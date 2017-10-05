@@ -1,0 +1,1855 @@
+commit dee2344e71621adce8c8c284744bbbfa1e660820
+Merge: 70583cd a446906
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Thu Jun 8 14:41:43 2017 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space into roles
+
+commit 70583cddc7681ff7f99c833d7eb655c3dda8a05e
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Thu Jun 8 14:20:51 2017 -0400
+
+    Se agrego campo de Monto a Recuperar Activo en la Hoja de Vida
+
+commit a446906cba196beeec2601be09b26995edd3527b
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Mon May 29 16:23:32 2017 -0400
+
+    #medidajudicial
+
+commit 9f02cee100935fb6ef90edc2f1b75c8edee61b83
+Merge: 4c8baf1 354d747
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Mon May 29 11:27:51 2017 -0400
+
+    Merge branch 'developer'
+
+commit 50636a8aaaf2eea0e25e1f28360b7398f77db7be
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Mon May 29 10:53:58 2017 -0400
+
+    Error al consultar beneficiario en medida judicial y predeterminar 0102 en el modulo de Cuentas Bancarias
+
+commit 4c8baf1e3ca68959049cb81782c4787c6b1ff546
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Mon May 29 09:46:56 2017 -0400
+
+    #MOrdenPago: orden por fecha
+
+commit 0504beece35f06aef6d753e1e06e6aee949577ee
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Thu May 25 14:26:00 2017 -0400
+
+    MHistorialAnticipo: orden anticipo
+
+commit 03f5e56efbd7d96df46ddc6d30e9a9f5aeffea7d
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed May 24 15:53:02 2017 -0400
+
+    #MHistorialAnticipo: no mostrar reversos
+
+commit 7dedf3d37e10608fb593a8bd716eb22c47e450e6
+Merge: 80106b5 fcb8f6f
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed May 24 14:54:39 2017 -0400
+
+    Merge commit 'fcb8f6f'
+
+commit fcb8f6f086d3dd41d2aa9298d8add1f855aaf066
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed May 24 14:53:30 2017 -0400
+
+    #MHistorialAnticipo: no mostrar reversos
+
+commit 80106b50d7ab18195f12faaa638bea0dfff5f397
+Merge: de3ce8e b184efe
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed May 24 14:30:08 2017 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space
+
+commit de3ce8eff81cbbfb0ef1001d090e9531b28c3c56
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed May 24 14:28:32 2017 -0400
+
+    MHistoriaAnticipo: no mostrar reversos anticipo
+
+commit b0e8cce6bd19f92eb54e5fb184b2d047a13270cc
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed May 24 11:49:15 2017 -0400
+
+    banco:  inicio nro cuenta
+
+commit b184efefca54421d973b2e056b2c9141e37db673
+Merge: 0842ae6 8cd67bd
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Wed May 24 08:51:20 2017 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space into roles
+
+commit 0842ae6f19693b76116c9d7aa5cb39e6d795f436
+Merge: b170fd9 dcc2e0c
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Wed May 24 08:45:02 2017 -0400
+
+    Merge branch 'developer' into roles
+
+commit b170fd9c173550da229af18a7f839ab3dd338e4a
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Wed May 24 08:43:06 2017 -0400
+
+    Campo para agregar la mensualidades por medidas judiciales y calculo automatico del monto total
+
+commit 8cd67bd7fcc15d3d6ac6338a461c5d6cd97f32cd
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue May 23 10:28:05 2017 -0400
+
+    #hoja_vida: ordenar anticipos por fecha
+
+commit 09f050e84deab19be6b72e2df0ab241a6adfc114
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Mon May 22 15:59:37 2017 -0400
+
+    #MBeneficiario:validacion del numero de hijos insertados de saman
+
+commit cc162ad5fb48195efce6861121cf974ad2965aaa
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Fri May 19 09:06:29 2017 -0400
+
+    #registrar_finiquito: comillas en partidas despliegue reportes
+
+commit 390c2a3a85f4b2585af4ea894b17d1a76c67aa46
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Tue May 16 16:01:30 2017 -0400
+
+    #MCalculo: se modifico la funcion de la alicuota de vacaciones
+
+commit d84b7e58e7838e96cd5a3d9ebdae1bbecad1c117
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Tue May 16 15:20:14 2017 -0400
+
+    #MCalculo: se modifico la funcion de la alicuota de vacaciones
+
+commit 64b2e88b95ca8ea93c365c0455b80144972142ac
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Thu May 11 16:17:05 2017 -0400
+
+    #MCalculo: se modifico el numero dias para la alicuota del bono vacacional y bono fin de año
+
+commit 354d7472a0c7bca608f397697f857ab9d7356f3e
+Merge: e7571e7 91b2833
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed May 3 16:33:39 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit 14a117c6cef2b32870c5285b62225ce6e5d10dcb
+Merge: b8a397b 859f55a
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Mon Apr 24 09:45:25 2017 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space into developer
+
+commit b8a397b6888db149bbf830275376de4b251bc1fa
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Mon Apr 24 09:43:06 2017 -0400
+
+    finiquito
+
+commit 859f55ac593ac481aa35a6698e4523fc19261715
+Merge: 374fa5e e7571e7
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Fri Apr 21 11:46:32 2017 -0400
+
+    Merge branch 'developer'
+
+commit e7571e752c0a288689b05e6c4d11eadcc416d704
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Fri Apr 21 11:29:48 2017 -0400
+
+    #medidajudicial: validar forma_pago en actualizar
+
+commit 374fa5e79adcd70f23a90040a53cb7055479bad9
+Merge: 3320889 91b2833
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Fri Apr 21 09:35:22 2017 -0400
+
+    Merge branch 'developer'
+
+commit 91b2833c08486967e89299cc5f9ba088825f3484
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Fri Apr 21 09:33:21 2017 -0400
+
+    Control de Busquedas y Actualización
+
+commit 3320889fcf3091e514edc5c418a2d2161332712f
+Merge: 5cfd472 f4f466f
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Apr 18 10:11:16 2017 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space
+
+commit 5cfd472da16388f1f6138f51acdf9ffd6038b2df
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Apr 16 22:35:50 2017 -0400
+
+    #MedidaJudical Editable, correcion de mensajes y Actualizacion de Directivas
+
+commit 63c9698e6a227fd29c14ec0d4ab4574d5ef2b0fe
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sat Apr 15 22:45:59 2017 -0400
+
+    Directiva, Tasa BCV
+
+commit f4f466f8aaf96eb2521d22ce1572c857afdb83e8
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Thu Apr 6 11:23:55 2017 -0400
+
+    APERTURA
+
+commit 6938758d4f6d726aa66686d5972dcc673a23a676
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Thu Apr 6 11:10:20 2017 -0400
+
+    Cero faltante y descarga de txt
+
+commit dea1d4b4090cc28588de9cf5b9347d8b4d35ddde
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Apr 6 10:03:51 2017 -0400
+
+    Control de Columnas
+
+commit ca77d10cd4159a81b036436928b71039e610e57c
+Merge: 8986b5b 5461aee
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Apr 6 09:33:19 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit 8986b5bb5163762e24858773361643aa3055c277
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Apr 6 09:30:13 2017 -0400
+
+    Generador
+
+commit 5461aee1975e89b8119d4aa70fea3f61666ff752
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Apr 5 10:04:10 2017 -0400
+
+    MOrden ;
+
+commit 569f9b16863720cdf80119c0763e1f440fcfaad5
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Apr 5 09:31:43 2017 -0400
+
+    Aportes Txt
+
+commit dcc2e0ce08f111cf1c64935dd92a3d42a2809e20
+Merge: 3515af3 99d6e01
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Wed Apr 5 09:15:27 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit 3515af31cc532e5b013370faa2c2c87826e3aca1
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Wed Apr 5 09:15:18 2017 -0400
+
+    Revision de los Calculos de Aporte
+
+commit 99d6e01aa339182eb84673ef4ccbccf5d1377243
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Apr 5 09:01:11 2017 -0400
+
+    Control de contador de lineas
+
+commit ee74913aac3045b4d2cdde129e703226b3bff3eb
+Merge: fbd96aa e6eae24
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Apr 4 18:39:28 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit fbd96aa87903567470208aa3ac3846407c12b501
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Apr 4 18:39:15 2017 -0400
+
+    Codigo de comentarios
+
+commit e6eae248819d192654cb23731e6b4420d163af9e
+Merge: 58f7a7f 2c26009
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Tue Apr 4 14:21:18 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit 58f7a7f09f6adfdc277e27363cbfd5ebb33fcf08
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Tue Apr 4 14:20:48 2017 -0400
+
+    #Archivos de Text
+
+commit 2c2600933060f65e837331062805f8a86e480f69
+Merge: 6ec00ec 8312c1e
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Apr 4 11:50:23 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space
+
+commit 6ec00ec9c2e7807be4feedfc4671e7e5a7177ba1
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Apr 4 11:49:48 2017 -0400
+
+    #MedidaJudicial: Inactivar; Asig. Interese
+
+commit 8312c1eeccbb69133583c194f46d78a15a070f13
+Merge: 80c6f8e 306300d
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Tue Apr 4 10:50:03 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit 80c6f8e3141a86c39c99c0ca32f12a6a20114e11
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Tue Apr 4 10:49:51 2017 -0400
+
+    Corregir mensaje de error en Anticipos
+
+commit 306300d09fa773536267ece91805aa4d6242fb84
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Apr 4 10:38:41 2017 -0400
+
+    #Beneficiario: Saldo disponible de los retirados
+
+commit d8f8fd76adf45657ffaa0e32b49e6ecd37f0e862
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Apr 4 10:38:10 2017 -0400
+
+    #MCalculo: eliminación de comentarios
+
+commit 16127c203f90275ecbbd0fa73c579e5c0069aa87
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Apr 4 10:37:27 2017 -0400
+
+    #MDirectiva: fecha_retiro < fecha_ultimo_ascenso
+
+commit 23cd843c5ffa633ebdd03d5e8af586cf1c9a16c6
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Apr 4 10:33:29 2017 -0400
+
+    #RegistrarFiniquito: AFAS Calculo en distribucion familiar
+
+commit e74cfcc332d93602c7dbb65b0b01ef20e83b1175
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Apr 4 09:09:05 2017 -0400
+
+    Registrar Finiquito
+
+commit 9858c4c2d4dc79bbdf41e7291ff81b75f29c0b7a
+Merge: 81afbf8 e74cfcc
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Tue Apr 4 09:06:49 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit 81afbf8c430cf1d9779848e4019ec7041f5d26de
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Tue Apr 4 08:47:45 2017 -0400
+
+    Usuarios y password en el archivo script.sh
+
+commit 05606ebb2c5a61083e1b641ea5f47d400a422960
+Merge: 193cc4d 3e84c48
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Apr 4 08:11:37 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit 193cc4d3d93d788a0ba698707035b7145d18d6ed
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Apr 4 08:10:34 2017 -0400
+
+    Archivos de procesos
+
+commit 0268a939527412da0eeec18c05a85c647438f63e
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Tue Apr 4 04:44:03 2017 -0400
+
+    Script configurar
+
+commit 3e84c48657935975aeb4399f0ae2c0422beb2dfc
+Merge: ef6c31b b143061
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Mon Apr 3 15:42:09 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit ef6c31bf329b79ca4f712f9f0a1f6c64c85a4c4c
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Mon Apr 3 15:39:48 2017 -0400
+
+    #actualizar: modificar privilegios en actualiza
+
+commit b143061bce401fc62d5a2e550b5a763b910b2418
+Merge: a70c871 bcd20a5
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Apr 3 10:47:07 2017 -0400
+
+    Control de Ordenes
+
+commit a70c8715331631b90b43f04cdf4e937d8067615c
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Apr 3 10:44:32 2017 -0400
+
+    Control de Ordenes
+
+commit bcd20a5582576b793b5dca429d68d172af78b67f
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Mon Apr 3 10:37:57 2017 -0400
+
+    Error en Consulta
+
+commit 147dd15da07b25ab1190582c8fec8ad03b5c86f2
+Merge: 0554ec1 e638f64
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Apr 3 10:36:04 2017 -0400
+
+    Error en consulta
+
+commit 0554ec122e0f6c406697d653785533a8888d3382
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Apr 3 10:31:23 2017 -0400
+
+    #Panel Generar Txt
+
+commit e638f6466d15aadc3bfa4b18b39a27759903c515
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Mon Apr 3 10:24:15 2017 -0400
+
+    Modificacion en le funcion Listarporfecha en el sql
+
+commit f00d9d207483760504c4def7bb333b55672f9863
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Apr 3 00:02:42 2017 -0400
+
+    Aporte de Capital
+
+commit a011d3080b3419ea76d791ef3bc2cb8708fc8af0
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Apr 2 17:27:46 2017 -0400
+
+    Aportes y Calculos
+
+commit df84e7785057dcc49db302ef04c5ff7a78f1cfde
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Mar 30 12:11:16 2017 -0400
+
+    Control de Finanzas
+
+commit 5696fb4791c8c01d593a1e09c733ef17b032310d
+Merge: 559ea5a 6c95b8c
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Mar 29 14:05:35 2017 -0400
+
+    Merge branch 'master' into roles
+
+commit 6c95b8c7a9eb491d243f4df4b92a369ae60d0548
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Mar 29 14:02:11 2017 -0400
+
+    Botones en DataTable
+
+commit 559ea5a8e1081b899b0d13bfb1edd2fb6bf79396
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Wed Mar 29 13:48:27 2017 -0400
+
+    Colocar fijo el valor 0102 en el modulo de cuentas bancarias
+
+commit f84a2bac6369d51008a056aca6a10906a82da9fb
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Tue Mar 28 19:52:52 2017 -0400
+
+    Resta del Monto Recuperado Activo al Total en Banco del Modulo de Finiquito
+
+commit 91b141de8d314b74cc89e150a4389cc53cf04812
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Mar 28 14:07:12 2017 -0400
+
+    #Beneficiario: impresion de sueldo y movimiento
+
+commit e3dcdd8bcfc33685ef4c578a01631d47f34724e2
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Mar 28 10:14:28 2017 -0400
+
+    Backup Perfiles y Menu
+
+commit c721c4ec2d8327c3587cea183a932bc7f6b8c45e
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Mar 28 09:09:37 2017 -0400
+
+    Backup Perfiles y Menu
+
+commit e52c6dafd11f6b6dbc286ddd26f00bc1efabd682
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Mar 28 00:17:16 2017 -0400
+
+    Insertando Postgres Masivo
+
+commit b4f035ebdc0f16d69d393b9382998071d87a241f
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Mar 27 23:22:22 2017 -0400
+
+    Control
+
+commit 75019eec069ea74b58af6fcb312dfbf630316ee5
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Mar 27 22:10:03 2017 -0400
+
+    Historial de Movimientos
+
+commit 122623927f4d372b1ed6cf938c6693da62c4c497
+Merge: 139ee00 e2a6313
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Mar 27 19:35:30 2017 -0400
+
+    Merge branch 'roles' into developer
+    Cambios comision de servicio
+
+commit 139ee00f82043a88c726cc2ec8813f893509f555
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Mar 27 19:32:22 2017 -0400
+
+    Limpiando Tmp
+
+commit 4318a94d5898235a74252d0b1f9f9903644d1c2e
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Mar 27 19:31:24 2017 -0400
+
+    Calculos de Lotes Archivos G,D, Asignacion
+
+commit e2a6313158392461493c8f0a43ba0aca54e3ae3b
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Mon Mar 27 16:21:57 2017 -0400
+
+    Restar Monto Recuperado Activo de Depositado en Banco
+
+commit 894228a77f3e13d5c1e78c1366119304269ea3ce
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Mon Mar 27 15:00:01 2017 -0400
+
+    Creacion de campos comision de servicios y monto recuperado activo en modulo actualizar para cargar el movimiento
+
+commit ace438812a3c8b6759b4004cf58f81a2b67b0592
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Fri Mar 24 08:25:06 2017 -0400
+
+    UPSERT Contenido
+
+commit b960b367f4ff471c5c6d10d2980290361666bc5d
+Merge: 3a78dd4 3d00353
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Mar 23 21:04:20 2017 -0400
+
+    Merge branch 'master' into developer
+
+commit 3d003536019f63f8f6e980ce4e1391f5c636d2e2
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Mar 23 21:01:27 2017 -0400
+
+    Configuracion de errores
+
+commit 2644b8fc28aeedffe51ffa5ad07a634607ff355a
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Mar 23 16:42:12 2017 -0400
+
+    Cambios del sistema Err. Log
+
+commit 3a78dd44e7e21e20a3dd1108195b0f4e222f909c
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Mar 23 16:00:38 2017 -0400
+
+    Descripciones
+
+commit 213daade25c4ce9bdac2df2cbb158c4206dc18a4
+Merge: c7bff30 49f5126
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Mar 23 15:48:15 2017 -0400
+
+    Merge branch 'master' into developer
+    Cambios en la base de calculos
+
+commit 49f5126a4912ed529fd617ade1a2ff08e39461c1
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Mar 23 15:46:55 2017 -0400
+
+    años reconocidos
+
+commit c7bff308e8339f782f63732bc3a7e1445d8cae00
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Mar 23 15:31:51 2017 -0400
+
+    Privilegios, Perfil y Menu
+
+commit 2fa3af0d301e0711a40ad9a0e06f68203b1674e8
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Thu Mar 23 10:10:05 2017 -0400
+
+    Actualizacion de grados en procesos en lote
+
+commit 2fe37b52b87f0be34c2531786535addd1f05821a
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Thu Mar 23 09:40:17 2017 -0400
+
+    Ajuste grado Base de Calculo
+
+commit a4c9e4812cbf67b2bfda112b9f9dbdce92572b60
+Merge: 53b4998 32f691b
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Wed Mar 22 10:21:36 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit 32f691b521779760667e1a68e0425a845d88d918
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Mar 21 19:00:25 2017 -0400
+
+    Actualizacion de Base de Calculo
+
+commit 9954072db90d144b3dbba6e8c89c0bf234e17192
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Mar 15 12:11:26 2017 -0400
+
+    registrar_finiquito.js: Actualizacion de modulo
+
+commit c15c3a27355bca4706bce08753729743a6fc6221
+Merge: 2652a10 7498197
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Mar 15 11:18:05 2017 -0400
+
+    Merge branch 'developer'
+
+commit 7498197ff774aa1ddf6f6efb7f06639e5c8e0327
+Merge: a50a497 4932b02
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Mar 15 11:16:58 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit a50a497abc2d13fca35d0dc36eb686fae5866a8d
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Mar 15 11:16:41 2017 -0400
+
+    Archivo space
+
+commit 2652a10b35f001c75fca0c5792873070c88d0bbb
+Merge: f1b922f 669c5fc
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Mar 15 11:12:54 2017 -0400
+
+    Merge branch 'roles'
+
+commit 669c5fc5d998884015d44794592ec5905c0b1963
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Mar 15 11:11:03 2017 -0400
+
+    Archivo space
+
+commit f1b922f052a88602d1cc8eb88511167ef6d6cdea
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Mar 15 11:01:56 2017 -0400
+
+    Archivo Config
+
+commit f80e4fc3885600d71a0aee4a3eb6a2a1aa2abf6d
+Merge: 130b33b 301e146
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Mar 14 16:31:28 2017 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space
+
+commit 301e146fb52ec3504563deffca7931fe2a4fdedb
+Merge: 306d7cb 6f1e4b5
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Tue Mar 14 16:21:45 2017 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space
+
+commit 130b33bae1cd334a6f6a04d4b9606e9e58a12f39
+Merge: 44b38c5 de133aa
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Mar 14 10:13:15 2017 -0400
+
+    Merge branch 'roles' of https://github.com/gesaodin/space
+
+commit 44b38c5c0164790aa7866cc22e261c121828986c
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Mar 14 10:05:32 2017 -0400
+
+    #Mcalculo: se calcule monto %embargo para finiquito con asignacion_antiguedad_fin
+
+commit 306d7cb623099392240265e69f11a8dfe255f7b2
+Merge: b960d2f de133aa
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Mon Mar 13 11:46:16 2017 -0400
+
+    Merge branch 'roles'
+
+commit de133aa2d0a29eb775f54308b926ff0dfa4470ee
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Fri Mar 10 11:05:58 2017 -0400
+
+    Colocar Fecha Reportes de Finiquito y validar campo de M.Actos de Servicios en Reporte Consultoria Juridica
+
+commit 9e6a89a29e6129740f9c101fe50f01c9342b2242
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Thu Mar 9 11:05:12 2017 -0400
+
+    #registrar_finiquito: monto de Asignacion AS/FS
+
+commit 3c43cfeb152edf00c08f409138cab995f765f6b9
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Thu Mar 9 10:35:48 2017 -0400
+
+    Modificaciones a los Reportes de Finiquitos
+
+commit 6f1e4b5a0a02d2fbaeee5a2ddea78e8686f9422e
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Mar 7 17:14:03 2017 -0400
+
+    #MMedida_judicial: mostrar el monto embargo correcto despues de finiquitar
+
+commit 2b282113804ff16e80d54e9206bc05003264fa13
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Fri Mar 3 10:26:54 2017 -0400
+
+    #reporte: consulta individual solo con la cedula
+
+commit 93d1d30bb853a439e42a035e1ca1c55e1b9ae2b1
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Fri Mar 3 09:25:41 2017 -0400
+
+    #MMedidaJudicial: se incluyo la instancia para conexion dbase
+
+commit 1febe8f91e949878fed575b58ea65adbe79094e0
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Fri Mar 3 09:13:06 2017 -0400
+
+    #MMedidaJudicial: se incluyo la instancia para conexion dbase
+
+commit ccac7407d7dbc9c0c271a4a215afc65f28b6ec31
+Merge: 8823e53 ac58ff4
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Fri Mar 3 08:47:56 2017 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space
+    
+    Conflicts:
+    	application/modules/panel/models/beneficiario/MMedidaJudicial.php
+
+commit 8823e532410efb6f22a0cf9488c4ee41b8e534b9
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Fri Mar 3 08:38:58 2017 -0400
+
+    #reporte.js: consulta individual solo colocando cedula
+
+commit ac58ff4b638ed20c324740f608ae23111eaec1d6
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Thu Mar 2 14:53:13 2017 -0400
+
+    #MDirectiva.php: Se cambio el signo de menor a mayormenor igual en la fecha de vigencia directiva para que la leyera correctamente cuando no_ascenso>0
+
+commit 7ff1f25408e3bbce26b2cd98241bc7effdc378cc
+Merge: f983983 461f731
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Mar 2 09:40:25 2017 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space
+
+commit f9839833e08397759f7bd27686305e61f88eb2b1
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Mar 2 09:40:08 2017 -0400
+
+    #MedidaJudicial: Dbpace no definido en el Constructor de la clase
+
+commit 461f73134ea1406b89fd64cbaf4ed7973d7550d7
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Wed Mar 1 15:05:23 2017 -0400
+
+    #punto_cuenta_anticipo: Se coloco un espacio entre el grado y el nombre
+
+commit 25609f01da71f91c5a32bca5257ea2680314871f
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Mar 1 11:08:45 2017 -0400
+
+    #Mdirectiva: cambio signo f.inicio de directiva cuando no_ascenso>0
+
+commit 860111d046884aa481667658c64826674b47f870
+Merge: 5f19cf1 613fbee
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Mar 1 11:03:15 2017 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space
+
+commit 5f19cf15fabd80dc0868756ee8b7f5feb8b8d77a
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Mar 1 10:49:40 2017 -0400
+
+    #Mdirectiva: cambio signo f.inicio de directiva cuando no_ascenso>0
+
+commit 613fbeea0f4f6d9e7ed13081fc6dbb09000298d0
+Merge: 4932b02 b960d2f
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Feb 23 17:21:22 2017 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space
+
+commit 4932b0252cec3d3f79fb3704383d18fcfacff406
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Feb 23 17:19:59 2017 -0400
+
+    #Reporte: Revisión de paralizar
+
+commit b960d2fc3872767fecf189d79f9b63f1346438d5
+Merge: 6c77564 8cd38e3
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Thu Feb 23 15:53:57 2017 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space
+
+commit 6c775645652c87f37bed232bfd047db0f9d1a902
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Thu Feb 23 15:50:20 2017 -0400
+
+    Actualizacion seleccion de reporte
+
+commit 8cd38e3dd459fb9c95b2bc0b57f5630ac63064d5
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Feb 23 14:55:43 2017 -0400
+
+    #Panel, KCalculo: Red Perceptron amplia
+
+commit 53b4998ef6bd84c16158de8c8a9c409b0c541ddf
+Merge: 37353c9 8cd38e3
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Thu Feb 23 14:50:34 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit c8015135216e8e47c063452ac2ea55b52a29ac0f
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Feb 23 09:07:16 2017 -0400
+
+    #Reportes: Filtros de Busqueda
+
+commit 37353c94a3d825328522e3b980fb36b9f83ba3b3
+Merge: 401aa1e c801513
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Thu Feb 23 08:59:11 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit cce81559b5878288db09c72213e338a43d51908a
+Merge: be358fb a2d1c7c
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Feb 22 22:57:14 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit be358fbfc603c2709a239185659c1b602c322aff
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Feb 22 22:55:51 2017 -0400
+
+    #Kernel: Creación de Grupos
+
+commit f35d172a2de0000a1c6df9251ab6eb428638016a
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Feb 22 17:40:47 2017 -0400
+
+    #Anticipo: CargarFecha
+
+commit d63c751c585de192663554b12de9d52a56e7d452
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Feb 22 17:35:30 2017 -0400
+
+    #Top: Nombre de la Directiva
+
+commit e45935a5ebf2d1e6238ad99e451b8be50cce2c12
+Merge: 71e26c6 52d9eaf
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Feb 22 17:09:17 2017 -0400
+
+    Actualizacion de Merge
+
+commit 71e26c6698696ab8e3ca229223c793895926b07b
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Feb 22 17:02:35 2017 -0400
+
+    #Reportes: Finiquito
+
+commit a2d1c7c571df01485e59abd98f55744f3f46f7b3
+Merge: f35d172 623209d
+Author: mercy <cardenasmercy@gmail.com>
+Date:   Wed Feb 22 13:56:32 2017 -0400
+
+    Merge branch 'roles' into developer
+
+commit 623209d65204d9d7edfca8723e7f3060aaf0b366
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Wed Feb 22 13:31:31 2017 -0400
+
+    Cambio de Nombre del Campo Total Apartado por Depositado en Banco en la Hoja de Vida
+
+commit a29c540c8a68c8af089dc10feea4dd30c96fab3a
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Feb 22 10:47:47 2017 -0400
+
+    #Finiquito: Registart
+
+commit 401aa1ead2e668bd0a582f99f6c9e630128ff5cf
+Merge: 553fefd a29c540
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Wed Feb 22 10:37:53 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit c74dd38d5f0ae3ea8530b6bd7557560a2d448ffe
+Merge: d6f0fe0 a9e9b06
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Feb 21 19:07:47 2017 -0400
+
+    Merge branch 'roles' into developer
+
+commit 416972400e25837d35b3b735476143cea45a248b
+Merge: a9e9b06 553fefd
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Tue Feb 21 18:55:54 2017 -0400
+
+    Merge branch 'developer' into roles
+
+commit a9e9b069419ffb3cbfe551721beef372f2fe43fe
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Tue Feb 21 15:44:05 2017 -0400
+
+    #Reportes: Bordes a los Reportes de Finiquito
+
+commit d6f0fe02a1e053d0ae6106ca5dc5360570f2f693
+Merge: 5ac79d7 e3c69cb
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Feb 21 10:18:33 2017 -0400
+
+    Merge branch 'roles' into developer
+
+commit 5ac79d770d1383c926f3081f329e9c7def30c8f7
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Feb 21 10:14:19 2017 -0400
+
+    #Reportes: Consultas al Sistema
+
+commit 553fefd8d5dca77a5cadef27e9249d1402e986e0
+Merge: ba84c4e 5ac79d7
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Tue Feb 21 10:07:02 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit a11d48bb50a888476b5b7002b51a0930e19eda9b
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Feb 21 01:06:29 2017 -0400
+
+    #Reportes: Consultas Por lote
+
+commit 3325e44de55842359fdae9d8affcb06fa34553f8
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Feb 20 19:26:52 2017 -0400
+
+    #Kernel: Dias de Vacaciones y cabecera de los lotes
+
+commit e3c69cb7e86a48120adf3efd29eb143b0a914aa1
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Mon Feb 20 15:05:35 2017 -0400
+
+    #MedidaJudicial: Suspender Medida Judicial
+
+commit 140c6f577d29b40babe4f4591d2dae8d8570dd64
+Merge: a4038d6 ba84c4e
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Mon Feb 20 13:50:53 2017 -0400
+
+    Merge branch 'developer' into roles
+
+commit ba84c4ef4bf3b3c151abe4076167900d06d76b8c
+Merge: 8109da7 8474cfe
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Mon Feb 20 13:50:06 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit a4038d65946c1ebc712e158266b0c7ba0fb9ae72
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Mon Feb 20 11:53:43 2017 -0400
+
+    #Anticipo: Limpiar pantallas y indexar monto
+
+commit 8474cfeaf1fe3cd14776d1bef5089e91986e85f8
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Feb 20 00:04:52 2017 -0400
+
+    #Panel: Activación de Indices
+
+commit 92626a15ab66a082b69e7c1b197824cdc7af2d72
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Feb 20 00:04:00 2017 -0400
+
+    Modificacion de limites > KCargador
+
+commit f80a622773cbf3a53a1c0020a5f5b01f0687ae60
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Feb 20 00:01:28 2017 -0400
+
+    #Motor: Inferencias, Patrones, Redes
+
+commit e5c5aa3411b578561e8c54e996b1c52e028513d7
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sat Feb 18 23:41:34 2017 -0400
+
+    Ignorar: tmp/*.zip|*.csv
+
+commit cd682c4325505a851b10473ad97187ce1b4b0675
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sat Feb 18 23:37:32 2017 -0400
+
+    tmp: Eliminando pruebas
+
+commit 48059b66e43fb88e45971745ef2516233f6da4d0
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sat Feb 18 23:35:16 2017 -0400
+
+    #KPerceptron: Reconocimiento de Patrones e Interfaz Aportes de Capital
+
+commit 8109da78c352080537febbe0d375a6965069e496
+Merge: d64a51c 4a273e9
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Fri Feb 17 09:31:01 2017 -0400
+
+    Merge branch 'roles' into developer
+
+commit d64a51c634ce866461aaffc124c58ff5d67eddf8
+Merge: 1c11a54 0ffffb8
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Fri Feb 17 09:30:28 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit 4a273e928af0e501add0e662b740bd8ff4f3a55f
+Merge: 1c11a54 0ffffb8
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Fri Feb 17 09:29:15 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into roles
+
+commit 1c11a5439dab633d6f8f5f6259ef2e5582b9944a
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Fri Feb 17 09:26:17 2017 -0400
+
+    Valida que el beneficiario tenga numero de cuenta
+
+commit 0ffffb8023e9911b769fc19e495cb0441ae9c49a
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Feb 16 16:44:52 2017 -0400
+
+    #Kernel: Dias Adicionales y Garantias (Base de Calculos)
+
+commit b0286417480350d76d9faccd050cb0375f7ccb85
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Feb 16 16:08:36 2017 -0400
+
+    #Kernel: Formulas y Calculos
+
+commit 034522ed837d0d8586645238e571b3038c6e10e4
+Merge: 6b33329 c2f2b77
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Feb 16 14:52:31 2017 -0400
+
+    Merge branch 'developer' of https://github.com/gesaodin/space into developer
+
+commit 6b333290f59bd5c0e4b0fdc252e3d66baf750766
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Feb 16 14:50:13 2017 -0400
+
+    #Kernel: Proceso de Lotes
+
+commit c2f2b773e802dc9540d472adcd65e0ae6eb80594
+Merge: 76418d4 f12d4d1
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Feb 14 16:14:57 2017 -0400
+
+    #Finiquito: Actualizar y Sincronizar
+
+commit f12d4d1fffa98beb8e078afbfa7b38a631d7364e
+Merge: 3f97f73 d125b36
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Feb 14 15:50:53 2017 -0400
+
+    Merge branch 'roles' into developer
+
+commit d125b36467dddf262fa23c26549640bcbc2cd081
+Merge: a8fdb7f 296dfe6
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Feb 14 15:50:07 2017 -0400
+
+    Merge branch 'roles' of https://github.com/gesaodin/space into roles
+
+commit 3f97f7370dd304f3ead017301901c20631e9a84a
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Feb 14 15:48:27 2017 -0400
+
+    #Kernel: Origne, Funciones, Finiquito
+
+commit 52d9eafc8c127238c4f8a9be71326985feb3f0a1
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Mon Feb 13 16:32:44 2017 -0400
+
+    #finiquito: reverso finiquito con medida_judicial por monto
+
+commit d3f3910170f12099d75405bd1b05f8d8e27b2164
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Mon Feb 13 14:09:37 2017 -0400
+
+    #registrar_finiquito.js: mostrar en consultar t.servicio segun fecha_retiro
+
+commit 01592958964248e3791f26b35d42bb0e347fef21
+Merge: f6c7e16 76418d4
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Mon Feb 13 11:47:53 2017 -0400
+
+    Merge branch 'developer'
+
+commit 76418d41982d4cae3952087c9d7668a8c8a8ef5c
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Mon Feb 13 11:39:43 2017 -0400
+
+    #registrar_finiquito.js: mostrar tservicio segun fecha_retiro
+
+commit 1fb590bef3e5651efb132035d3c0da2f4a671725
+Merge: 9c305d5 f6c7e16
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sat Feb 11 20:43:50 2017 -0400
+
+    Merge branch 'master' into developer
+
+commit 296dfe68aeb55aa026a59f0e5e2c504b631d27ef
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Sat Feb 11 14:17:34 2017 -0400
+
+    Ajuste para el calculo de anticipo por monto
+
+commit 8c18c39b579791ad969750d2b26902ce7eeffda8
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Fri Feb 10 14:25:46 2017 -0400
+
+    Ajuste para el calculo de anticipo por porcentaje
+
+commit f6c7e1605c3d8769ddd0e4f6dcfffe392f100c51
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Thu Feb 9 14:50:54 2017 -0400
+
+    #Mcalculo: mostrar monto recuperacion print
+
+commit a8fdb7f04464642df68f91f9ddd16465a41b0e05
+Merge: 9c305d5 1a79a40
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Feb 9 14:47:48 2017 -0400
+
+    Merge branch 'roles' of https://github.com/gesaodin/space into roles
+
+commit 1a79a40497cc488714d7f9267312480f74b4ef15
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Thu Feb 9 13:57:07 2017 -0400
+
+    Orden de Anticipo por porcentaje y reporte
+
+commit 9c305d506c2fa747912a86dd22dfcdd50d65cc10
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Feb 9 10:14:00 2017 -0400
+
+    #MPrima: Eliminando echo PHP
+
+commit 4b65c577fac853220a90450728808db3cc7e722a
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Feb 9 10:11:34 2017 -0400
+
+    #MPrima: Inlusión de Monto Nominal como parametro
+
+commit a7cff673b28b20e7ba23f90881bb1efb746f220b
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Feb 8 15:33:26 2017 -0400
+
+    #punto_cuenta_anticipo: espacio entre grado y nombre
+
+commit bdc326514687172c65adbfce5745cec6297c6604
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Feb 8 14:55:16 2017 -0400
+
+    #hoja_vida: mostrar diferencia_asignacion fraccion
+
+commit 4997784344d1aa4eb5e31d997927a944e91c2cbf
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Wed Feb 8 14:24:04 2017 -0400
+
+    Diferencia AA en el print para toma fraccion de años de servicios
+
+commit fed0b27df6362aebf753db798b52720eb015af99
+Author: Yolenis Gamez <yolenis.gamez@gmail.com>
+Date:   Wed Feb 8 11:13:08 2017 -0400
+
+    Diferencia AA para tomar fraccion años de servicio
+
+commit e545e878ac9da95e4606946112007b05d4f927c4
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Jan 31 14:04:24 2017 -0400
+
+    #hoja_vida.php: se modifico para mostrar t.serv y AA segun status afiliado
+
+commit c2376b7670ad192ec1b6528133c9c2330eb4a954
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Mon Jan 30 16:11:40 2017 -0400
+
+    #MOrdenPago: ordenar anticipo por fecha
+
+commit a4fb71265cd19c4f90d70f6414305c524817b00c
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Jan 18 11:54:45 2017 -0400
+
+    #MCalculo: numero dias AlicuotaAguinaldo
+
+commit 5e2bd09ff9f0f4c3f19c7a48eb600aacdbad8afe
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Jan 17 10:51:06 2017 -0400
+
+    #Mbeneficiario: mostrar comision_servicio
+
+commit f8ddc099eed335f7e5afa813bdc7c5bea2aac023
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Fri Jan 13 11:37:39 2017 -0400
+
+    #Mcalculo: AsignacionFiniquito, Comision_servicios, fecha_ult_deposito
+
+commit 8f0fd74bfcb3eb16843d85284accaad03bd8e4a0
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Dec 20 12:37:01 2016 -0400
+
+    #MCalculo:cantidad dias BFA
+
+commit 2c493e5dc778c8b23c12b76a50c25f8cc6058732
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Mon Dec 12 19:01:01 2016 -0400
+
+    #MMedidaJudicial: ejecucion medida judicial en finiquito
+
+commit d937e8a88b4f67b4b6c2b00f559849a6dd3c30e0
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Dec 6 10:23:28 2016 -0400
+
+    #vista: titulo medida judicial
+
+commit 70d8ee7873429132757c0dfb790adf97c0902959
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Mon Dec 5 16:17:59 2016 -0400
+
+    #reporte: monto-porcentaje medida judicial
+
+commit 5aa212d632cbd5933cc8e753aaef03446be53fc7
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Fri Dec 2 16:06:47 2016 -0400
+
+    #registra_finiquito: etiqueta medida judicial
+
+commit b3049a290b7ccdc6d52f698d5ffa53da205d2129
+Merge: b718e8d d73398c
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Nov 29 16:16:23 2016 -0400
+
+    Merge branch 'master' of https://github.com/gesaodin/space
+
+commit b718e8d0cbf8962454bff2f00f2de3b2cd48a827
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Nov 29 16:14:11 2016 -0400
+
+    #registrar_finiquito: Paralizados
+
+commit d73398c97b9af0060fc2c433bf7ba8f48c686908
+Merge: 7f68997 e2a8e6d
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 29 07:05:08 2016 -0400
+
+    #MBeneficiario: ParalizarDesparalizar Sincronizar
+
+commit 7f6899772150af95003b3c46665ed675d80bf844
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 29 06:56:42 2016 -0400
+
+    Beneficiario log
+
+commit e2a8e6dfa66898d6008f54953eabb7b847a35132
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Thu Nov 24 18:14:40 2016 -0400
+
+    #Reportes, models.beneficiario, controllers: fecha_retiro
+
+commit cd17b4d9abd1c2a1f7e6aec772b6ab4752b5ad55
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Nov 23 14:35:57 2016 -0400
+
+    Agregar ID medida judicial
+
+commit 3ae5b714ab52919c3586a36ec4e8a962c28632d1
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Nov 23 14:23:50 2016 -0400
+
+    #MedidaJudicial: convertir fecha slash a guion
+
+commit 6550ab7f038bce0d950daf369ad9289148852a10
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Nov 23 11:32:34 2016 -0400
+
+    Control de Fechas y Mensaje
+
+commit 9c173b427d18af889d0ccb1f24bb173c99aa4b4a
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 22 23:34:36 2016 -0400
+
+    #Anticipos: Cambio de Calculo con limites, #CuentaBancaria: Actualizacion
+
+commit cb7780f9da4e0fa0a84ef416be0fe632dead58a4
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Nov 22 17:03:29 2016 -0400
+
+    #Reportes: monto a recuperar
+
+commit d969c57a02e437dd10a4f213b1a664cee35d236a
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 22 16:58:15 2016 -0400
+
+    #Reportes: Monto a Recuperar Mayor a Cero para partidas
+
+commit 987c795fb73dd17192b329424fcb90cb9c489f3d
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Nov 22 14:59:42 2016 -0400
+
+    #Reportes: campo partida recuperacion == 5 monto recuperar
+
+commit 5c2a3143848ac05eab555512f04493111849be15
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Nov 22 14:42:18 2016 -0400
+
+    #Reportes: campo partida recuperacion
+
+commit 5b0145bb82030baa309a3b883da9c3791eb1dec8
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Nov 22 13:39:46 2016 -0400
+
+    #Reportes: cambio CNEL finanzas
+
+commit 2fda1e38c2a6b5e4ff0a3276c22a0e054fd6c033
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Nov 22 11:14:41 2016 -0400
+
+    DR-Anexos
+
+commit 11eedd69c5f0f73a5429ac817818c94bf47cf8b6
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Tue Nov 22 09:50:54 2016 -0400
+
+    #Reportes: estilo,tamaño,fuente
+
+commit dc4efb204f441d29d7c6a0245149936f0756e3e8
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Nov 21 17:50:36 2016 -0400
+
+    Formato de Datos Basicos en Fecha
+
+commit e15a14394cef8db559a947c0dc571c63c8fb40cc
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Nov 21 16:56:51 2016 -0400
+
+    Cambios de Print/Finiquito
+
+commit 2eca572aef93bee228f2f0dcf1074344f0299e4e
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Nov 21 15:24:14 2016 -0400
+
+    Control de Medida Judicial Ejecutada
+
+commit 94988d28f2fbd8616fad287fbb06c80c46c58594
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Nov 20 11:57:43 2016 -0400
+
+    Limpiando Codigo de Utilidad
+
+commit 2d9b26f58fe1911b825c192d069046375241cb8f
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Nov 20 11:56:20 2016 -0400
+
+    Descripcion de Clase
+
+commit 1b5b58fd483fe6b606112e8d34307d98dda79c6d
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Nov 20 11:46:04 2016 -0400
+
+    Eliminando archivos
+
+commit 63af4eb6e3e94b51ac47aab712f0697fd17d39b1
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Nov 20 11:44:40 2016 -0400
+
+    Editando Index de Error
+
+commit 9586ad4a25c975a19e775b30f37bde6076a89430
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Nov 20 11:38:07 2016 -0400
+
+    Creando carpeta temporal e incluyendo index
+
+commit 8d7c061cdf3914af8bb4e36a88c6a572250cda21
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Nov 20 11:36:43 2016 -0400
+
+    Ignorando TXT: Para la carga masiva
+
+commit 9522b96e56098f2aeb336cfa9b3001ea239f8045
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 17 23:32:52 2016 -0400
+
+    Paquete de Intereses
+
+commit 3893e2faaa512d861717cd84b62e12a2dd72f46a
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Thu Nov 17 18:30:52 2016 -0400
+
+    #beneficiario.php,dbasico.js: incluyo mensaje medida
+
+commit b6923c1c8be2413675f9d8a23e4dd0006ab5a705
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Thu Nov 17 17:34:08 2016 -0400
+
+    #Mcalculo.php: diferencia_AA <0
+
+commit f022a02246219cac21f118c7f52586b4bc95d52d
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 17 08:32:56 2016 -0400
+
+    Ocultando/Mostrando Boton MJ
+
+commit 98eef5af88bdbe12cc1d587978eb6f16759db9fe
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 17 08:30:37 2016 -0400
+
+    Ocultando botón de medida
+
+commit 7fdf6ff882ef74ebd08a57b9fd2d5b24ffe3a708
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 17 08:24:25 2016 -0400
+
+    Controlando Cuenta Bancaria
+
+commit ad9140700cf849b623a1f53d87cd180797542f13
+Author: Mary Quiñones <marycq@gmail.com>
+Date:   Wed Nov 16 11:49:34 2016 -0400
+
+    #Panel,MBeneficiario: paralizarDesparalizar actualizamos fecha_retiro/efectiva
+
+commit 1f2cf75bf2d0f7b8a3455072edf4bff7595bb9e9
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 15 23:04:02 2016 -0400
+
+    Certificacion de Cuenta
+
+commit c1587ed4a51125f37c0793eefcf3d16f1997816d
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 15 22:51:53 2016 -0400
+
+    Importacion de Militar desde SAMAN
+
+commit 3aa1c3187c1e1a355a8749c4c0c450c9229c30d6
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 15 11:08:48 2016 -0400
+
+    Reporte de Anticipos
+
+commit 8270026c2a549954aa703fd37ea2af1e6aef11c4
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 15 11:04:11 2016 -0400
+
+    Control de Medida Judicial
+
+commit eb219cf653934757294c60781fcc649905ea0d33
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 15 10:39:29 2016 -0400
+
+    Medida Judicial: Reportes:Parentesco
+
+commit c7387a2b8a657adc3b9092449e24d285d3eae389
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 15 10:38:00 2016 -0400
+
+    Medida Judicial: Reportes
+
+commit 98e02eb510c2be36515683fa3f637343a2ea53dd
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Nov 14 16:28:22 2016 -0400
+
+    Cambio de U%20 Espacio en blanco
+
+commit 6b79df2da0d6c51a32a79de32edacd08216885dd
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Nov 14 14:08:37 2016 -0400
+
+    Cambio de Usuario en los puntos de cuenta
+
+commit 1ae5f8f3d53c20e8d95f3d34d5c57974ea09b237
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Nov 14 10:57:36 2016 -0400
+
+    correccion en la variable de saldo disponible
+
+commit 0bc77d80a82fac5fcf4025aa37eefcccfca906c7
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Fri Nov 11 17:32:24 2016 -0400
+
+    #finiquito: Documentos,
+
+commit 9fa59ea97330c4350797d5fdce5fb7805f93b333
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 10 15:44:14 2016 -0400
+
+    Control de Versiones
+
+commit 87e4c5cdd1239f33ae93aa5655860213ef4d3016
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 10 15:41:23 2016 -0400
+
+    #CosultarMovimiento: Reportes
+
+commit d7582258c77e762a2af1d6dc44016bc3aa1c388c
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 10 09:56:34 2016 -0400
+
+    #Reportes: saldo_disponible
+
+commit 8237675adb804543b42199dfb03344e2f7684d16
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 10 09:55:19 2016 -0400
+
+    #Reportes: saldo_disponible
+
+commit 08afdcdf9bb18dd9da7760bf3ca8765c3a088bc9
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Nov 9 15:45:29 2016 -0400
+
+    #Reportes: Estatus 202->201
+
+commit 82ad87f37f55d5b2c4bdefe9ca2eceed5eebc3d2
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Nov 9 15:11:18 2016 -0400
+
+    comparacion finiquito
+
+commit f5ab8d785b79e505dd4a04f2111254ca71f28945
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Nov 9 15:08:58 2016 -0400
+
+    comparacion finiquito
+
+commit 745414a850c6cab05dd785ce643c891f0cff512c
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Nov 9 10:28:17 2016 -0400
+
+    reportes anticipos,
+
+commit d4d19b08dfc578d9e668d4a3afcc04c2e0759532
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 8 14:42:41 2016 -0400
+
+    #CartaFinanzas
+
+commit 64d89895de7c7aa9b0dc362f4d45e0f06c878ccd
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 8 12:23:24 2016 -0400
+
+    #actualizar fecha
+
+commit e127668ab3f23e4b2fa689607155d1feb03894e2
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 8 11:03:31 2016 -0400
+
+    #actualizar fecha
+
+commit c5b601995eaf42bd76454fe3c60cdb5743125e64
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 8 10:51:58 2016 -0400
+
+    #actualizar, reportes
+
+commit 11976049a884f8c66945404b35aacd6f92789dbe
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 8 08:59:32 2016 -0400
+
+    #registra_finiquito: fecha_contable
+
+commit ff2088fab14fe56da5d76dfb1730e8965c4793a0
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Nov 7 18:15:18 2016 -0400
+
+    #registra_finiquito: fecha_contable
+
+commit 166b315a654fec71cb5351ec9d39dc00b26de9d7
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Nov 7 18:12:05 2016 -0400
+
+    #registra_finiquito: fecha_contable
+
+commit 72a2797bcb3a6b4a2356091217189ee45754e960
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Nov 7 18:02:02 2016 -0400
+
+    hojavida
+
+commit 75534fc2056ac92c9bf322990382bbdedb56b68c
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Nov 7 17:13:11 2016 -0400
+
+    #Beneficiario, #hojavida: diferencia_AA
+
+commit 827e813b0f15b842abe738f006802c16e82ebbeb
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Nov 7 17:11:38 2016 -0400
+
+    #Beneficiario, #hojavida: diferencia_AA
+
+commit ed797ff296b00d04c16d15a9d44c9524fbc4f86d
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Nov 7 10:44:52 2016 -0400
+
+    #Finiquito: Reversos > 2016-11
+
+commit 870d5a74933848b491c1759acc7664a011d43083
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Nov 6 19:54:04 2016 -0400
+
+    #Anticipo: rechazar, puntoCuenta, reversar
+
+commit 851079afdfc3a1e7b44e1d93956d300ced0c5bdb
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Nov 6 13:22:24 2016 -0400
+
+    Ordenes Pendientes/Ejecutadas
+
+commit 8400d7042f0ec6ac2a4dae238dc5f025286aa377
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Fri Nov 4 00:04:29 2016 -0400
+
+    #Anticipos: M->salvar()
+
+commit 4db501ad203b17722b5c4dad1d5b902b45a86d00
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 3 15:00:23 2016 -0400
+
+    Control Paralizar: PHP
+
+commit 6af053d3bc3824ade248f1a5fa33a647e3d5902d
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 3 14:52:44 2016 -0400
+
+    Control Paralizar
+
+commit 83fb3c1b73c1cdbf051ad18bd7661d57db693c3b
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 3 14:47:21 2016 -0400
+
+    Control Paralizar
+
+commit 20670256461867e7f1794cf99809104109d32ef1
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 3 14:39:05 2016 -0400
+
+    #RegistrarFiniquito: Calendario
+
+commit 424e497db2001155ae983a00550bdf98be08d3c9
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 3 14:35:47 2016 -0400
+
+    #Reportes: Moment y Paralizar
+
+commit 65de060301521ebfb31ec421628600a40fc092cc
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 3 14:22:11 2016 -0400
+
+    #Primas - Actualizar
+
+commit eebfdd7ecad7503cf91cacc4b874b04552ec724a
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 3 11:02:45 2016 -0400
+
+    #CartaBanco: Boton Imprimir
+
+commit 1c8c96fedbfbe27418ea44ac7fcbe956250f324d
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 3 10:58:21 2016 -0400
+
+    #ReporteBeneficiario: Activacion/Paralizacion
+
+commit 7466055e9e01e4732a9661c625564c090db93cb0
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 3 09:55:27 2016 -0400
+
+    #Hoja_Vida: Boton Imprimir::javascript
+
+commit af2e48d994bab8f3024f72f616baf479f702cae9
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 3 09:34:59 2016 -0400
+
+    #ActualizarBeneficiario: Modulo validacion
+
+commit 1756b836224656fff11915743f3cb7e434ba4f3f
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Nov 3 00:01:44 2016 -0400
+
+    Cambio de Calculos de Anticipo, Modulo de Actualizar y Pantalla PRINT
+
+commit aecf3fd2fe3c1a3085f408f44a2295f863700687
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Nov 2 10:00:01 2016 -0400
+
+    Boton Cerrar Principal, Error Patalla gris en reversar finiquito
+
+commit f91dcc2bf7029c2c9b55cc695c6280b55db545f7
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Nov 2 09:46:29 2016 -0400
+
+    Creacion de Roles, y Usuarios del sistema
+
+commit 1972f63de505117fc13be7b78d7d8c8d7dc06871
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Nov 2 08:24:27 2016 -0400
+
+    Campo cedula en movimiento agregado
+
+commit d7f08ce33beddcaf530b6269f90a9d79f6b6c20c
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 1 21:55:45 2016 -0400
+
+    Reverso de Finiquito
+
+commit 4ce37604ab27464c18d1db1ed18b2046f04e6fd7
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 1 15:39:50 2016 -0400
+
+    1# Cambios en cdnx login
+
+commit 66dd65cb4039621c5a79e50adb1526acde961144
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 1 15:33:39 2016 -0400
+
+    1# Cambios en las direcciones y/o acciones en las x
+
+commit 2a9d8e4d3ce4e3f48d33d4dd69afe078c5fb9b95
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Nov 1 09:25:02 2016 -0400
+
+    Antincipo y Ordenes de Pago
+
+commit c818cf92e1c600b1efb67650101a1a28da5dc858
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Oct 31 16:47:48 2016 -0400
+
+    Control de Interfaz
+
+commit 49e3fb44967ee78e590c6b4b4990b705e672c898
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Oct 30 18:04:26 2016 -0400
+
+    Configuracion de AS/FS
+
+commit de7d6e45212e22801b0c03061d633414d84dda7d
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Oct 30 17:41:50 2016 -0400
+
+    Control y validaciones AS/FS Causa Muerte
+
+commit 2e00ad7440c461adb296d43565549459122000c8
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Oct 30 12:34:00 2016 -0400
+
+    Cambio en objeto num_rows()
+
+commit 1ac62b0b4fdee77bdda8b7a25865bbf01d7f2f57
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Oct 30 12:21:08 2016 -0400
+
+    Archivo de Pruebas
+
+commit 13940249014f5ee3373c9fc639799ffe017634d7
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Oct 30 11:53:07 2016 -0400
+
+    Creando configuracion de Archivos + Validaciones
+
+commit 597bcc061cb574b170d29aa6de0e9489d14b0af8
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Sun Oct 30 11:48:02 2016 -0400
+
+    Git Ignore
+
+commit e8e5e399d2d39bd7eb5d0736e94bedb3c103169f
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Oct 27 22:10:21 2016 -0400
+
+    Creacion de Finiquito
+
+commit 873efc2600a51a32d43847a0e32c33c2e72c4522
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Thu Oct 27 08:07:57 2016 -0400
+
+    Creacion de Modelos
+
+commit 603af68eed7aebeeb66a3a80fb109153f4b12633
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Tue Sep 27 22:25:33 2016 -0400
+
+    Finiquito y Reporte
+
+commit 14dc09bc851224a3ea41231245a7e8671c7fb915
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Mon Sep 26 21:37:52 2016 -0400
+
+    Fideicomiso Interfaz y Funciones
+
+commit 76008091736e5be82bab241f4ec33c0611ccde66
+Author: Carlos Peña <gesaodin@gmail.com>
+Date:   Wed Sep 14 17:28:22 2016 -0400
+
+    Control Numerico e Interfaz
+
+commit 07359a329e650827ea636e65c5b4332249191d56
+Author: crash <crash@goku>
+Date:   Tue Aug 30 11:01:13 2016 -0400
+
+    Iniciando El Proyecto
+
+commit 325c7f62ded5081ab87d360dddfc12429fc00ea3
+Author: Carlos Peña <gesaodin@users.noreply.github.com>
+Date:   Sun Jun 26 12:47:23 2016 -0430
+
+    Update README.md
+
+commit 64c3edc716b932078c483babfd7368f547835910
+Author: Carlos Peña <gesaodin@users.noreply.github.com>
+Date:   Sun Jun 26 12:46:55 2016 -0430
+
+    Update README.md
+
+commit 30725899b41bd530fdfc0c13b712a9aa33ad26d3
+Author: Carlos Peña <gesaodin@users.noreply.github.com>
+Date:   Sun Jun 26 12:45:31 2016 -0430
+
+    Initial commit
