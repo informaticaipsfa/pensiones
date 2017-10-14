@@ -5,6 +5,7 @@ date_default_timezone_set ( 'America/Caracas' );
 define ('__CONTROLADOR', 'panel');
 class Panel extends MY_Controller {
 
+
 	var $_DIRECTIVA = array();
 
 	/**
@@ -14,7 +15,9 @@ class Panel extends MY_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
-		$this->load->library('session');		
+		$this->load->library('session');
+		$this->load->model('logico/MCurl');
+
 		//if(!isset($_SESSION['usuario']))$this->salir();
 	}
 
@@ -28,11 +31,64 @@ class Panel extends MY_Controller {
 		$this->load->view("view_home");
 	}
 
-	public function Limpieza(){
-		echo "Hola Mundo";
+	public function beneficiario(){
+		$this->load->model('beneficiario/MHistorialMovimiento');
+		$data['Movimientos'] = $this->MHistorialMovimiento->listarTodo();
+
+		$this->load->view("menu/beneficiario/beneficiario", $data);
+	}
+	public function pensiones(){
+		$this->load->view("menu/beneficiario/finiquito");
+	}
+	public function medidajudicial(){
+		$this->load->model('beneficiario/MEstado');
+		$this->load->model('beneficiario/MParentesco');
+		$this->load->model('beneficiario/MFormaPago');
+
+		$data['Estado'] = $this->MEstado->listar();
+		$data['Parentesco'] = $this->MParentesco->listar();
+		$data['FormaPago'] = $this->MFormaPago->listar();
+		$this->load->view("menu/beneficiario/medidajudicial", $data);
 	}
 
+	function ObtenerEstados(){
+		$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
+		$api = $this->MCurl->Cargar_API($arr);
+		$estado = $api['obj'];
+		print_r($estado);
+	}
 
+	/**
+	*	---------------------------------------------
+	*	FIN DE LOS REPORTES GENERALES DEL SISTEMA
+	*	---------------------------------------------
+	*/
+
+	public function consultarBeneficiario($cedula = '', $fecha = ''){
+		//header('Content-Type: application/json');
+		$this->load->model('beneficiario/MBeneficiario');
+		$this->load->model('beneficiario/MHistorialMovimiento');
+
+		$this->MBeneficiario->obtenerID($cedula, $fecha);
+
+
+		//print_r( $Militar->Pension->DatoFinanciero);
+		// print_r($this->MBeneficiario);
+		// $this->load->model('beneficiario/MOrdenPago'); //MedidaJudicial
+		// $this->MBeneficiario->HistorialOrdenPagos = $this->MOrdenPago->listarPorCedula($cedula);
+		//$this->MBeneficiario->HistorialDetalleMovimiento = $this->MHistorialMovimiento->listarDetalle($cedula);
+
+		echo json_encode($this->MBeneficiario);
+	}
+
+	public function consultarBeneficiarioJudicial($cedula = '', $fecha = ''){
+		$this->load->model('beneficiario/MBeneficiario');
+		$this->load->model('beneficiario/MMedidaJudicial');
+
+		$this->MBeneficiario->obtenerID($cedula, $fecha);
+		$this->MBeneficiario->MedidaJudicial = $this->MMedidaJudicial->listarTodo($cedula);
+		echo json_encode($this->MBeneficiario);
+	}
 
 
 
@@ -50,7 +106,7 @@ class Panel extends MY_Controller {
 	 * -------------------------------------------------------------------
 	 *
 	 * @return	void
-	 */ 
+	 */
 
 
 	public function GenerarSueldos(){
@@ -59,39 +115,13 @@ class Panel extends MY_Controller {
 		$this->load->model('kernel/KSensor');
 		$fecha = date('d/m/Y H:i:s');
 		$firma = md5($fecha);
-		//$data = json_decode($_POST['data']);
-		//print_r($data);
-		
-		$this->load->model('kernel/KCargador');	
-		$data['id'] = 53; //Directiva
-		//$data['fe'] = "2016-01-31";
-		//$data['estado_id'] = 203;
-		//$data['sit'] = 203;
-		//$data['com'] = 99;
-		//$data['gra'] = 99;
-		//$data['fde'] = "2016-01-01";
-		//$data['fha'] = "2016-01-31";
-		
 
- 		$this->KCargador->IniciarLote($data, $firma, "SSSIFANB");	
- 		//$this->KCargador->IniciarLote((object)$data, '2016-01-01', $firma, $_SESSION['usuario']);	
- 		/**
- 		$mnt = $this->KCargador->Resultado['l'] - 1;
-		$json = array(
-			'd' => $data,
-			'm' => "Fecha y Hora del Servidor: " . $fecha . 
-					"\nFirma del Archivo: " . 	$firma .  
-					"\nCantidad de Registros: " . $mnt  .
-					"\nMonto Total de las Garantias: " . $this->KCargador->Resultado['g'] .
-					"\nMonto Total de Dias Adicionales: " . $this->KCargador->Resultado['d'] .
-					"\nPeso del Archivo: " . $this->KCargador->Resultado['p'] . " " . $this->KCargador->Resultado['f'] . "\n" .
-					$this->KSensor->Duracion() . "... ",
-			'z' => $firma .".zip",
-			'json' => $this->KCargador->Resultado
-		);
-		echo json_encode($json);
-		**/
-		
+		$this->load->model('kernel/KCargador');
+		$data['id'] = 53; //Directiva
+
+
+ 		$this->KCargador->IniciarLote($data, $firma, "SSSIFANB");
+
 	}
 	public function GenerarCalculoAporteCapitalEstudiar(){
 		//ini_set('memory_limit', '1024M');
@@ -100,9 +130,9 @@ class Panel extends MY_Controller {
 		$fecha = date('d/m/Y H:i:s');
 		$firma = md5($fecha); //PID
 
-		$this->load->model('kernel/KCargador');			
- 		$this->KCargador->IniciarLoteEstudiar(48, '2017-03-01', $firma, $_SESSION['usuario'], 100);	
- 		//$mnt = $this->KCargador->Resultado['l'] - 1;		
+		$this->load->model('kernel/KCargador');
+ 		$this->KCargador->IniciarLoteEstudiar(48, '2017-03-01', $firma, $_SESSION['usuario'], 100);
+ 		//$mnt = $this->KCargador->Resultado['l'] - 1;
 	}
 
 	public function ConsultarGrupos(){
@@ -111,10 +141,10 @@ class Panel extends MY_Controller {
 		$fecha = date('d/m/Y H:i:s');
 		$firma = md5($fecha);
 
-		$this->load->model('kernel/KCargador');		
-		
+		$this->load->model('kernel/KCargador');
+
 		$json = json_decode($_POST['data']);
- 		$lst = $this->KCargador->ConsultarGrupos($json);	
+ 		$lst = $this->KCargador->ConsultarGrupos($json);
 
  		echo json_encode($lst);
 
@@ -129,17 +159,17 @@ class Panel extends MY_Controller {
 			echo 'Está intentando acceder a un área restringida.';
 		}else{
 			$this->load->model("kernel/KCargador");
-			$respuesta = $this->KCargador->GarantiasDiasAdicionales($archivo, $data->tipo, $data->porc);	
+			$respuesta = $this->KCargador->GarantiasDiasAdicionales($archivo, $data->tipo, $data->porc);
 			echo json_encode($this->KCargador->Resultado);
 		}
-		
+
 	}
 
 
-	
 
 
-	
+
+
 
 	public function salir(){
 		redirect('panel/Login/salir');

@@ -1,10 +1,11 @@
+
 <header class="main-header">
         <!-- Logo -->
-        <a href="../../index2.html" class="logo">
+        <a href="" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>P</b>c</span>
+          <span class="logo-mini"><b>P</b>S</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>PA</b>CE</span>
+          <span class="logo-lg"><b>SSSI</b>FANB</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -67,41 +68,12 @@
                 </ul>
               </li>
               <!-- Tasks: style can be found in dropdown.less -->
-              <li class="dropdown tasks-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-flag-o"></i>
-                  <span class="label label-danger">9</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header">You have 9 tasks</li>
-                  <li>
-                    <!-- inner menu: contains the actual data -->
-                    <ul class="menu">
-                      <li><!-- Task item -->
-                        <a href="#">
-                          <h3>
-                            Design some buttons
-                            <small class="pull-right">20%</small>
-                          </h3>
-                          <div class="progress xs">
-                            <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                              <span class="sr-only">20% Complete</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li><!-- end task item -->
-                    </ul>
-                  </li>
-                  <li class="footer">
-                    <a href="#">View all tasks</a>
-                  </li>
-                </ul>
-              </li>
+
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img src="<?php echo base_url()?>system/img/pace.png" class="user-image" alt="User Image">
-                  <span class="hidden-xs">PACE</span>
+                  <span class="hidden-xs">Pensión</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
@@ -117,7 +89,7 @@
                     <div class="col-xs-12 text-center">
                       <small>Sistema</small>
                     </div>
-                    <!-- Menu 
+                    <!-- Menu
                       <div class="col-xs-4 text-center">
                         <a href="#">Usuarios</a>
                       </div>
@@ -140,7 +112,7 @@
                   </li>
                 </ul>
               </li>
-              
+
             </ul>
           </div>
         </nav>
@@ -158,7 +130,7 @@
               <img src="<?php echo base_url()?>system/img/pace.png" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-              <p><?php echo $_SESSION['nombre']?></p>
+              <p></p>
               <a href="#"><i class="fa fa-circle text-success"></i> En Linea</a>
             </div>
           </div>

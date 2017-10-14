@@ -1,9 +1,9 @@
-<?php 
+<?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 /**
- * MamonSoft 
+ * MamonSoft
  *
  * Componente
  *
@@ -69,7 +69,7 @@ class MComponente extends CI_Model{
             'id' => $val->codigo,
             'nomb' => $val->nombre,
             'desc' => $val->descripcion
-        );        
+        );
       }
     }
     return $lst;
@@ -79,15 +79,15 @@ class MComponente extends CI_Model{
   /**
   * @param int | Componente ID
   * @param int | Grado ID
-  * @return MComponete 
+  * @return MComponete
   */
   public function ObtenerConGrado($cid, $gid){
     $sConsulta = 'SELECT grado.id AS gid, grado.codigo AS gcod, grado.nombre AS gnomb, grado.descripcion AS gdesc,
-      componente_id AS cid, componente.nombre as cnomb, componente.descripcion as cdesc 
-      FROM componente 
+      componente_id AS cid, componente.nombre as cnomb, componente.descripcion as cdesc
+      FROM componente
       JOIN grado ON componente.id = grado.componente_id
-      WHERE componente.id=' . $cid . ' AND grado.id=' . $gid;
-    
+      WHERE componente.id=' . $cid . ' AND grado.codigo=' . $gid;
+    //echo $sConsulta . "<br><br>";
     $obj = $this->Dbpace->consultar($sConsulta);
     if($obj->code == 0 ){
       foreach ($obj->rs as $clv => $val) {
@@ -104,18 +104,18 @@ class MComponente extends CI_Model{
 
   /**
   * @param int | Componente ID
-  * @return array 
+  * @return array
   */
   public function Listar($id){
 
-    
+
 
     $sConsulta = 'SELECT grado.id AS gid, grado.codigo AS gcod, grado.nombre AS gnomb, grado.descripcion AS gdesc,
-      componente_id AS cid, componente.nombre as cnomb, componente.descripcion as cdesc 
-      FROM componente 
+      componente_id AS cid, componente.nombre as cnomb, componente.descripcion as cdesc
+      FROM componente
       JOIN grado ON componente.id = grado.componente_id
       WHERE componente.id=' . $id;
-    
+
     $obj = $this->Dbpace->consultar($sConsulta);
     $lstComponente = array();
 
@@ -134,8 +134,8 @@ class MComponente extends CI_Model{
     }
 
     return $this;
-     
+
   }
 
-  
+
 }

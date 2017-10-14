@@ -13,12 +13,12 @@
           <!-- Content Header (Page header) -->
           <section class="content-header">
                 <h1>
-                  Finiquitos
+                  Calcular Pensiones
                   <small>.</small>
                 </h1>
                 <ol class="breadcrumb">
                   <li><a href="#"><i class="fa fa-dashboard"></i> Beneficiario</a></li>
-                  <li><a href="#">Finiquitos</a></li>
+                  <li><a href="#">Calcular Pensiones</a></li>
                 </ol>
               </section>
 
@@ -28,7 +28,7 @@
                 <!-- Default box -->
                 <div class="box box  box-solid box-primary">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Consultar Finiquitos</h3>
+                    <h3 class="box-title">Consultar Pensiones</h3>
                        <div class="box-tools pull-right">
                       <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                         <i class="fa fa-minus"></i></button>
@@ -36,35 +36,36 @@
                         <i class="fa fa-times"></i></button>
                   </div>
                   </div>
-                      <div class="box-body">                                                
+                      <div class="box-body">
                               <label class="col-md-2">Cedula de Identidad</label>
                               <div class="col-md-4">
                                   <input type="text" class="form-control" placeholder="Cedula de Identidad" id="cedulaB">
-                                  
+
                               </div>
                               <div class="col-md-6" id="divBotones">
-                                <button type="button" class="btn btn-info pull-midium" onclick="consultarFiniquitos()"><i class="fa fa-search"></i>&nbsp;&nbsp;Consultar</button>
-                                
+                                <button type="button" class="btn btn-info pull-midium" onclick="consultarFiniquitos()">
+                                  <i class="fa fa-search"></i>&nbsp;&nbsp;Consultar</button>
+
                                 </a>
                               </div>
                               <br>
                     </div>
                   <!-- /.box-body -->
-                  
+
                   <!-- /.box-footer-->
                 </div>
                 <!-- /.box -->
 
-                <div class="box box-success">
+                <div class="box box-success" style="display:none">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Detalles del Finiquito</h3>
+                    <h3 class="box-title">Detalles de pensiones</h3>
                     <div class="box-tools pull-right">
-                     
+
                     </div><!-- /.box-tools -->
                   </div><!-- /.box-header -->
                   <div class="box-body">
-                    
-                      
+
+
                          <br>
                         <label>Cédula de Identidad:&nbsp;</label><label id="lblCedula"></label><br>
                         <label>Beneficiario:&nbsp;</label><label id="lblBeneficiario"></label>
@@ -84,7 +85,7 @@
                                   <th>F. Finiquito</th>
                                   <th>Motivo o Concepto</th>
                                   <th>Estatus </th>
-                                  
+
                               </tr>
                               </thead>
                               <tbody>
@@ -106,7 +107,7 @@
 
 
 
-                         
+
 
               </section>
 
@@ -135,7 +136,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-              
+
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -148,7 +149,7 @@
         <strong>Copyright &copy; 2015-2016 Instituto de Previsión Social.</strong> Todos los derechos.
       </footer>
 
-   
+
     </div><!-- ./wrapper -->
 
     <?php $this->load->view('inc/pie.php');?>
