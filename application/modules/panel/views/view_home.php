@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <?php $this->load->view('inc/cabecera.php');?>
-  
+
     <!-- Site wrapper -->
     <div class="wrapper">
 
       <?php $this->load->view('inc/top.php');?>
 
-      
+
       <!-- =============================================== -->
 
       <!-- Content Wrapper. Contains page content -->
@@ -15,12 +15,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Panel de PACE
+            Panel de Pensiones
             <small></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Principal</a></li>
-            
+
           </ol><br>
 
           <div class="row">
@@ -28,29 +28,30 @@
               <!-- small box -->
               <div class="small-box bg-aqua">
                 <div class="inner">
-                  <h2>Beneficiario</h2>
+                  <h2>Pensionado</h2>
 
                   <p>Consultar</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-person-stalker"></i>
                 </div>
-                <a href="<?php echo base_url()?>index.php/panel/Panel/beneficiario" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?php echo base_url()?>index.php/panel/Panel/beneficiario"
+                  class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
               </div>
-            </div> 
+            </div>
 
             <div class="col-lg-3 col-xs-6">
               <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h2>Finiquito</h2>
+                  <h2>Calcular Pensión</h2>
 
                   <p>Consultar</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-card"></i>
                 </div>
-                <a href="<?php echo base_url()?>index.php/panel/Panel/finiquitos" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?php echo base_url()?>index.php/panel/Panel/pensiones" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -58,14 +59,14 @@
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h2>Anticipos</h2>
+                  <h2>Medida Judicial</h2>
 
                   <p>Consultar</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-calculator"></i>
                 </div>
-                <a href="<?php echo base_url()?>index.php/panel/Panel/anticipo" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?php echo base_url()?>index.php/panel/Panel/medidajudicial" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
 

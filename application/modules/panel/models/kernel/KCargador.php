@@ -135,7 +135,7 @@ class KCargador extends CI_Model{
     $this->load->model('kernel/KDirectiva');
     $Directivas = $this->KDirectiva->Cargar($id); //Directivas
     $this->load->model('kernel/KPerceptron'); //Red Perceptron Aprendizaje de patrones
-    $file = fopen("tmp/" . $archivo . ".csv","a") or die("Problemas");//Para Generar archivo csv 04102017
+    // $file = fopen("tmp/" . $archivo . ".csv","a") or die("Problemas");//Para Generar archivo csv 04102017
     //$file_log = fopen("tmp/" . $archivo . ".log","a") or die("Problemas");
   //  $linea = 'cedula;grado;sueldo_base;prima_transporte;prima_tiemposervicio;prima_descendencia;prima_especial;prima_noascenso'
     //fputs($file,$linea);//Para Generar archivo csv 04102017
@@ -148,9 +148,11 @@ class KCargador extends CI_Model{
       $linea = $this->generarConPatrones($Bnf,  $this->KCalculoLote, $this->KPerceptron, $fecha, $Directivas, $v);
 
       echo $linea . "\n";
+
      fputs($file,$linea);
       fputs($file,"\n");
       //unset($Bnf);
+
     }
 
     echo "Sueldo Base Total: " . $this->SSueldoBase;
