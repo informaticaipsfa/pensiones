@@ -148,9 +148,11 @@ class KCargador extends CI_Model{
       $linea = $this->generarConPatrones($Bnf,  $this->KCalculoLote, $this->KPerceptron, $fecha, $Directivas, $v);
 
       echo $linea . "\n";
-      // fputs($file,$linea);
-      // fputs($file,"\n");
-      // unset($Bnf);
+
+     fputs($file,$linea);
+      fputs($file,"\n");
+      //unset($Bnf);
+
     }
 
     echo "Sueldo Base Total: " . $this->SSueldoBase;
