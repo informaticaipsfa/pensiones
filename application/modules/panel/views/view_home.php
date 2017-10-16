@@ -42,6 +42,22 @@
 
             <div class="col-lg-3 col-xs-6">
               <!-- small box -->
+              <div class="small-box bg-purple">
+                <div class="inner">
+                  <h2>Actualizar Pensión</h2>
+
+                  <p>Actualizar</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-card"></i>
+                </div>
+                <a href="<?php echo base_url()?>index.php/panel/Panel/actualizar"
+                  class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
                   <h2>Calcular Pensión</h2>
@@ -51,9 +67,12 @@
                 <div class="icon">
                   <i class="ion ion-card"></i>
                 </div>
-                <a href="<?php echo base_url()?>index.php/panel/Panel/pensiones" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?php echo base_url()?>index.php/panel/Panel/pensiones"
+                  class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
+
+
 
             <div class="col-lg-3 col-xs-6">
               <!-- small box -->
@@ -66,7 +85,8 @@
                 <div class="icon">
                   <i class="ion ion-calculator"></i>
                 </div>
-                <a href="<?php echo base_url()?>index.php/panel/Panel/medidajudicial" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?php echo base_url()?>index.php/panel/Panel/medidajudicial"
+                  class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
 

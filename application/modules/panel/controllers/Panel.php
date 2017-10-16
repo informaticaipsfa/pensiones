@@ -58,6 +58,10 @@ class Panel extends MY_Controller {
 		print_r($estado);
 	}
 
+	public function actualizar(){
+		$this->load->view("menu/beneficiario/actualizarbeneficiario");
+	}
+
 	/**
 	*	---------------------------------------------
 	*	FIN DE LOS REPORTES GENERALES DEL SISTEMA

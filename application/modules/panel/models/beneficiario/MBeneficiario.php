@@ -373,7 +373,8 @@ class MBeneficiario extends CI_Model{
 
 	public function obtenerID($id, $fecha = ''){
 		$obj = $this->_consultar($id);
-		if($obj->code == 0 ){
+    // print_r($obj);
+		if($obj->code == 1 ){
 			foreach ($obj->rs as $clv => $val) {
 				$this->cedula = $val->cedula;
 				$this->nombres = $val->nombres;
@@ -414,7 +415,7 @@ class MBeneficiario extends CI_Model{
     		$arr['url'] = 'http://192.168.6.45:8080/devel/api/militar/crud/'.$arr['id'];
     		$api = $this->MCurl->Cargar_API($arr);
     		$Militar = $api['obj'];
-    		$this->MBeneficiario->numero_cuenta = $Militar->Pension->DatoFinanciero->cuenta;
+    		//$this->MBeneficiario->numero_cuenta = $Militar->Pension->DatoFinanciero->cuenta;
 
 			}
 			//$this->HistorialSueldo = $this->MHistorialSueldo->listar($id);
@@ -426,7 +427,26 @@ class MBeneficiario extends CI_Model{
 			if($fecha != '') $this->fecha_retiro = $fecha; //En el caso de calcular finiquitos
 			$this->MCalculo->iniciarCalculosBeneficiario($this->MBeneficiario);
 			//$this->Calculo =
-		}
+		}else{
+      $arr['id'] = $id;
+      $arr['url'] = 'http://192.168.6.45:8080/devel/api/militar/crud/'.$arr['id'];
+      $api = $this->MCurl->Cargar_API($arr);
+      $Militar = $api['obj'];
+      // print_r($Militar);
+      $this->cedula = $Militar->Persona->DatoBasico->cedula;
+      $this->nombres = $Militar->Persona->DatoBasico->nombreprimero;
+      $this->apellidos = $Militar->Persona->DatoBasico->apellidoprimero;
+      $this->estado_civil = $Militar->Persona->DatoBasico->estadocivil;
+      $this->sexo = $Militar->Persona->DatoBasico->sexo;
+      $this->estatus_activo = "201";
+      $this->estatus_descripcion = "ACTIVO";
+      $this->numero_hijos = 3;
+      $this->fecha_ingreso = date( "Y-m-d", strtotime($Militar->fingreso) );
+      $this->fecha_ultimo_ascenso = date( "Y-m-d", strtotime($Militar->fascenso) );
+      $this->Componente->ObtenerConGrado(1,1040);
+      $this->fecha_retiro = $fecha; //En el caso de calcular finiquitos
+			$this->MCalculo->iniciarCalculosBeneficiario($this->MBeneficiario);
+    }
 	}
 
 	/**

@@ -42,8 +42,12 @@ class MCalculo extends CI_Model{
     $this->load->model('beneficiario/MPrima');
     $this->Beneficiario = $Beneficiario;
     //print("Control");
+
+
+    // print_r($this->Beneficiario->fecha_retiro);
     $this->AntiguedadGrado();
     $this->TiempoServicios();
+
     $codigo_grado = $this->Beneficiario->Componente->Grado->codigo;
     $this->Beneficiario->Componente->Grado->Directiva = $this->MDirectiva->obtener($this->Beneficiario);
     $directiva_id = $this->Beneficiario->Componente->Grado->Directiva->id;
@@ -227,8 +231,8 @@ class MCalculo extends CI_Model{
 
     if(isset($this->Beneficiario)){
 
+      // print_r("controlll");
       $anos = $this->__restarFecha($this->Beneficiario->fecha_ultimo_ascenso, $this->Beneficiario->fecha_retiro, TRUE);
-      // print_r($anos);
       $this->Beneficiario->antiguedad_grado = $anos['e'];
     }else{
 

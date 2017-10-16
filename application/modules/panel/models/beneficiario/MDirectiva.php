@@ -231,7 +231,7 @@ class MDirectiva extends CI_Model{
     WHERE detalle_directiva.grado_id = \'' . $grado . '\'
             GROUP BY detalle_directiva.grado_id';
 
-    //echo $sConsulta;
+    // echo $sConsulta;
 
     $obj = $this->Dbpace->consultar($sConsulta);
     if($obj->code == 0 ){
