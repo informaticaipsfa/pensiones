@@ -20,21 +20,21 @@ function ShowNuevaMedida(){
     limpiarMedida();
     if($("#id").val() != "" ){
         $("#codigomedida").val("0");
-        $("#myModal").modal('show');    
+        $("#myModal").modal('show');
     }
-    
+
 }
 
 function consultar() {
     var val = $("#id").val();
     ruta = sUrlP + "consultarBeneficiarioJudicial/" + val;
-    $.getJSON(ruta, function(data) {       
+    $.getJSON(ruta, function(data) {
         if(data.fecha_retiro != null && data.fecha_retiro != '') {
             $("#btnMedida").hide();
         }else{
             $("#btnMedida").show();
         }
-            
+
         MedidaJudicial['cedula'] = data.cedula;
         $("#lblNombre").text(' Nombres: ' + data.nombres + ' ' + data.apellidos + ' C.I: ' + data.cedula );
         $("#nombres").val(data.nombres);
@@ -49,19 +49,19 @@ function consultar() {
         $("#noascenso").val(data.no_ascenso);
         $("#profesionalizacion").val(data.profesionalizacion);
         $("#arec").val(data.ano_reconocido);
-        $("#mrec").val(data.mes_reconocido);    
-        $("#drec").val(data.dia_reconocido);            
+        $("#mrec").val(data.mes_reconocido);
+        $("#drec").val(data.dia_reconocido);
         $("#fano").val(data.aguinaldos_aux);
         $("#vacaciones").val(data.vacaciones_aux);
         $("#numero_cuenta").val(data.numero_cuenta);
         $("#estatus").val(data.estatus_descripcion);
-        listar(data.MedidaJudicial);            
+        listar(data.MedidaJudicial);
     }).done(function(msg) {}).fail(function(jqXHR, textStatus) {
         $("#id").val('');
         var boton = '<button id="btnContinuar" type="button" class="btn btn-success pull-right" onclick="continuar()">';
         boton += '<i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Continuar</button>';
         $("#divContinuar").html(boton);
-        $("#txtMensaje").html('El Beneficiario que intenta consultar no se encuentra en nuestra base de datos'); 
+        $("#txtMensaje").html('El Beneficiario que intenta consultar no se encuentra en nuestra base de datos');
         $("#logMensaje").modal('show');
         $("#controles").hide();
         $("#btnContinuar").focus();
@@ -74,30 +74,30 @@ function listar(data){
     $.each(data, function (clave, valor){
         var monto = Number(valor.monto);
         var sBoton = '<div class="btn-group">';
-        var sAcciones = '';        
-        sBoton += '<button type="button" class="btn btn-success" title="Ver Detalles" onclick="ConsultarMedidaEjecutada(\'' + valor.id + '\')" ><i class="fa fa-search" ></i></button>'; 
+        var sAcciones = '';
+        sBoton += '<button type="button" class="btn btn-success" title="Ver Detalles" onclick="ConsultarMedidaEjecutada(\'' + valor.id + '\')" ><i class="fa fa-search" ></i></button>';
         switch (valor.estatus){
             case '220':
                 idbtn = 'btnAsignacion';
                 if(valor.tipo_nombre == 'INTERESES')idbtn = 'btnIntereses';
                 sBoton += '<button id="' + idbtn +'" onclick="SuspenderMedidaEjecutada(\'' + valor.id + '\')" type="button" class="btn btn-warning" title="Inactivar"><i class="fa fa-mail-reply-all" ></i></button>';
-                //sBoton += '<button type="button" class="btn btn-info" title="Ejecutar"><i class="fa fa-cogs" ></i></button>'; 
-                sBoton += '<button type="button" class="btn btn-info" title="Imprimir" onclick="imprimir(\'' + valor.id + '\')"><i class="fa fa-print" ></i></button>'; 
+                //sBoton += '<button type="button" class="btn btn-info" title="Ejecutar"><i class="fa fa-cogs" ></i></button>';
+                sBoton += '<button type="button" class="btn btn-info" title="Imprimir" onclick="imprimir(\'' + valor.id + '\')"><i class="fa fa-print" ></i></button>';
                 break;
             case '221':
                 break;21
             case '222':
                 break;
-            case '223':                
+            case '223':
                 //sBoton += '<button type="button" class="btn btn-danger" title="Suspender"><i class="fa fa-cogs" ></i></button>';
-                sBoton += '<button type="button" class="btn btn-info" title="Imprimir" onclick="MedidaEjecutada(\'' + valor.cedula + '\', \'' + valor.ultima_observacion + '\',\'' + valor.id + '\')"><i class="fa fa-print" ></i></button>'; 
+                sBoton += '<button type="button" class="btn btn-info" title="Imprimir" onclick="MedidaEjecutada(\'' + valor.cedula + '\', \'' + valor.ultima_observacion + '\',\'' + valor.id + '\')"><i class="fa fa-print" ></i></button>';
                 break;
             default:
                 break;
         }
-        
+
         sBoton += '</div>';
-        
+
         t.row.add( [
             sBoton,
             valor.tipo_nombre,
@@ -110,7 +110,7 @@ function listar(data){
             valor.estado,
             valor.mensualidades
         ] ).draw( false );
-        
+
     });
     vBtn();
 }
@@ -126,7 +126,7 @@ function imprimir(id){
     window.open(URL,"Hoja de Vida","toolbar=0,location=1,menubar=0,scrollbars=1,resizable=1,width=900,height=800")
 }
 
-function SuspenderMedidaEjecutada(id){     
+function SuspenderMedidaEjecutada(id){
     var boton = '<button type="button" class="btn btn-danger pull-right" onclick="continuar()">';
         boton += '<i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;No</button>';
         boton += '<button type="button" class="btn btn-success" onclick="Suspender(\'' + id + '\')">';
@@ -147,7 +147,7 @@ function Suspender(id){
         $("#txtMensaje").html(data);
         $("#logMensaje").modal('show');
         $("#controles").hide();
-        
+
     }).done(function (data){
 
     });
@@ -180,9 +180,9 @@ function ConsultarMedidaEjecutada(id){
             $("#autoridad").val(q.nombre_autoridad);
             $("#cargo").val(q.cargo);
 
-            
+
             $("#estado").val(q.estado_id);
-            
+
             obtenerCiudades();
             $("#ciudad option:selected").val(q.ciudad);
             $("#municipio option:selected").val(q.municipio);
@@ -210,7 +210,7 @@ function continuar(){
 }
 
 
-function MedidaEjecutada(ced,  cod, id){    
+function MedidaEjecutada(ced,  cod, id){
     URL = sUrlP + "medidaejecutada/" + ced + '/' + id + '/' + cod;
     window.open(URL,"Medida Ejecutada","toolbar=0,location=1,menubar=0,scrollbars=1,resizable=1,width=900,height=800")
 }
@@ -221,9 +221,9 @@ function obtenerCiudades(){
     ruta = sUrlP + "obtenerCiudades/" + id;
     $("#ciudad option").remove();
     $("#municipio option").remove();
-
+    console.log(ruta);
     $.getJSON(ruta, function(data) {
-        $.each(data, function(d, v){            
+        $.each(data, function(d, v){
             var opt = new Option(v.nombre, v.id);
             $("#ciudad").append(opt);
             i = v.id;
@@ -231,7 +231,7 @@ function obtenerCiudades(){
         obtenerMunicipiosID(i);
 
     }).done(function(msg) {}).fail(function(jqXHR, textStatus) {
-       $("#txtMensaje").html('No se encontraron ciudades'); 
+       $("#txtMensaje").html('No se encontraron ciudades');
        $("#logMensaje").modal('show');
     });
 }
@@ -245,12 +245,12 @@ function obtenerMunicipiosID(id){
     ruta = sUrlP + "obtenerMunicipios/" + id;
     $("#municipio option").remove();
     $.getJSON(ruta, function(data) {
-        $.each(data, function(d, v){            
+        $.each(data, function(d, v){
             var opt = new Option(v.nombre, v.id);
-            $("#municipio").append(opt);           
+            $("#municipio").append(opt);
         });
     }).done(function(msg) {}).fail(function(jqXHR, textStatus) {
-       $("#txtMensaje").html('No se encontraron municipios'); 
+       $("#txtMensaje").html('No se encontraron municipios');
        $("#logMensaje").modal('show');
     });
 }
@@ -271,9 +271,9 @@ function cargar(){
     MedidaJudicial['ut'] = $("#ut").val();
     MedidaJudicial['monto'] = $("#monto_total").val();
     if($("#forma_pago option:selected").val() == null || $("#forma_pago option:selected").val() == '0'){
-      MedidaJudicial['forma_pago'] = 1;  
+      MedidaJudicial['forma_pago'] = 1;
     }else{
-       MedidaJudicial['forma_pago'] = $("#forma_pago option:selected").val(); 
+       MedidaJudicial['forma_pago'] = $("#forma_pago option:selected").val();
     }
     MedidaJudicial['institucion'] = $("#institucion").val();
     MedidaJudicial['autoridad'] = $("#autoridad").val();
@@ -308,19 +308,19 @@ function guardarMedida(){
               url: url,
               type: "POST",
               data: {'data' : JSON.stringify({
-                MedidaJudicial: MedidaJudicial      
+                MedidaJudicial: MedidaJudicial
               })},
-              success: function (data) { 
+              success: function (data) {
                 //console.log(data);
                 var boton = '<button type="button" class="btn btn-success pull-right" onclick="recargar()">';
                     boton += '<i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Continuar</button>';
                 $("#divContinuar").html(boton);
-                $("#txtMensaje").html(data);             
+                $("#txtMensaje").html(data);
                 $("#logMensaje").modal('show');
-                
+
               },
-              error: function(data){ 
-                $("#txtMensaje").html('Ocurrio un error en la conexion'); 
+              error: function(data){
+                $("#txtMensaje").html('Ocurrio un error en la conexion');
                 $("#logMensaje").modal('show');
 
               }
@@ -377,7 +377,7 @@ function limpiarMedida(){
     $("#institucion").val("");
     $("#autoridad").val("");
     $("#cargo").val("");
-    
+
     $("#estado").val(0);
     $("#municipio").val("");
     $("#descripcion_institucion").val("");
@@ -389,7 +389,7 @@ function limpiarMedida(){
 }
 
 function calculomensual(){
-    if($("#salarioaux").val() != "0" && $("#mensualidades").val() != "0") 
+    if($("#salarioaux").val() != "0" && $("#mensualidades").val() != "0")
         $("#monto_total").val($("#salarioaux").val() * $("#mensualidades").val());
 
     else{

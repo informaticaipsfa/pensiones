@@ -306,7 +306,7 @@
                                   <option value='0'>SELECCIONE UNA OPCION</option>
                                   <?php
                                     foreach ($Estado as $k => $v) {
-                                      echo '<option value="' . $v->id . '">' . $v->nombre . '</option>';
+                                      echo '<option value="' . $v->codigo . '">' . $v->nombre . '</option>';
                                     }
                                   ?>
                                 </select>
