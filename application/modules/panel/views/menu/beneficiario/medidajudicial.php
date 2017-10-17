@@ -224,8 +224,11 @@
                             <div class="col-md-2">Tipo:</div>
                             <div class="col-md-4">
                               <select class="form-control select2" style="width: 100%;" id='tipo'>
-                                <option selected="selected" value="1">ASIGNACION DE ANTIGUEDAD</option>
-                                <option value="2">INTERESES</option>
+                                <option selected="selected" value="1">PENSION ALIMENTARIA</option>
+                                <option value="2">RETRIBUCION ESPECIAL</option>
+                                <option value="3">BONO RECREACIONAL</option>
+                                <option value="4">RETENCION ESCOLAR</option>
+                                <option value="5">RETENCION AGUINALDOS</option>
                               </select></div>
                             <div class="col-md-2">
                               Fecha:
@@ -248,30 +251,32 @@
                             <div class="row">
                               <div class="col-md-2">Porcentaje:</div>
                               <div class="col-md-4"><input type="text" class="form-control" placeholder="Porcentaje" id='porcentaje' value=0></div>
-                              <div class="col-md-2">Salarios:</div>
+                              <div class="col-md-2">Sueldo Minimo:</div>
                               <div class="col-md-4">
                                 <input type="text" class="form-control" placeholder="Salarios" id='salario' value=0 onblur="convertirSalario()">
                                 <input type="hidden" id='salarioaux' value=0 >
                               </div>
                             </div>
                              <div class="row">
-                              <div class="col-md-2">Mensualidades:</div>
+                              <div class="col-md-2">Monto Fijo:</div>
                               <div class="col-md-4"><input type="text" class="form-control" placeholder="Mensualidades" id='mensualidades' value=0></div>
                               <div class="col-md-2">U.T.:</div>
                               <div class="col-md-4"><input type="text" class="form-control" placeholder="Unidad Tributaria" id='ut' value=0></div>
                             </div>
-                            <div class="row">
+                            <!--<div class="row">
                               <div class="col-md-2">Monto Total:</div>
                               <div class="col-md-4"><input type="text" class="form-control" placeholder="Monto Total" id='monto_total' value=0></div>
                               <div class="col-md-2"><button type="button" class="btn btn-success pull-left" onclick="calculomensual()">
                             Calc.
                             </button></div>
-                            </div>
+                          </div>!-->
                             <div class="row">
                               <div class="col-md-2">Forma Pago:</div>
                               <div class="col-md-10">
                                 <select class="form-control" id='forma_pago' style="width: 100%;">
-                                  <option value='0'>SELECCIONE UNA OPCION</option>
+                                  <option value='0'>CHEQUE</option>
+                                  <option value='1'>TRANSFERENCIA</option>
+                                  <option value='2'>DEPOSITO</option>
                                   <?php
                                     foreach ($FormaPago as $k => $v) {
                                       echo '<option value="' . $v->id . '">' . $v->nombre . '</option>';
@@ -306,7 +311,7 @@
                                   <option value='0'>SELECCIONE UNA OPCION</option>
                                   <?php
                                     foreach ($Estado as $k => $v) {
-                                      echo '<option value="' . $v->id . '">' . $v->nombre . '</option>';
+                                      echo '<option value="' . $v->codigo . '">' . $v->nombre . '</option>';
                                     }
                                   ?>
                                 </select>
@@ -347,7 +352,9 @@
                               <div class="col-md-2">Parentesco:</div>
                               <div class="col-md-4">
                                 <select class="form-control" id='parentesco' style="width: 100%;">
-                                  <option value='0'>SELECCIONE UNA OPCION</option>
+                                  <option value='0'>NO POSEE</option>
+                                  <option value='1'>HIJO</option>
+                                  <option value='2'>ESPOSA</option>
                                   <?php
                                     foreach ($Parentesco as $k => $v) {
                                       echo '<option value="' . $v->id . '">' . $v->nombre . '</option>';

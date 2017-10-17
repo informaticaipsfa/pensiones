@@ -43,11 +43,13 @@ class Panel extends MY_Controller {
 		$this->load->view("menu/beneficiario/finiquito");
 	}
 	public function medidajudicial(){
-		$this->load->model('beneficiario/MEstado');
+		// $this->load->model('beneficiario/MEstado');
 		$this->load->model('beneficiario/MParentesco');
 		$this->load->model('beneficiario/MFormaPago');
-
-		$data['Estado'] = $this->MEstado->listar();
+		$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
+		$api = $this->MCurl->Cargar_API($arr);
+		$estado = $api['obj'];
+		$data['Estado'] = $estado; //$this->MEstado->listar();
 		$data['Parentesco'] = $this->MParentesco->listar();
 		$data['FormaPago'] = $this->MFormaPago->listar();
 		$this->load->view("menu/beneficiario/medidajudicial", $data);
@@ -57,7 +59,49 @@ class Panel extends MY_Controller {
 		$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
 		$api = $this->MCurl->Cargar_API($arr);
 		$estado = $api['obj'];
+		echo "<pre>";
 		print_r($estado);
+		// foreach ($estado as $k => $v) {
+		//  if ($v->codigo == "VE-X" ){
+		// 	 foreach ($v->ciudad as $key => $value) {
+		// 	 	echo $value->nombre . "<br>";
+		// 	 }
+		//  }
+		// }
+	}
+
+	function obtenerCiudades($codigo){
+		$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
+		$api = $this->MCurl->Cargar_API($arr);
+		$estado = $api['obj'];
+		$lst = array();
+		// echo "<pre>";
+		// print_r($estado);
+		foreach ($estado as $k => $v) {
+		 if ($v->codigo == $codigo ){
+			 foreach ($v->ciudad as $key => $value) {
+			 	$lst[] = array("id" => $value->capital, "nombre" => $value->nombre);
+			 }
+		 }
+		}
+		echo json_encode($lst);
+	}
+
+	function obtenerMunicipios($codigo){
+		$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
+		$api = $this->MCurl->Cargar_API($arr);
+		$estado = $api['obj'];
+		$lst = array();
+		// echo "<pre>";
+		// print_r($estado);
+		foreach ($estado as $k => $v) {
+		 if ($v->codigo == $codigo ){
+			 foreach ($v->municipio as $key => $value) {
+			 	$lst[] = array("id" => $key, "nombre" => $value->nombre);
+			 }
+		 }
+		}
+		echo json_encode($lst);
 	}
 
 	public function actualizar(){
@@ -171,7 +215,61 @@ class Panel extends MY_Controller {
 
 	}
 
+	public function crearMedidaJudicial($id = ''){
 
+		$this->load->model('beneficiario/MMedidaJudicial');
+
+
+		$data = json_decode($_POST['data']);
+		$this->MMedidaJudicial->cedula = $data->MedidaJudicial->cedula;
+		$this->MMedidaJudicial->estatus = '220';
+		$this->MMedidaJudicial->numero_oficio = $data->MedidaJudicial->numero_oficio;
+		$this->MMedidaJudicial->numero_expediente = $data->MedidaJudicial->numero_expediente;
+
+		$this->MMedidaJudicial->tipo = $data->MedidaJudicial->tipo;
+		$this->MMedidaJudicial->fecha = $data->MedidaJudicial->fecha;
+		$this->MMedidaJudicial->observacion =  $data->MedidaJudicial->observacion;
+
+
+		$this->MMedidaJudicial->porcentaje = $data->MedidaJudicial->porcentaje;
+		$this->MMedidaJudicial->salario = $data->MedidaJudicial->salario;
+		$this->MMedidaJudicial->mensualidades = $data->MedidaJudicial->mensualidades;
+		$this->MMedidaJudicial->unidad_tributaria = $data->MedidaJudicial->ut;
+		$this->MMedidaJudicial->monto = $data->MedidaJudicial->monto;
+
+		$this->MMedidaJudicial->forma_pago = $data->MedidaJudicial->forma_pago;
+		$this->MMedidaJudicial->institucion = $data->MedidaJudicial->institucion;
+		$this->MMedidaJudicial->nombre_autoridad = $data->MedidaJudicial->autoridad;
+		$this->MMedidaJudicial->cargo = $data->MedidaJudicial->cargo;
+
+
+		$this->MMedidaJudicial->estado = $data->MedidaJudicial->estado;
+		$this->MMedidaJudicial->ciudad = $data->MedidaJudicial->ciudad;
+		$this->MMedidaJudicial->municipio = $data->MedidaJudicial->municipio;
+		$this->MMedidaJudicial->descripcion_institucion = $data->MedidaJudicial->descripcion_institucion;
+
+		$this->MMedidaJudicial->nombre_beneficiario = $data->MedidaJudicial->nombre_beneficiario;
+		$this->MMedidaJudicial->cedula_beneficiario = $data->MedidaJudicial->cedula_beneficiario;
+		$this->MMedidaJudicial->parentesco = $data->MedidaJudicial->parentesco;
+
+		$this->MMedidaJudicial->cedula_autorizado = $data->MedidaJudicial->cedula_autorizado;
+		$this->MMedidaJudicial->nombre_autorizado = $data->MedidaJudicial->nombre_autorizado;
+
+		$this->MMedidaJudicial->fecha_creacion =  date("Y-m-d H:i:s");
+		//$this->MMedidaJudicial->usuario_creacion = $_SESSION['usuario'];
+		$this->MMedidaJudicial->fecha_modificacion =  date("Y-m-d H:i:s");
+		//$this->MMedidaJudicial->usuario_modificacion = $_SESSION['usuario'];
+		$this->MMedidaJudicial->ultima_observacion = '';
+
+		if($id == ''){
+			$this->MMedidaJudicial->salvar();
+		}else{
+			$this->MMedidaJudicial->id = $id;
+			$this->MMedidaJudicial->actualizar();
+		}
+		//print_r($this->MMedidaJudicial);
+		echo "Se registro nueva Medida Judicial en estatus de activo";
+	}
 
 
 
