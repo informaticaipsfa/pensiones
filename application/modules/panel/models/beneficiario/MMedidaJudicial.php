@@ -291,11 +291,11 @@ class MMedidaJudicial extends CI_Model{
 			$mdj->salario = number_format($v->cantidad_salario, 2, ',', '.');
 			$mdj->mensualidades = $v->mensualidades;
 			$mdj->monto = number_format($v->total_monto, 2, ',', '.');
-			$mdj->ciudad = $v->cid;
+			//$mdj->ciudad = $v->cid;
 			$mdj->tipo = $v->tipo_medida_id;
 			$mdj->estatus = $v->estatus;
-			$mdj->estado = strtoupper($v->estado_nombre);
-			$mdj->estado_id = $v->eid;
+			//$mdj->estado = strtoupper($v->estado_nombre);
+			//$mdj->estado_id = $v->eid;
 			$mdj->nombre_autoridad = $v->nombre_autoridad;
 			$mdj->cargo = $v->cargo_autoridad;
 			$mdj->descripcion_institucion = $v->desc_institucion;
