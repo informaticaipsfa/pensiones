@@ -27,8 +27,10 @@ class Panel extends MY_Controller {
 	*	Sección de la GUI
 	* 	----------------------------------
 	*/
-	public function index(){
-		$this->load->view("view_home");
+	public function index($token){
+
+		$data['token'] = $token;
+		$this->load->view("view_home", $token);
 	}
 
 	public function beneficiario(){
