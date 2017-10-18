@@ -205,13 +205,65 @@
                       <div class="modal-dialog modal-lg" role="document">
 
                         <!-- Modal content-->
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title"><label>Nueva Medida</label> <label id='lblNombre'></label></h4>
+                        <div class="modal-content" style="border-radius: 8px;border:2px #337ab7 solid; ">
+                          <div class="modal-header" style="background-color:#337ab7;color:white;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">Nueva Medida Judicial</h4>
+                            <label id='lblNombre'></label>
                           </div>
                           <div class="modal-body">
                            <div class="row">
+                             <!-- Numero de oficio -->
+                             <div class="col-md-6 col-sm-12">
+                                 <label>N° Oficio:</label>
+                                 <input type="hidden" id='codigomedida' value="0"/>
+                                 <input type="text" class="form-control" placeholder="N° Oficio" id='numero_oficio'/>
+                             </div>
+                             <!-- Numero de Expediente -->
+                             <div class="col-md-6 col-sm-12">
+                                 <label>N° Expediente:</label>
+                                 <input type="text" class="form-control" placeholder="Expediente" id='numero_expediente'/>
+                             </div>
+                          </div>
+                          <div class="row">
+
+
+                          </div>
+                          <div class="row">
+                            <!-- Tipo de Medida Judicial -->
+                            <div class="col-md-6 col-sm-12">
+                                <label>Tipo:</label>
+                                <select class="js-states form-control" style="width: 100%" required aria-hidden="true"
+                                        id="tipo">
+                                        <option selected="selected" value="1">PENSION ALIMENTARIA</option>
+                                        <option value="2">RETRIBUCION ESPECIAL</option>
+                                        <option value="3">BONO RECREACIONAL</option>
+                                        <option value="4">RETENCION ESCOLAR</option>
+                                        <option value="5">RETENCION AGUINALDOS</option>
+                                </select>
+                            </div>
+                            <!-- Fecha del Expediente -->
+                            <div class="col-md-6 col-sm-12">
+                              <label>Fecha:</label>
+                              <div class="input-group date">
+                                  <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                  </div>
+                                  <div class="input-group input-group">
+                                      <input type="text" class="form-control" style="width: 110%;" id="datepicker">
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                              <label>Observaciones:</label>
+                              <textarea class="form-control" placeholder="Descripción" id='observacion'></textarea>
+                            </div>
+                          </div>
+                          <br>
+                            <!-- <div class="row">
                             <div class="col-md-2">N° Oficio:</div>
                             <div class="col-md-4">
                               <input type="hidden" id='codigomedida' value="0"/>
@@ -219,8 +271,9 @@
                             </div>
                             <div class="col-md-2">Expediente:</div>
                             <div class="col-md-4"><input type="text" class="form-control" placeholder="Expediente" id='numero_expediente'/></div>
-                          </div>
-                          <div class="row">
+                          </div> -->
+
+                           <!-- <div class="row">
                             <div class="col-md-2">Tipo:</div>
                             <div class="col-md-4">
                               <select class="form-control select2" style="width: 100%;" id='tipo'>
@@ -241,13 +294,13 @@
                                 <input type="text" class="form-control" id="datepicker">
                               </div>
                               </div>
-                            </div>
-                            <div class="row">
+                            </div> -->
+                            <!-- <div class="row">
                               <div class="col-md-2">Observaciones:</div>
                               <div class="col-md-10">
                                 <textarea class="form-control" placeholder="Descripción" id='observacion'></textarea>
                               </div>
-                            </div>
+                            </div> -->
                             <div class="row">
                               <div class="col-md-2">Porcentaje:</div>
                               <div class="col-md-4"><input type="text" class="form-control" placeholder="Porcentaje" id='porcentaje' value=0></div>
@@ -263,14 +316,14 @@
                               <div class="col-md-2">U.T.:</div>
                               <div class="col-md-4"><input type="text" class="form-control" placeholder="Unidad Tributaria" id='ut' value=0></div>
                             </div>
-                            <!--<div class="row">
+                            <!--<div class="row"> <!--Comentado>
                               <div class="col-md-2">Monto Total:</div>
                               <div class="col-md-4"><input type="text" class="form-control" placeholder="Monto Total" id='monto_total' value=0></div>
                               <div class="col-md-2"><button type="button" class="btn btn-success pull-left" onclick="calculomensual()">
                             Calc.
                             </button></div>
                           </div>!-->
-                            <div class="row">
+                             <div class="row">
                               <div class="col-md-2">Forma Pago:</div>
                               <div class="col-md-10">
                                 <select class="form-control" id='forma_pago' style="width: 100%;">
@@ -393,7 +446,6 @@
 
                       </div>
                     </div>
-
 
 
 
