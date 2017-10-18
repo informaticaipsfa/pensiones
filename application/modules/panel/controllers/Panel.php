@@ -27,8 +27,10 @@ class Panel extends MY_Controller {
 	*	Sección de la GUI
 	* 	----------------------------------
 	*/
-	public function index(){
-		$this->load->view("view_home");
+	public function index($token){
+
+		$data['token'] = $token;
+		$this->load->view("view_home", $token);
 	}
 
 	public function beneficiario(){
@@ -253,9 +255,9 @@ class Panel extends MY_Controller {
 		$this->MMedidaJudicial->nombre_autorizado = $data->MedidaJudicial->nombre_autorizado;
 
 		$this->MMedidaJudicial->fecha_creacion =  date("Y-m-d H:i:s");
-		$this->MMedidaJudicial->usuario_creacion = $_SESSION['usuario'];
+		//$this->MMedidaJudicial->usuario_creacion = $_SESSION['usuario'];
 		$this->MMedidaJudicial->fecha_modificacion =  date("Y-m-d H:i:s");
-		$this->MMedidaJudicial->usuario_modificacion = $_SESSION['usuario'];
+		//$this->MMedidaJudicial->usuario_modificacion = $_SESSION['usuario'];
 		$this->MMedidaJudicial->ultima_observacion = '';
 
 		if($id == ''){

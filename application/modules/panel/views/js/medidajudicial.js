@@ -228,7 +228,7 @@ function obtenerCiudades(){
             $("#ciudad").append(opt);
             i = v.id;
         });
-        obtenerMunicipiosID(i);
+        obtenerMunicipios();
 
     }).done(function(msg) {}).fail(function(jqXHR, textStatus) {
        $("#txtMensaje").html('No se encontraron ciudades');
@@ -237,7 +237,7 @@ function obtenerCiudades(){
 }
 
 function obtenerMunicipios(){
-    id = $("#ciudad option:selected").val();
+    id = $("#estado option:selected").val();
     obtenerMunicipiosID(id);
 }
 

@@ -168,6 +168,13 @@ class MBeneficiario extends CI_Model{
 	*/
 	var $profesionalizacion;
 
+  /**
+  * Valor de la prima especial por reconocimiento en el grado de Cnel Técnico
+	* @var double
+	*/
+	var $exrcnelt;
+
+
 	/**
 	* @var string
 	*/
@@ -383,24 +390,18 @@ class MBeneficiario extends CI_Model{
 				$this->estatus_activo = $val->status_id;
 				$this->estatus_descripcion = $val->estatus_descripcion;
 				$this->numero_hijos = $val->n_hijos;
-
 				$this->tiempo_servicio_db = $val->tiempo_servicio; //El tiempo es una herencia referencial al Beneficiario en MCalculo
 				$this->fecha_ingreso = $val->fecha_ingreso;
 				$this->fecha_ingreso_sistema = $val->f_ingreso_sistema;
-
 				$this->ano_reconocido = $val->anio_reconocido;
 				$this->mes_reconocido = $val->mes_reconocido;
 				$this->dia_reconocido = $val->dia_reconocido;
 				$this->sexo = $val->sexo;
 				$this->usuario_creador = $val->usr_creacion;
-
 				$this->usuario_modificacion = $val->usr_modificacion;
-
 				$this->fecha_ultima_modificacion = $val->f_ult_modificacion;
 				$this->fecha_creacion = $val->f_creacion;
-
 				$this->fecha_ultimo_ascenso = $val->f_ult_ascenso;
-
 				$this->no_ascenso = $val->st_no_ascenso;
 				$this->profesionalizacion = $val->st_profesion;
 				$this->fecha_retiro = $val->f_retiro;
@@ -412,13 +413,14 @@ class MBeneficiario extends CI_Model{
 
 				$this->Componente->ObtenerConGrado($val->componente_id, $val->grado_id, $val->st_no_ascenso);
         $arr['id'] = $id;
-    		$arr['url'] = 'http://192.168.6.45:8080/devel/api/militar/crud/'.$arr['id'];
+    		$arr['url'] = 'http://192.168.6.45:8080/devel/api/militar/crud/' . $arr['id'];
     		$api = $this->MCurl->Cargar_API($arr);
+
     		$Militar = $api['obj'];
-    		//$this->MBeneficiario->numero_cuenta = $Militar->Pension->DatoFinanciero->cuenta;
+        $this->nombres = $Militar->Persona->DatoBasico->nombreprimero;
+        $this->apellidos = $Militar->Persona->DatoBasico->apellidoprimero;
 
 			}
-			//$this->HistorialSueldo = $this->MHistorialSueldo->listar($id);
 			$this->HistorialMovimiento = $this->MHistorialMovimiento->listar($id);
 			$this->MedidaJudicial = $this->MMedidaJudicial->listar($id, $this->fecha_retiro);
 			$this->MedidaJudicialActiva = $this->MMedidaJudicial->listar($id, $this->fecha_retiro, true);
@@ -426,13 +428,11 @@ class MBeneficiario extends CI_Model{
 
 			if($fecha != '') $this->fecha_retiro = $fecha; //En el caso de calcular finiquitos
 			$this->MCalculo->iniciarCalculosBeneficiario($this->MBeneficiario);
-			//$this->Calculo =
 		}else{
       $arr['id'] = $id;
-      $arr['url'] = 'http://192.168.6.45:8080/devel/api/militar/crud/'.$arr['id'];
+      $arr['url'] = 'http://192.168.6.45:8080/devel/api/militar/crud/' . $arr['id'];
       $api = $this->MCurl->Cargar_API($arr);
       $Militar = $api['obj'];
-      // print_r($Militar);
       $this->cedula = $Militar->Persona->DatoBasico->cedula;
       $this->nombres = $Militar->Persona->DatoBasico->nombreprimero;
       $this->apellidos = $Militar->Persona->DatoBasico->apellidoprimero;
@@ -441,10 +441,19 @@ class MBeneficiario extends CI_Model{
       $this->estatus_activo = "201";
       $this->estatus_descripcion = "ACTIVO";
       $this->numero_hijos = 3;
+      $this->no_ascenso = $Militar->pxnoascenso;
+      $this->profesionalizacion = $Militar->pprof;
+      $this->exrcnelt = $Militar->pespecial;
+      $this->ano_reconocido = 0;
+      $this->mes_reconocido = 0;
+      $this->dia_reconocido = 0;
       $this->fecha_ingreso = date( "Y-m-d", strtotime($Militar->fingreso) );
       $this->fecha_ultimo_ascenso = date( "Y-m-d", strtotime($Militar->fascenso) );
-      $this->Componente->ObtenerConGrado(1,1040);
-      $this->fecha_retiro = $fecha; //En el caso de calcular finiquitos
+
+      $this->Componente->ObtenerConGrado($Militar->Pension->componente,$Militar->Pension->grado);
+      $this->observacion = "IMPORTANDO DATO DE SSSIFANB";
+      $this->fecha_retiro = $fecha;
+      if($fecha == '') $this->fecha_retiro = date( "Y-m-d" ); //En el caso de calcular finiquitos
 			$this->MCalculo->iniciarCalculosBeneficiario($this->MBeneficiario);
     }
 	}
@@ -457,17 +466,7 @@ class MBeneficiario extends CI_Model{
 	* @return Dbpace
 	*/
 	private function _consultar($cedula = '', $tabla = ''){
-
-		/** SIN BENEFICIARIO CALC
-		$sConsulta = 'SELECT
-		  cedula, nombres, apellidos, grado_id,componente_id, tiempo_servicio, fecha_ingreso,
-		  edo_civil, n_hijos, f_ult_ascenso, anio_reconocido, mes_reconocido,
-		  dia_reconocido, f_ingreso_sistema, f_retiro, f_retiro_efectiva,
-		  status_id, st_no_ascenso, numero_cuenta, st_profesion, sexo, status.descripcion AS estatus_descripcion
-		FROM beneficiario JOIN status ON beneficiario.status_id=status.id WHERE cedula=\'' . $cedula . '\'';
-		**/
 		$tbl = $tabla == ''? 'beneficiario' : $tabla;
-
 		$sConsulta = '
 			SELECT
 				' . $tbl . '.cedula,
@@ -514,83 +513,25 @@ class MBeneficiario extends CI_Model{
 
 
 	/**
-	* Consultar los beneficiario por componente, cargar diirectivas, instanciar las primas y ejeutar calculos
+	* Consultar los beneficiario por componente, cargar diirectivas,
+  * instanciar las primas y ejeutar calculos
 	*
 	* @access public
 	* @param string
 	* @return Dbpace
 	*/
 	public function listarPorComponente($idComponente = 0){
-
 		$this->load->model('beneficiario/MCalculo');
 		$this->load->model('beneficiario/MDirectiva');
-	    $Directiva = $this->MDirectiva->iniciar();
-	    $this->load->model('beneficiario/MPrima');
-
-
-/**
-	    $Prima = $this->MPrima->obtenerSegunDirectiva($Directiva->id);
-	    $Prima->unidad_tributaria = $Directiva->unidad_tributaria;
-		$this->load->model('beneficiario/MCalculo');
-
-		$this->load->model('beneficiario/MHistorialMovimiento');
-		$HistorialMovimiento = $this->MHistorialMovimiento->listarPorComponente($idComponente);
-
-		$sConsulta = 'SELECT
-				cedula, nombres, apellidos, grado_id, beneficiario.componente_id, tiempo_servicio, fecha_ingreso,
-				edo_civil, n_hijos, f_ult_ascenso, anio_reconocido, mes_reconocido,
-				dia_reconocido, f_ingreso_sistema, f_retiro, f_retiro_efectiva,
-				beneficiario.status_id, st_no_ascenso, numero_cuenta, st_profesion, sexo,grado.codigo AS grado_codigo, grado.nombre
-				FROM beneficiario
-				JOIN grado ON grado.id=grado_id
-				WHERE beneficiario.status_id=201
-				AND beneficiario.componente_id1 = ' . $idComponente . '  LIMIT 10';
-		echo $sConsulta;
-
-
-	  	$obj = $this->Dbpace->consultar($sConsulta);
-		$i = 0;
-		if($obj->code >0){
-			foreach ($obj->rs as $clv => $val) {
-				$Beneficiario = new $this->MBeneficiario();
-				$Beneficiario->cedula = $val->cedula;
-				$Beneficiario->nombres = $val->nombres;
-				$Beneficiario->apellidos = $val->apellidos;
-				$Beneficiario->estado_civil = $val->edo_civil;
-				$Beneficiario->estus_activo = $val->status_id;
-				$Beneficiario->numero_hijos = $val->n_hijos;
-				$Beneficiario->fecha_ingreso = $val->fecha_ingreso;
-				$Beneficiario->ano_reconocido = $val->anio_reconocido;
-				$Beneficiario->mes_reconocido = $val->mes_reconocido;
-				$Beneficiario->dia_reconocido = $val->dia_reconocido;
-				$Beneficiario->sexo = $val->sexo;
-				$Beneficiario->fecha_ultimo_ascenso = $val->f_ult_ascenso;
-				$Beneficiario->no_ascenso = $val->st_no_ascenso;
-				$Beneficiario->profesionalizacion = $val->st_profesion;
-				$Beneficiario->fecha_retiro = $val->f_retiro;
-				$Beneficiario->fecha_retiro_efectiva = $val->f_retiro_efectiva;
-				$Beneficiario->grado_codigo = $val->grado_codigo;
-
-				$this->MCalculo->iniciarCalculosLote($Beneficiario, $HistorialMovimiento, $Directiva, $Prima);
-				$lst[] = $Beneficiario;
-				$i++;
-		}
-		}
-
-
-		echo '<pre>';
-		print_r($lst);
-		echo 'Registros Consultados: ' . $i . '<br><br>';
-
-		return $lst;**/
+    $Directiva = $this->MDirectiva->iniciar();
+    $this->load->model('beneficiario/MPrima');
 	}
 
 	function CargarFamiliares($id = ''){
 		$this->load->model('comun/DbSaman');
 		$familiar = array();
-
 		$sConsulta = 'SELECT A.codnip, A.nombrecompleto, A.sexocod, A.persrelstipcod  FROM personas JOIN
-			(SELECT pers_relaciones.nropersona, personas.nombrecompleto, personas.sexocod, personas.codnip,pers_relaciones.persrelstipcod  FROM pers_relaciones
+			( SELECT pers_relaciones.nropersona, personas.nombrecompleto, personas.sexocod, personas.codnip,pers_relaciones.persrelstipcod  FROM pers_relaciones
 				INNER JOIN pers_relacs_tipo ON pers_relaciones.persrelstipcod=pers_relacs_tipo.persrelstipcod
 				INNER JOIN personas ON pers_relaciones.nropersonarel=personas.nropersona
 				LEFT JOIN edo_civil ON personas.edocivilcod=edo_civil.edocivilcod
@@ -603,11 +544,8 @@ class MBeneficiario extends CI_Model{
 				'nombre'=> $val->nombrecompleto,
 				'parentesco' => $this->Parentesco($val->sexocod, $val->persrelstipcod)
 				);
-
-
 		}
 		return $familiar;
-
 	}
 
 
