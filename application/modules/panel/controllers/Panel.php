@@ -27,13 +27,21 @@ class Panel extends MY_Controller {
 	*	Sección de la GUI
 	* 	----------------------------------
 	*/
-	public function index($token){
+	public function index($token = ""){
 
-		$data['token'] = $token;
-		$this->load->view("view_home", $token);
+		if ($token != ""){
+			$data['token'] = $token;
+			$this->load->view("view_home", $data);
+		}else{
+			echo "Saliendo del sistema";
+		}
+
 	}
 
 	public function beneficiario(){
+		$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
+		$api = $this->MCurl->Cargar_API($arr);
+		$data['estado'] = $api['json'];
 		$this->load->model('beneficiario/MHistorialMovimiento');
 		$data['Movimientos'] = $this->MHistorialMovimiento->listarTodo();
 
@@ -56,11 +64,12 @@ class Panel extends MY_Controller {
 	}
 
 	function ObtenerEstados(){
+		header('Content-Type: application/json');
 		$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
 		$api = $this->MCurl->Cargar_API($arr);
-		$estado = $api['obj'];
-		echo "<pre>";
-		print_r($estado);
+		echo $api['json'];
+		// echo "<pre>";
+		// print_r($estado);
 		// foreach ($estado as $k => $v) {
 		//  if ($v->codigo == "VE-X" ){
 		// 	 foreach ($v->ciudad as $key => $value) {
@@ -114,12 +123,27 @@ class Panel extends MY_Controller {
 	*	---------------------------------------------
 	*/
 
-	public function consultarBeneficiario($cedula = '', $fecha = ''){
+	public function consultarBeneficiario($cedula = '', $fecha = '', $token = ''){
 		//header('Content-Type: application/json');
 		$this->load->model('beneficiario/MBeneficiario');
 		$this->load->model('beneficiario/MHistorialMovimiento');
+		$arr['url'] = 'http://192.168.6.45:8080/ipsfa/api/wusuario/validarphp';
+		if($token != ""){
 
-		$this->MBeneficiario->obtenerID($cedula, $fecha);
+			$arr['token'] = $token;
+			$api = $this->MCurl->Cargar_API($arr);
+			$data['rs'] = $api['obj'];
+			if ($data['rs']->tipo == 1 ){
+				$this->MBeneficiario->obtenerID($cedula, $fecha);
+				echo json_encode($this->MBeneficiario);
+			}else {
+				// header('Location: http://192.168.6.45/SSSIFANB/' );
+				echo "No posee Acceso";
+			}
+		}else{
+			echo "No posee Acceso";
+		}
+
 
 
 		//print_r( $Militar->Pension->DatoFinanciero);
@@ -128,7 +152,6 @@ class Panel extends MY_Controller {
 		// $this->MBeneficiario->HistorialOrdenPagos = $this->MOrdenPago->listarPorCedula($cedula);
 		//$this->MBeneficiario->HistorialDetalleMovimiento = $this->MHistorialMovimiento->listarDetalle($cedula);
 
-		echo json_encode($this->MBeneficiario);
 	}
 
 	public function consultarBeneficiarioJudicial($cedula = '', $fecha = ''){

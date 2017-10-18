@@ -69,16 +69,20 @@ class MCurl extends CI_Model{
   */
   function Cargar_API($arr){
     error_reporting(E_ALL);
-    //print("Conectando..." . $arr['id']);
     $curl = curl_init();
     $url = $arr['url'];
+
     curl_setopt_array($curl, array(
         CURLOPT_RETURNTRANSFER => 1,
         CURLOPT_URL => $url,
         CURLOPT_USERAGENT => 'Codular Sample cURL Request'
     ));
-    // Send the request & save response to $resp
+    if(isset($arr['token'])){
+      curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Bearer '. $arr['token'], 'Content-Type: application/x-www-form-urlencoded;charset=UTF-8'));
+    }
+
     $resp = curl_exec($curl);
+
     return ['json' => $resp, 'obj' => (object)json_decode($resp) ];
   }
 

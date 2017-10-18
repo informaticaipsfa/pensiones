@@ -6,18 +6,100 @@
 */
 
 
-_INTERFAZ = '';
-_PRV = {};
-_ACT = false;
+let _INTERFAZ = '';
+let _PRV = {};
+let _ACT = false;
 
- $(function () {
- 	s = window.location.pathname;
- 	a = s.split("/");
-	_INTERFAZ = a[a.length-1];
 
- 	init();
 
- });
+ class Estado{
+     constructor() {
+
+     }
+     Crear(Json) {
+         if (sessionStorage.getItem('ipsfaEstado') == undefined ){
+             sessionStorage.setItem('ipsfaEstado', JSON.stringify(Json));
+         }
+     }
+     ObtenerCodigo(estados){
+       var cadena = "";
+       let estado = JSON.parse(sessionStorage.getItem('ipsfaEstado'));
+       estado.forEach(v => {
+           if (v.codigo == estados){
+              cadena = v.nombre;
+           }
+       });
+       return cadena;
+     }
+
+     ObtenerEstados(){
+         let estado = JSON.parse(sessionStorage.getItem('ipsfaEstado'));
+
+         $("#cmbmestado").html('<option value="S" selected="selected"></option>');
+         $("#cmbestadof").html('<option value="S" selected="selected"></option>');
+         $.each(estado, function (c, v){
+             $("#cmbmestado").append('<option value="' + v.codigo + '">' + v.nombre + '</option>');
+             $("#cmbestadof").append('<option value="' + v.codigo + '">' + v.nombre + '</option>');
+         });
+
+     }
+     ObtenerCiudadMunicipio(estado, nombre){
+         var sciudad = 'cmbmciudad';
+         var smunicipio = 'cmbmmunicipio';
+         if ( nombre != undefined){
+             sciudad = 'cmbciudadf';
+             smunicipio = 'cmbmunicipiof';
+         }
+         var cm = JSON.parse(sessionStorage.getItem('ipsfaEstado')); //CiudadMunicipio
+         $.each(cm, function(c, v){
+             if (v.codigo == estado){
+
+                 let ciudad = v.ciudad;
+                 let municipio = v.municipio;
+                 $("#" + sciudad).html('<option value="S" selected="selected"></option>');
+                 $("#" + smunicipio).html('<option value="S" selected="selected"></option>');
+                 $.each(ciudad, function (c,v){
+                     $("#" + sciudad).append('<option value="' + v.nombre + '">' + v.nombre + '</option>');
+                 });
+                 $.each(municipio, function (c,v){
+                     $("#" + smunicipio).append('<option value="' + v.nombre + '">' + v.nombre + '</option>');
+                 });
+             }
+         });
+     }
+     ObtenerParroquia(estado, municipio, nombre){
+         var sparroquia = 'cmbmparroquia';
+         if ( nombre != undefined){
+             sparroquia = 'cmbparroquiaf';
+         }
+         var cm = JSON.parse(sessionStorage.getItem('ipsfaEstado')); //CiudadMunicipio
+         $.each(cm, function(c, v){
+             if (v.codigo == estado){
+                 var mun = v.municipio;
+                 $.each(mun, function (c,v){
+                     if(v.nombre == municipio){
+                         $("#" + sparroquia).html('<option value="S"></option>');
+                         $.each(v.parroquia, function(cl, vl){
+                             $("#" + sparroquia).append('<option value="' + vl + '">' + vl + '</option>');
+                         });
+                     }
+                 });
+             }
+         });
+     }
+ }
+
+var Estados = new Estado();
+
+
+$(function () {
+ s = window.location.pathname;
+ a = s.split("/");
+ _INTERFAZ = a[a.length-1];
+
+ init();
+
+});
 
 function init(){
 	// var url = sUrlP + 'obtenerMenu';

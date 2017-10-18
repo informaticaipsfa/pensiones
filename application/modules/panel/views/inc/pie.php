@@ -26,7 +26,8 @@
     <script src="<?php echo base_url()?>assets/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
     <script src="<?php echo base_url()?>assets/plugins/iCheck/icheck.min.js"></script>
   <script>
-
+    let token = "<?php echo $token;?>";
+    sessionStorage.setItem('ipsfaToken', token);
     function principal(){
         $(location).attr('href', sUrlP + "index");
      }
@@ -58,7 +59,9 @@
     $(function () {
         check();
         $(".select2").select2();
-        let token = <?php echo $token?>
+        let estados = [];
+
+
         $('#fingreso').datepicker({
           format: 'dd/mm/yyyy',
           autoclose: true
@@ -104,6 +107,15 @@
         $('#datepicker2').datepicker({
           format: 'dd/mm/yyyy',
           autoclose: true
+        });
+
+        ruta = sUrlP + "ObtenerEstados";
+        $.getJSON(ruta, function(data) {
+          sessionStorage.setItem('ipsfaEstado', JSON.stringify(data));
+        }).done(function(msg) {
+
+        }).fail(function(jqXHR, textStatus) {
+
         });
       });
     </script>

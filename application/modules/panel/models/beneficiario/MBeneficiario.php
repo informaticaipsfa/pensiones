@@ -441,9 +441,9 @@ class MBeneficiario extends CI_Model{
       $this->estatus_activo = "201";
       $this->estatus_descripcion = "ACTIVO";
       $this->numero_hijos = 3;
-      $this->no_ascenso = $Militar->pxnoascenso;
-      $this->profesionalizacion = $Militar->pprof;
-      $this->exrcnelt = $Militar->pespecial;
+      // $this->no_ascenso = $Militar->pxnoascenso;
+      // $this->profesionalizacion = $Militar->pprof;
+      // $this->exrcnelt = $Militar->pespecial;
       $this->ano_reconocido = 0;
       $this->mes_reconocido = 0;
       $this->dia_reconocido = 0;
