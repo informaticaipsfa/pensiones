@@ -33,7 +33,7 @@ class Panel extends MY_Controller {
 			$data['token'] = $token;
 			$this->load->view("view_home", $data);
 		}else{
-			echo "Saliendo del sistema";
+			header('Location: /SSSIFANB/' );
 		}
 
 	}

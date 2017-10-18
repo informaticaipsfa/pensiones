@@ -71,7 +71,7 @@ class Login extends MY_Controller {
 			if ($data['rs']->tipo == 1 ){
 				$this->inicio($token);
 			}else {
-				header('Location: http://192.168.6.45/SSSIFANB/' );
+				header('Location: /SSSIFANB/' );
 			}
 
 		}
