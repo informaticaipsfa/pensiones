@@ -96,23 +96,22 @@ class Panel extends MY_Controller {
 		echo json_encode($lst);
 	}
 
-	function obtenerMunicipios($codigo){
-		$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
-		$api = $this->MCurl->Cargar_API($arr);
-		$estado = $api['obj'];
-		$lst = array();
-		// echo "<pre>";
-		// print_r($estado);
-		foreach ($estado as $k => $v) {
-		 if ($v->codigo == $codigo ){
-			 foreach ($v->municipio as $key => $value) {
-			 	$lst[] = array("id" => $key, "nombre" => $value->nombre);
+		function obtenerMunicipios($codigo){
+			$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
+			$api = $this->MCurl->Cargar_API($arr);
+			$estado = $api['obj'];
+			$lst = array();
+			// echo "<pre>";
+			// print_r($estado);
+			foreach ($estado as $k => $v) {
+			 if ($v->codigo == $codigo ){
+				 foreach ($v->municipio as $key => $value) {
+				 	$lst[] = array("id" => $value->capital, "nombre" => $value->nombre);
+				 }
 			 }
-		 }
+			}
+			echo json_encode($lst);
 		}
-		echo json_encode($lst);
-	}
-
 	public function actualizar(){
 		$this->load->view("menu/beneficiario/actualizarbeneficiario");
 	}

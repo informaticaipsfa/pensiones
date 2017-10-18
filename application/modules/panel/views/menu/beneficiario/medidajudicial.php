@@ -320,7 +320,7 @@
                             <div class="row">
                               <div class="col-md-2">Ciudad:</div>
                               <div class="col-md-10">
-                                <select class="form-control" id='ciudad' style="width: 100%;" onchange="obtenerMunicipios()">
+                                <select class="form-control" id='ciudad' onchange="obtenerCuidades()" style="width: 100%;" >
                                   <option value='0'>SELECCIONE UNA OPCION</option>
                                 </select>
                               </div>
@@ -328,7 +328,7 @@
                             <div class="row">
                               <div class="col-md-2">Municipio:</div>
                               <div class="col-md-10">
-                                <select class="form-control" id='municipio' style="width: 100%;">
+                                <select class="form-control" id='municipio' style="width: 100%;" onchange="obtenerMunicipios()">
                                   <option value='0'>SELECCIONE UNA OPCION</option>
                                 </select>
                               </div>
