@@ -243,8 +243,10 @@ function obtenerMunicipios(){
 
 function obtenerMunicipiosID(id){
     ruta = sUrlP + "obtenerMunicipios/" + id;
+    console.log(ruta);
     $("#municipio option").remove();
     $.getJSON(ruta, function(data) {
+      
         $.each(data, function(d, v){
             var opt = new Option(v.nombre, v.id);
             $("#municipio").append(opt);

@@ -81,6 +81,7 @@ class Panel extends MY_Controller {
 	}
 
 	function obtenerCiudades($codigo){
+		header('Content-Type: application/json');
 		$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
 		$api = $this->MCurl->Cargar_API($arr);
 		$estado = $api['obj'];
@@ -98,6 +99,7 @@ class Panel extends MY_Controller {
 	}
 
 		function obtenerMunicipios($codigo){
+			header('Content-Type: application/json');
 			$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
 			$api = $this->MCurl->Cargar_API($arr);
 			$estado = $api['obj'];
@@ -107,7 +109,7 @@ class Panel extends MY_Controller {
 			foreach ($estado as $k => $v) {
 			 if ($v->codigo == $codigo ){
 				 foreach ($v->municipio as $key => $value) {
-				 	$lst[] = array("id" => $value->capital, "nombre" => $value->nombre);
+				 	$lst[] = array("id" => $key, "nombre" => $value->nombre);
 				 }
 			 }
 			}
