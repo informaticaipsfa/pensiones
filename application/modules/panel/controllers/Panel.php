@@ -29,12 +29,13 @@ class Panel extends MY_Controller {
 	*/
 	public function index($token = ""){
 
-		if ($token != ""){
-			$data['token'] = $token;
-			$this->load->view("view_home", $data);
-		}else{
-			header('Location: /SSSIFANB/' );
-		}
+		// if ($token != ""){
+		// 	$data['token'] = $token;
+			// $this->load->view("view_home", $data);
+			$this->load->view("view_home");
+		// }else{
+		// 	header('Location: /SSSIFANB/' );
+		// }
 
 	}
 
@@ -80,6 +81,7 @@ class Panel extends MY_Controller {
 	}
 
 	function obtenerCiudades($codigo){
+		header('Content-Type: application/json');
 		$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
 		$api = $this->MCurl->Cargar_API($arr);
 		$estado = $api['obj'];
@@ -97,6 +99,7 @@ class Panel extends MY_Controller {
 	}
 
 		function obtenerMunicipios($codigo){
+			header('Content-Type: application/json');
 			$arr['url'] = 'http://192.168.6.45:8080/devel/api/estado';
 			$api = $this->MCurl->Cargar_API($arr);
 			$estado = $api['obj'];
@@ -106,7 +109,7 @@ class Panel extends MY_Controller {
 			foreach ($estado as $k => $v) {
 			 if ($v->codigo == $codigo ){
 				 foreach ($v->municipio as $key => $value) {
-				 	$lst[] = array("id" => $value->capital, "nombre" => $value->nombre);
+				 	$lst[] = array("id" => $key, "nombre" => $value->nombre);
 				 }
 			 }
 			}
@@ -127,21 +130,21 @@ class Panel extends MY_Controller {
 		$this->load->model('beneficiario/MBeneficiario');
 		$this->load->model('beneficiario/MHistorialMovimiento');
 		$arr['url'] = 'http://192.168.6.45:8080/ipsfa/api/wusuario/validarphp';
-		if($token != ""){
-
-			$arr['token'] = $token;
-			$api = $this->MCurl->Cargar_API($arr);
-			$data['rs'] = $api['obj'];
-			if ($data['rs']->tipo == 1 ){
-				$this->MBeneficiario->obtenerID($cedula, $fecha);
-				echo json_encode($this->MBeneficiario);
-			}else {
-				// header('Location: http://192.168.6.45/SSSIFANB/' );
-				echo "No posee Acceso";
-			}
-		}else{
-			echo "No posee Acceso";
-		}
+		// if($token != ""){
+		//
+		// 	$arr['token'] = $token;
+		// 	$api = $this->MCurl->Cargar_API($arr);
+		// 	$data['rs'] = $api['obj'];
+		// 	if ($data['rs']->tipo == 1 ){
+		$this->MBeneficiario->obtenerID($cedula, $fecha);
+		echo json_encode($this->MBeneficiario);
+		// 	}else {
+		// 		// header('Location: http://192.168.6.45/SSSIFANB/' );
+		// 		echo "No posee Acceso";
+		// 	}
+		// }else{
+		// 	echo "No posee Acceso";
+		// }
 
 
 

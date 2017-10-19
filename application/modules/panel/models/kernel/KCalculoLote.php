@@ -62,7 +62,7 @@ class KCalculoLote extends CI_Model{
     $this->Beneficiario->sueldo_base = isset($sueldo[$cod])? $sueldo[$cod]['sb']: $sueldo[$this->Beneficiario->grado_codigo.'M']['sb'];
 
     $this->SumarPrimas();
-    //$this->SueldoMensual();
+    $this->SueldoMensual();
     //$this->GenerarAlicuotaAguinaldo();
     //$this->GenerarAlicuotaVacaciones();
     //$this->GenerarSueldoIntegral();
@@ -112,7 +112,6 @@ class KCalculoLote extends CI_Model{
       $this->Beneficiario->prima_profesionalizacion = $prima;*/
    }
 
-}
 
   function SueldoMensual(){
     $this->Beneficiario->sueldo_mensual = $this->Beneficiario->sueldo_base + $this->Beneficiario->monto_total_prima;
