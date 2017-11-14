@@ -206,7 +206,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                             </button>
                             <h4 class="modal-title">Nueva Medida Judicial</h4>
-                            <label id='lblNombre'></label>
+                            <!--label id='lblNombre'></label-->
                           </div>
                           <div class="modal-body">
                               <div class="row">
@@ -304,7 +304,7 @@
                                 <!-- Institución -->
                                 <div class="col-md-4 col-sm-12">
                                     <label>Institución:</label>
-                                    <select class="js-states form-control" style="width: 100%" required aria-hidden="true"
+                                    <select class="js-states form-control" style="width: 100%"  aria-hidden="true"
                                             id="institucion">
                                             <option value="0156">100%BANCO</option>
                                             <option value="0196">ABN AMRO BANK</option>
@@ -342,6 +342,22 @@
                                             <option value="0137">SOFITASA</option>
                                     </select>
                                     <!--input type="text" class="form-control" placeholder="Institución" id='institucion'-->
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <label>Tipo de Cuenta:</label>
+                                    <select class="form-control" style="width: 100%"
+                                            id="tipodecuenta">
+                                        <option selected="selected" value="S"></option>
+                                        <option value="CA" selected="selected">AHORRO</option>
+                                        <option value="CC">CORRIENTE</option>
+                                    </select>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-4 col-sm-12">
+                                    <label>Nro. de Cuenta:</label>
+                                    <input id="numerocuenta" class="form-control"  type="text" maxlength="23"
+                                           data-inputmask='"mask": "9999-9999-99-9999999999"' data-mask>
                                 </div>
                               </div>
                               <div class="row">
@@ -385,7 +401,50 @@
                                 </div>
                               </div>
                               <div class="row">
-
+                                <!-- Descripcion Institución -->
+                                <div class="col-md-12 col-sm-12">
+                                    <label> Descripcion Institución:</label>
+                                    <!--input type="text" class="form-control" placeholder="Descripcion" id='descripcion_institucion'-->
+                                    <textarea class="form-control" placeholder="Descripción" id='descripcion_institucion'></textarea>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <!-- Cedula Beneficiario -->
+                                <div class="col-md-4 col-sm-12">
+                                    <label> Cedula:</label>
+                                    <input type="text" class="form-control" placeholder="Cedula Beneficiario" id='cedula_beneficiario'>
+                                </div>
+                                <!-- Beneficiario -->
+                                <div class="col-md-4 col-sm-12">
+                                    <label> Beneficiario:</label>
+                                    <input type="text" class="form-control" placeholder="Nombre Beneficiario" id='beneficiario'>
+                                </div>
+                                <!-- Parentesco -->
+                                <div class="col-md-4 col-sm-12">
+                                    <label> Parentesco:</label>
+                                    <select class="form-control" id='parentesco' style="width: 100%;">
+                                      <option value='0'>NO POSEE</option>
+                                      <option value='1'>HIJO</option>
+                                      <option value='2'>ESPOSA</option>
+                                      <?php
+                                        foreach ($Parentesco as $k => $v) {
+                                          echo '<option value="' . $v->id . '">' . $v->nombre . '</option>';
+                                        }
+                                      ?>
+                                    </select>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <!-- Cedula Autorizado -->
+                                <div class="col-md-4 col-sm-12">
+                                    <label> Cedula:</label>
+                                    <input type="text" class="form-control" placeholder="Cedula Autorizado" id='cedula_autorizado'>
+                                </div>
+                                <!-- Nombre Autorizado -->
+                                <div class="col-md-4 col-sm-12">
+                                    <label> Autorizado:</label>
+                                    <input type="text" class="form-control" placeholder="Nombre Autorizado" id='autorizado'>
+                                </div>
                               </div>
                           <br>
                             <!-- <div class="row">
@@ -517,22 +576,25 @@
                               </div>
                             </div> -->
 
-                            <div class="row">
+                            <!-- <div class="row">
                               <div class="col-md-2">Descripción Institución:</div>
                               <div class="col-md-10">
                                 <textarea class="form-control" placeholder="Descripción Institución" id='descripcion_institucion'></textarea>
                               </div>
-                            </div>
-                            <div class="row">
+                            </div> -->
+
+                            <!-- <div class="row">
                               <div class="col-md-2">Beneficiario:</div>
                               <div class="col-md-10">
                                 <input type="text" class="form-control" placeholder="Datos del Beneficiario" id='beneficiario'/>
                               </div>
-                            </div>
+                            </div> -->
 
-                            <div class="row">
+                            <!-- <div class="row">
                               <div class="col-md-2">Cedula:</div>
-                              <div class="col-md-4"><input type="text" class="form-control" placeholder="Cédula de Identidad" id='cedula_beneficiario'/></div>
+                              <div class="col-md-4">
+                                <input type="text" class="form-control" placeholder="Cédula de Identidad" id='cedula_beneficiario'/>
+                              </div>
                               <div class="col-md-2">Parentesco:</div>
                               <div class="col-md-4">
                                 <select class="form-control" id='parentesco' style="width: 100%;">
@@ -546,15 +608,14 @@
                                   ?>
                                 </select>
                               </div>
-                            </div>
-                            <div class="row">
+                            </div> -->
+
+                            <!-- <div class="row">
                               <div class="col-md-2">Cedula Autorizado:</div>
                               <div class="col-md-4"><input type="text" class="form-control" placeholder="Cédula de Identidad" id='cedula_autorizado'/></div>
                               <div class="col-md-2">Autorizado:</div>
                               <div class="col-md-4"><input type="text" class="form-control" placeholder="Autorizado" id='autorizado'/></div>
-                            </div>
-
-
+                            </div> -->
 
                           </div>
 
