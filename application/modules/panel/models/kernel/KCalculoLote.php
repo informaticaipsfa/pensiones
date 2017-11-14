@@ -88,7 +88,7 @@ class KCalculoLote extends CI_Model{
     $sueldo_base = $this->Beneficiario->sueldo_base;
     $no_ascenso = $this->Beneficiario->no_ascenso;
     $numero_hijos = $this->Beneficiario->numero_hijos;
-
+    $prima_profesionalizacion_mt = $this->Beneficiario->prima_profesionalizacion_mt;
     foreach ($lst as $c => $v) {
       $monto_nominal = $v;
       //print_r($this->Directiva['fnx']);
