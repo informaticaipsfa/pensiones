@@ -67,7 +67,7 @@ class MBeneficiario extends CI_Model{
 	*/
 	var $fecha_ingreso_reconocida = '';
 
-	
+
 
 	/**
 	* @var date
@@ -209,7 +209,7 @@ class MBeneficiario extends CI_Model{
 	*/
 	var $prima_profesionalizacion = 0.00;
 	var $prima_profesionalizacion_mt = 0;
-	
+
 
 	/**
 	* @var double
@@ -272,17 +272,17 @@ class MBeneficiario extends CI_Model{
 
 	/**
 	* @var double
-	*/	
+	*/
 	var $anticipo = 0.00;
 
 	/**
 	* @var double
-	*/	
+	*/
 	var $finiquito = 0.00;
 
 	/**
 	* @var double
-	*/	
+	*/
 	var $diferencia_asig_a = 0.00;
 
 
@@ -469,6 +469,7 @@ class MBeneficiario extends CI_Model{
 
 				$this->no_ascenso = $val->st_no_ascenso;
 				$this->profesionalizacion = $val->st_profesion;
+        $this->monto_especial = $val->monto_especial;
 				$this->fecha_retiro = $val->f_retiro;
 				$this->fecha_retiro_efectiva = $val->f_retiro_efectiva;
 				$this->numero_cuenta = $val->numero_cuenta;
@@ -532,6 +533,7 @@ class MBeneficiario extends CI_Model{
 				' . $tbl . '.sexo,
 				' . $tbl . '.observ_ult_modificacion,
 				' . $tbl . '.motivo_paralizacion,
+        ' . $tbl . '.monto_especial,
 				beneficiario_calc.numero_cuenta,
 				status.descripcion AS estatus_descripcion
 			FROM
@@ -549,7 +551,7 @@ class MBeneficiario extends CI_Model{
 	}
 
 
-	
+
 
 	function CargarFamiliares($id = ''){
 		$this->load->model('comun/DbSaman');
@@ -756,14 +758,14 @@ class MBeneficiario extends CI_Model{
 	}
 
 	function ParalizarDesparalizar(){
-		$fecha_r = 'f_retiro=\'' . $this->fecha_retiro . '\', 
+		$fecha_r = 'f_retiro=\'' . $this->fecha_retiro . '\',
 			f_retiro_efectiva=\'' . $this->fecha_retiro . '\',';
 
 		if ($this->fecha_retiro == ''){
 			$fecha_r = 'f_retiro=null, f_retiro_efectiva=null, ';
 		}
-		$sActualizar = 'UPDATE beneficiario SET  
-			motivo_paralizacion=\'' . $this->motivo_paralizacion . '\', 
+		$sActualizar = 'UPDATE beneficiario SET
+			motivo_paralizacion=\'' . $this->motivo_paralizacion . '\',
 			'. $fecha_r.'
 			status_id=\'' . $this->estatus_activo . '\',
 			usr_modificacion=\'' . $_SESSION['usuario'] . '\',

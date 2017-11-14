@@ -240,7 +240,12 @@ class MBeneficiario extends CI_Model{
 	*/
 	var $prima_especial = 0.00;
 
-	/**
+  /**
+  * @var double
+  */
+  var $prima_especial = 0.00;
+
+  /**
 	* @var double
 	*/
 	var $prima_noascenso = 0.00;
@@ -404,6 +409,7 @@ class MBeneficiario extends CI_Model{
 				$this->fecha_ultimo_ascenso = $val->f_ult_ascenso;
 				$this->no_ascenso = $val->st_no_ascenso;
 				$this->profesionalizacion = $val->st_profesion;
+        $this->monto_especial = $val->monto_especial;
 				$this->fecha_retiro = $val->f_retiro;
 				$this->fecha_retiro_efectiva = $val->f_retiro_efectiva;
 				$this->numero_cuenta = $val->numero_cuenta;
@@ -497,6 +503,7 @@ class MBeneficiario extends CI_Model{
 				' . $tbl . '.sexo,
 				' . $tbl . '.observ_ult_modificacion,
 				' . $tbl . '.motivo_paralizacion,
+        ' . $tbl . '.monto_especial,
 				status.descripcion AS estatus_descripcion
 			FROM
 				' . $tbl . '

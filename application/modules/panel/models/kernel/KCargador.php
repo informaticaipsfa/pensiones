@@ -112,7 +112,7 @@ class KCargador extends CI_Model{
         beneficiario.nombres, beneficiario.apellidos,
         beneficiario.cedula, fecha_ingreso,f_ult_ascenso, grado.codigo,grado.nombre as gnombre,
         beneficiario.componente_id, n_hijos, st_no_ascenso, beneficiario.status_id,
-        st_profesion,anio_reconocido, mes_reconocido,dia_reconocido,beneficiario.status_id as status_id
+        st_profesion, monto_especial, anio_reconocido, mes_reconocido,dia_reconocido,beneficiario.status_id as status_id
         FROM
           beneficiario
         JOIN
@@ -190,7 +190,8 @@ class KCargador extends CI_Model{
       $Bnf->grado_nombre = $v->gnombre;
       $Bnf->fecha_ultimo_ascenso = $v->f_ult_ascenso;
       $Bnf->fecha_retiro = $fecha;
-      $Bnf->prima_profesionalizacion_mt =  ""; //$v->st_profesion;
+      $Bnf->estatus_profesion = $v->st_profesion;
+      $Bnf->prima_especial = $v->monto_especial;
       $Bnf->ano_reconocido = $v->anio_reconocido;
       $Bnf->mes_reconocido = $v->mes_reconocido;
       $Bnf->dia_reconocido = $v->dia_reconocido;
@@ -209,8 +210,9 @@ class KCargador extends CI_Model{
                           $Bnf->prima_tiemposervicio . ';' .
                           $Bnf->prima_descendencia . ';' .
                           $Bnf->prima_especial . ';' . $Bnf->no_ascenso . ';' .
-                          $Bnf->prima_noascenso . ';' . $Bnf->prima_profesionalizacion_mt . ';' .
-                          $Bnf->prima_profesionalizacion . ';' . $Bnf->sueldo_mensual . ';' .
+                          $Bnf->prima_noascenso . ';' . $Bnf->estatus_profesion . ';' .
+                          $Bnf->prima_profesionalizacion . ';' .
+                          $Bnf->sueldo_mensual . ';' .
                           $Bnf->aguinaldos . ';' . $Bnf->dia_vacaciones . ';' . $Bnf->vacaciones . ';' .
                           $Bnf->sueldo_integral . ';' . $Bnf->asignacion_antiguedad . ';';
         $segmentofinal =  $Bnf->garantias . ';' . $Bnf->dias_adicionales ;

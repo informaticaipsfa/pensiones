@@ -101,17 +101,17 @@ class KCalculoLote extends CI_Model{
       $this->Beneficiario->monto_total_prima += $this->Beneficiario->$rs;
     }
 
-    /* if($this->Beneficiario->prima_profesionalizacion_mt > 0){
-          $pprof = $this->Beneficiario->prima_profesionalizacion_mt;
-         if($this->Beneficiario->fecha_retiro <= '2015-12-31'){
+    /*if($this->Beneficiario->profesionalizacion > 0){
+          $pprof = $this->Beneficiario->profesionalizacion;
+       if($this->Beneficiario->fecha_retiro <= '2015-12-31'){
            $prima = round(($sueldo_base * 12)/100,2);
          }else{
           $prima = round(($sueldo_base * $pprof)/100,2);
-         }
+        }
       $this->Beneficiario->monto_total_prima += $prima;
-      $this->Beneficiario->prima_profesionalizacion = $prima;*/
-   }
-
+      $this->Beneficiario->prima_profesionalizacion = $prima;
+  }*/
+}
 
   function SueldoMensual(){
     $this->Beneficiario->sueldo_mensual = $this->Beneficiario->sueldo_base + $this->Beneficiario->monto_total_prima;
