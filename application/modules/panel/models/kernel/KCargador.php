@@ -190,12 +190,9 @@ class KCargador extends CI_Model{
       $Bnf->grado_nombre = $v->gnombre;
       $Bnf->fecha_ultimo_ascenso = $v->f_ult_ascenso;
       $Bnf->fecha_retiro = $fecha;
-<<<<<<< HEAD
       $Bnf->prima_profesionalizacion_mt =  $v->st_profesion;
-=======
       $Bnf->estatus_profesion = $v->st_profesion;
       $Bnf->prima_especial = $v->monto_especial;
->>>>>>> d11f601bda57f5821eedbff68212a1987a2e028e
       $Bnf->ano_reconocido = $v->anio_reconocido;
       $Bnf->mes_reconocido = $v->mes_reconocido;
       $Bnf->dia_reconocido = $v->dia_reconocido;
