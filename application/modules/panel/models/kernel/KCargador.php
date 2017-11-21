@@ -117,7 +117,7 @@ class KCargador extends CI_Model{
           beneficiario
         JOIN
           grado ON beneficiario.grado_id=grado.codigo AND beneficiario.componente_id= grado.componente_id
-        WHERE grado.codigo NOT IN(8450)
+        WHERE grado.codigo NOT IN(8450) and beneficiario.cedula='3578455'
           ";
 
     $con = $this->DBSpace->consultar($sConsulta);
@@ -146,11 +146,13 @@ class KCargador extends CI_Model{
       $Bnf = new $this->MBeneficiario;
       $this->KCalculoLote->Instanciar($Bnf, $Directivas);
       $linea = $this->generarConPatrones($Bnf,  $this->KCalculoLote, $this->KPerceptron, $fecha, $Directivas, $v);
-
+      if($Bnf->cedula == "3578455") {
+         print_r($Bnf);
+      }
       echo $linea . "\n";
-     //
-    //  fputs($file,$linea);
-    //   fputs($file,"\n");
+      //
+      //  fputs($file,$linea);
+      //   fputs($file,"\n");
       //unset($Bnf);
 
     }
@@ -223,8 +225,10 @@ class KCargador extends CI_Model{
         $linea = $Bnf->cedula . ';' . $this->generarLinea($segmentoincial);
 
       }else{
+
         $linea = $Bnf->cedula . ';' .  $this->generarLineaMemoria($Perceptron->Neurona[$patron]);
       }
+
 
       $this->SSueldoBase += $Bnf->sueldo_base;
       return $linea;

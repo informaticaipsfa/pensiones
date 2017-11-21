@@ -81,6 +81,8 @@ class KCalculoLote extends CI_Model{
   function SumarPrimas(){
     //Que grado tiene
     $lst =  $this->Directiva['sb'][$this->Beneficiario->grado_codigo.'M']['mt'];
+    print_r( $this->Directiva['sb']);
+    print_r($this->Beneficiario->grado_codigo);
     $valor = 0;
     $this->Beneficiario->monto_total_prima = 0;
     $tiempo_servicio = $this->Beneficiario->tiempo_servicio;
@@ -91,11 +93,13 @@ class KCalculoLote extends CI_Model{
     $prima_profesionalizacion_mt = $this->Beneficiario->prima_profesionalizacion_mt;
     foreach ($lst as $c => $v) {
       $monto_nominal = $v;
-      //print_r($this->Directiva['fnx']);
       $rs =  $this->Directiva['fnx'][$c]['rs']; // Como se llama la variable
       $rs_mt =  $this->Directiva['fnx'][$c]['rs'] . '_mt';
       $fnx =  $this->Directiva['fnx'][$c]['fn'];
-      eval('$valor = ' . $fnx);
+      //print_r($this->Directiva);
+      //echo "\n\n";
+
+      //eval('$valor = ' . $fnx);
       $this->Beneficiario->$rs = round($valor,2);
       $this->Beneficiario->$rs_mt = $monto_nominal;
       $this->Beneficiario->monto_total_prima += $this->Beneficiario->$rs;
