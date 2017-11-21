@@ -151,7 +151,7 @@ class MPrima extends CI_Model{
        $this->Beneficiario->$metodo = $valor;
       }
     }
-    
+
     $this->Beneficiario->Prima[8] = array(
       //'P_PROFESIONALIZACION' => $this->Beneficiario->profesionalizacion == 1 ? $this->Profesionalizacion() : 0.00
       'P_PROFESIONALIZACION' => $this->Beneficiario->profesionalizacion > 0 ? $this->Profesionalizacion() : 0.00
@@ -167,6 +167,7 @@ class MPrima extends CI_Model{
     $sueldo_base = $this->Beneficiario->sueldo_base;
     $no_ascenso = $this->Beneficiario->no_ascenso;
     $numero_hijos = $this->Beneficiario->numero_hijos;
+    $prima_profesionalizacion_mt = $this->Beneficiario->prima_profesionalizacion;
     eval('$valor = ' . $fnx);
     return round($valor,2);
   }

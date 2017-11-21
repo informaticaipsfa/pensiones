@@ -241,11 +241,6 @@ class MBeneficiario extends CI_Model{
 	var $prima_especial = 0.00;
 
   /**
-  * @var double
-  */
-  var $prima_especial = 0.00;
-
-  /**
 	* @var double
 	*/
 	var $prima_noascenso = 0.00;
@@ -385,8 +380,10 @@ class MBeneficiario extends CI_Model{
 
 	public function obtenerID($id, $fecha = ''){
 		$obj = $this->_consultar($id);
+    // echo "<pre>";
     // print_r($obj);
-		if($obj->code == 1 ){
+		if($obj->cant == 1 ){
+      $fecha = "";
 			foreach ($obj->rs as $clv => $val) {
 				$this->cedula = $val->cedula;
 				$this->nombres = $val->nombres;
@@ -411,6 +408,7 @@ class MBeneficiario extends CI_Model{
 				$this->profesionalizacion = $val->st_profesion;
         $this->monto_especial = $val->monto_especial;
 				$this->fecha_retiro = $val->f_retiro;
+        $fecha = $val->f_retiro;
 				$this->fecha_retiro_efectiva = $val->f_retiro_efectiva;
 				$this->numero_cuenta = $val->numero_cuenta;
 				$this->motivo_paralizacion = $val->motivo_paralizacion;
@@ -460,6 +458,7 @@ class MBeneficiario extends CI_Model{
       $this->observacion = "IMPORTANDO DATO DE SSSIFANB";
       $this->fecha_retiro = $fecha;
       if($fecha == '') $this->fecha_retiro = date( "Y-m-d" ); //En el caso de calcular finiquitos
+
 			$this->MCalculo->iniciarCalculosBeneficiario($this->MBeneficiario);
     }
 	}
