@@ -265,6 +265,8 @@ class Panel extends MY_Controller {
 		$this->MMedidaJudicial->forma_pago = $data->MedidaJudicial->forma_pago;
 		$this->MMedidaJudicial->institucion = $data->MedidaJudicial->institucion;
 		$this->MMedidaJudicial->nombre_autoridad = $data->MedidaJudicial->autoridad;
+		$this->MMedidaJudicial->tipodecuenta = $data->MedidaJudicial->tipodecuenta;
+		$this->MMedidaJudicial->numerocuenta = $data->MedidaJudicial->numerocuenta;
 		$this->MMedidaJudicial->cargo = $data->MedidaJudicial->cargo;
 
 
@@ -296,9 +298,12 @@ class Panel extends MY_Controller {
 		echo "Se registro nueva Medida Judicial en estatus de activo";
 	}
 
-
-
-
+  ///Para permitir consultar la medida 22112017
+	function ConsultarMedidaEjecutada(){
+		header('Content-Type: application/json');
+		$this->load->model("beneficiario/MMedidaJudicial");
+		echo json_encode($this->MMedidaJudicial->listarTodo($_POST['ced'], $_POST['id']));
+	}
 
 	public function salir(){
 		redirect('panel/Login/salir');

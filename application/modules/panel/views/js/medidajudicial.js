@@ -53,7 +53,6 @@ function consultar() {
         $("#drec").val(data.dia_reconocido);
         $("#fano").val(data.aguinaldos_aux);
         $("#vacaciones").val(data.vacaciones_aux);
-        $("#numero_cuenta").val(data.numero_cuenta);
         $("#estatus").val(data.estatus_descripcion);
         listar(data.MedidaJudicial);
     }).done(function(msg) {}).fail(function(jqXHR, textStatus) {
@@ -109,7 +108,7 @@ function listar(data){
             valor.nombre_beneficiario,
             valor.estado,
             valor.mensualidades
-        ] ).draw( false );
+          ] ).draw( false );
 
     });
     vBtn();
@@ -159,7 +158,7 @@ function ConsultarMedidaEjecutada(id){
 
     $("#myModal").modal("show");
     $.post(ruta, {ced:ced, id:id}, function (data){
-       //console.log(data);
+       console.log(data);
        $.each(data, function(p,q){
             $("#codigomedida").val(id);
             $("#numero_oficio").val(q.numero_oficio);
@@ -174,13 +173,14 @@ function ConsultarMedidaEjecutada(id){
             $("#salarioaux").val(q.salario);
             $("#ut").val(q.unidad_tributaria);
             $("#monto_total").val(q.monto);
+            $("#monto_totalaux").val(q.monto);
             $("#mensualidades").val(q.mensualidades);
             $("#forma_pago").val(q.forma_pago);
             $("#institucion").val(q.institucion);
+            $("#tipodecuenta").val(q.tipodecuenta);
+            $("#numerocuenta").val(q.numerocuenta);
             $("#autoridad").val(q.nombre_autoridad);
             $("#cargo").val(q.cargo);
-
-
             $("#estado").val(q.estado_id);
 
             obtenerCiudades();
@@ -246,7 +246,7 @@ function obtenerMunicipiosID(id){
     console.log(ruta);
     $("#municipio option").remove();
     $.getJSON(ruta, function(data) {
-      
+
         $.each(data, function(d, v){
             var opt = new Option(v.nombre, v.id);
             $("#municipio").append(opt);
@@ -271,6 +271,8 @@ function cargar(){
     MedidaJudicial['salario'] = $("#salarioaux").val();
     MedidaJudicial['mensualidades'] = $("#mensualidades").val();
     MedidaJudicial['ut'] = $("#ut").val();
+    //convertirMonto();
+    //MedidaJudicial['monto'] = $("#monto_totalaux").val();
     MedidaJudicial['monto'] = $("#monto_total").val();
     if($("#forma_pago option:selected").val() == null || $("#forma_pago option:selected").val() == '0'){
       MedidaJudicial['forma_pago'] = 1;
@@ -278,6 +280,8 @@ function cargar(){
        MedidaJudicial['forma_pago'] = $("#forma_pago option:selected").val();
     }
     MedidaJudicial['institucion'] = $("#institucion").val();
+    MedidaJudicial['tipodecuenta'] = $("#tipodecuenta").val();
+    MedidaJudicial['numerocuenta'] = $("#numerocuenta").val();
     MedidaJudicial['autoridad'] = $("#autoridad").val();
     MedidaJudicial['cargo'] = $("#cargo").val();
 
@@ -354,6 +358,12 @@ function convertirSalario(){
   $("#salarioaux").val(valor);
 }
 
+/*function convertirMonto(){
+  var conversion = $("#monto").val();
+  resultado = conversion.replace(",",".");
+
+  $("#monto_totalaux").val(resultado);
+}*/
 
 
 function recargar(){

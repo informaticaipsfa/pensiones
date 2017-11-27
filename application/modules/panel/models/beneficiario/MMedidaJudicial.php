@@ -190,6 +190,11 @@ class MMedidaJudicial extends CI_Model{
 	var $numero_expediente = '';
 
 	/**
+	* @var string
+	*/
+	var $numerocuenta = '';
+
+	/**
 	* @var int
 	*/
 	var $porcentaje = 0;
@@ -291,13 +296,15 @@ class MMedidaJudicial extends CI_Model{
 			$mdj->salario = number_format($v->cantidad_salario, 2, ',', '.');
 			$mdj->mensualidades = $v->mensualidades;
 			$mdj->monto = number_format($v->total_monto, 2, ',', '.');
-			//$mdj->ciudad = $v->cid;
+			$mdj->ciudad = $v->ciudad_id;
 			$mdj->tipo = $v->tipo_medida_id;
 			$mdj->estatus = $v->estatus;
 			//$mdj->estado = strtoupper($v->estado_nombre);
-			//$mdj->estado_id = $v->eid;
+			$mdj->estado_id = $v->estado_id;
 			$mdj->nombre_autoridad = $v->nombre_autoridad;
 			$mdj->cargo = $v->cargo_autoridad;
+			$mdj->tipodecuenta = $v->tipo_cuenta_id;
+			$mdj->numerocuenta = $v->numero_cuenta;
 			$mdj->descripcion_institucion = $v->desc_institucion;
 			$mdj->cedula_autorizado = $v->ci_autorizado;
 			$mdj->unidad_tributaria = $v->unidad_tributaria;
@@ -313,13 +320,15 @@ class MMedidaJudicial extends CI_Model{
 
 	public function salvar(){
     	$sInsert = 'INSERT INTO medida_judicial (
-	      	f_documento,
+	    f_documento,
 			nro_oficio,
 			nro_expediente,
 			total_monto,
 			porcentaje,
 			desc_embargo,
 			forma_pago_id,
+			estado_id,
+			ciudad_id,
 			municipio_id,
 			institucion,
 			desc_institucion,
@@ -341,7 +350,9 @@ class MMedidaJudicial extends CI_Model{
 			f_ult_modificacion,
 			usr_modificacion,
 			observ_ult_modificacion,
-			mensualidades
+			mensualidades,
+			numero_cuenta,
+			tipo_cuenta_id
 	    ) VALUES (';
 
 	    $sInsert .=
@@ -352,7 +363,9 @@ class MMedidaJudicial extends CI_Model{
 	      ' . $this->porcentaje . ',
 	      \'' . $this->observacion . '\',
 	      ' . $this->forma_pago . ',
-	      \'' . $this->municipio . '\',
+				\'' . $this->estado . '\',
+				\'' . $this->ciudad . '\',
+				\'' . $this->municipio . '\',
 	      \'' . $this->institucion . '\',
 	      \'' . $this->descripcion_institucion . '\',
 	      \'' . $this->cedula_beneficiario . '\',
@@ -373,7 +386,9 @@ class MMedidaJudicial extends CI_Model{
 	      \'' . $this->fecha_modificacion . '\',
 	      \'' . $this->usuario_modificacion . '\',
 	      \'' . $this->ultima_observacion . '\',
-	      \'' . $this->mensualidades . '\')';
+				' . $this->mensualidades . ',
+	      \'' . $this->numerocuenta . '\',
+				\'' . $this->tipodecuenta . '\')';
 
 	    //echo $sInsert;
 	    $obj = $this->Dbpace->consultar($sInsert);
@@ -383,14 +398,16 @@ class MMedidaJudicial extends CI_Model{
 
   public function actualizar(){
     	$sInsert = 'UPDATE medida_judicial SET
-	      	f_documento = \'' . $this->fecha . '\',
+	    f_documento = \'' . $this->fecha . '\',
 			nro_oficio = \'' . $this->numero_oficio . '\',
 			nro_expediente = \'' . $this->numero_expediente . '\',
 			total_monto = ' . $this->monto . ',
 			porcentaje = ' . $this->porcentaje . ',
 			desc_embargo = \'' . $this->observacion . '\',
 			forma_pago_id = ' . $this->forma_pago . ',
-			municipio_id = ' . $this->municipio . ',
+			estado_id = \'' . $this->estado . '\',
+			ciudad_id = \'' . $this->ciudad . '\',
+			municipio_id = \'' . $this->municipio . '\',
 			institucion = \'' . $this->institucion . '\',
 			desc_institucion = \'' . $this->descripcion_institucion . '\',
 			ci_beneficiario = \'' . $this->cedula_beneficiario . '\',
@@ -411,15 +428,13 @@ class MMedidaJudicial extends CI_Model{
 			f_ult_modificacion = \'' . $this->fecha_modificacion . '\',
 			usr_modificacion = \'' . $this->usuario_modificacion . '\',
 			observ_ult_modificacion = \'' . $this->ultima_observacion . '\',
-			mensualidades = \'' . $this->mensualidades . '\'
+			mensualidades = \'' . $this->mensualidades . '\',
+			numero_cuenta = \'' . $this->numerocuenta . '\',
+			tipo_cuenta_id = \'' . $this->tipodecuenta . '\'
 	    WHERE id = ' . $this->id;
 
-
-
-	    //echo $sInsert; Me permite mostrar el sql
+	   echo $sInsert; //Me permite mostrar el sql
 	    $obj = $this->Dbpace->consultar($sInsert);
-
-
   }
 
 
@@ -456,6 +471,8 @@ class MMedidaJudicial extends CI_Model{
 			$mdj->forma_pago = $v->forma_pago_id;
 			$mdj->forma_pago_text = $v->tipo_pago_nombre;
 
+			$mdj->estado = $v->estado_id;
+			$mdj->ciudad = $v->ciudad_id;
 			$mdj->municipio = $v->municipio_id;
 			$mdj->institucion = $v->institucion;
 

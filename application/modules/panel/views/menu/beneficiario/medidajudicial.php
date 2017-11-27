@@ -280,6 +280,11 @@
                                     <input type="hidden" id='salarioaux' value=0 >
                                 </div>
                                 <!-- Monto Total -->
+                              <!--  <div class="col-md-4 col-sm-12">
+                                    <label> Monto Total:</label>
+                                    <input type="text" class="form-control" placeholder="Monto Total" id='monto_total' value=0 onblur="convertirMonto()">
+                                    <input type="hidden" id='monto_totalaux' value=0 >
+                                </div>-->
                                 <div class="col-md-4 col-sm-12">
                                     <label> Monto Total:</label>
                                     <input type="text" class="form-control" placeholder="Monto Total" id='monto_total' value=0>
@@ -346,7 +351,7 @@
                                 <div class="col-md-4 col-sm-12">
                                     <label>Tipo de Cuenta:</label>
                                     <select class="form-control" style="width: 100%"
-                                            id="tipodecuenta">
+                                              id="tipodecuenta">
                                         <option selected="selected" value="S"></option>
                                         <option value="CA" selected="selected">AHORRO</option>
                                         <option value="CC">CORRIENTE</option>
@@ -356,7 +361,7 @@
                               <div class="row">
                                 <div class="col-md-4 col-sm-12">
                                     <label>Nro. de Cuenta:</label>
-                                    <input id="numerocuenta" class="form-control"  type="text" maxlength="23"
+                                    <input id="numerocuenta" placeholder="Nro. de Cuenta" class="form-control"  type="text" maxlength="20"
                                            data-inputmask='"mask": "9999-9999-99-9999999999"' data-mask>
                                 </div>
                               </div>
@@ -388,14 +393,14 @@
                                 <!-- Ciudad -->
                                 <div class="col-md-4 col-sm-12">
                                     <label> Ciudad:</label>
-                                    <select class="form-control" id='ciudad' onchange="obtenerCuidades()" style="width: 100%;" >
+                                    <select class="form-control" id='ciudad' onchange="obtenerMunicipios()" style="width: 100%;" >
                                       <option value='0'>SELECCIONE UNA OPCION</option>
                                     </select>
                                 </div>
                                 <!-- Municipio -->
                                 <div class="col-md-4 col-sm-12">
                                     <label> Municipio:</label>
-                                    <select class="form-control" id='municipio' onchange="obtenerMunicipios()" style="width: 100%;" >
+                                    <select class="form-control" id='municipio' style="width: 100%;" >
                                       <option value='0'>SELECCIONE UNA OPCION</option>
                                     </select>
                                 </div>
@@ -638,14 +643,6 @@
 
                       </div>
                     </div>
-
-
-
-
-
-
-
-
         </section><!-- /.content -->
 
         <!-- Main content -->
