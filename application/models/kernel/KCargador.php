@@ -34,6 +34,14 @@ class KCargador extends CI_Model{
   var $MedidaJudicial = null;
 
 
+
+  /**
+  * @var Retroactivo
+  */
+  var $KAsignaciones = null;
+
+
+
   /**
   * @var KArchivos
   */
@@ -187,6 +195,7 @@ class KCargador extends CI_Model{
     $this->load->model('kernel/KCalculo');
     $this->load->model('kernel/KGenerador');
     $this->load->model('kernel/KRecibo');
+    $this->load->model('kernel/KReciboSobreviviente');
     
   }
 
@@ -219,6 +228,7 @@ class KCargador extends CI_Model{
     $this->load->model('kernel/KArchivos');
     
     $this->MedidaJudicial = $this->KMedidaJudicial->Cargar($this->_MapWNomina["nombre"]);
+    $this->MedidaJudicial = $this->KMedidaJudicial->Cargar($this->_MapWNomina["nombre"]);
     $this->Archivos = $this->KArchivos->Cargar($this->_MapWNomina["nombre"],  $this->_MapWNomina["tipo"]);
     
     $sConsulta = "
@@ -237,25 +247,25 @@ class KCargador extends CI_Model{
         bnf.situacion = '" . $this->_MapWNomina["tipo"] . "'
         AND
         bnf.status_id = 201
-        -- AND bnf.cedula='15579924' --FCP='15236250' 
+        -- AND bnf.cedula='13587538' --FCP='15236250' 
         -- grado.codigo NOT IN(8450, 8510, 8500, 8460, 8470, 8480, 5320) 
         ORDER BY grado.codigo
         -- AND grado.codigo IN( 10, 15)
-        -- LIMIT 10
+        -- LIMIT 3
         ";
     //echo $sConsulta;
     $con = $this->DBSpace->consultar($sConsulta);
     $this->functionRefelxion = "generarConPatrones";
     if($this->_MapWNomina["tipo"] == "FCP"){
       $this->cargarFamiliaresFCP();
-      if($this->_MapWNomina["nombre"]=="DIFERENCIA DE SUELDO"){
+      if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" || $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO" ){
         $this->functionRefelxion = "generarConPatronesFCPDIF";
       }else{
         $this->functionRefelxion = "generarConPatronesFCP";
       }
       
     }else{
-      if($this->_MapWNomina["nombre"]=="DIFERENCIA DE SUELDO"){
+      if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" || $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO"){
         $this->functionRefelxion = "generarConPatronesRCPDIF";
       }
     }
@@ -289,7 +299,7 @@ class KCargador extends CI_Model{
     
 
     $sqlMJ = "INSERT INTO space.medidajudicial_detalle ( nomi, cedu, cben, bene, caut, naut, inst, tcue, ncue, pare, crea, usua, esta, mont ) VALUES ";
-    $sqlCVS = "INSERT INTO space.pagos ( nomi, did, cedu, nomb, calc, fech, banc, nume, tipo, situ, esta, usua, neto, base, grad, caut, naut,cfam ) VALUES ";
+    $sqlCVS = "INSERT INTO space.pagos ( nomi, did, cedu, nomb, calc, fech, banc, nume, tipo, situ, esta, usua, neto, base, grad, caut, naut, cfam, pare ) VALUES ";
     
     $cant = count($this->_MapWNomina['Concepto']);
     $map = $this->_MapWNomina['Concepto'];
@@ -338,7 +348,7 @@ class KCargador extends CI_Model{
       $this->CantidadMedida++;
       
       if($linea["csv"] != ""){
-        if($this->_MapWNomina['tipo'] == "FCP"){
+        if( $this->_MapWNomina['tipo'] == "FCP" ){
           fputs($file, $linea["csv"]); //Generacion CSV -> EXCEL
         }else{
           fputs($file,$linea["csv"]); //Generacion CSV -> EXCEL
@@ -366,8 +376,6 @@ class KCargador extends CI_Model{
         
       }else{
         if($linea["log"] != "" && $this->_MapWNomina['tipo'] == "FCP"){
-          //$lin = $Bnf->cedula . ';' . $Bnf->apellidos . ';' . $Bnf->nombres . ';CON FAMILIARES EN CERO' . PHP_EOL;
-          //fputs($file_log, $lin); //CREACION DE INCIDENCIAS
           fputs($file_log, $linea["log"]); //CREACION DE INCIDENCIAS
         }else{
           $lin = $Bnf->cedula . ';' . $Bnf->apellidos . ';' . $Bnf->nombres . PHP_EOL;
@@ -391,21 +399,22 @@ class KCargador extends CI_Model{
     $this->KNomina->Asignacion = $this->Asignacion;
     $this->KNomina->Deduccion = $this->Deduccion;
     $this->KNomina->Cantidad = $this->Cantidad;
-    if($this->_MapWNomina['tipo'] == "FCP"){
+    if( $this->_MapWNomina['tipo'] == "FCP" ){
       $this->KNomina->Cantidad = $this->OperarBeneficiarios;
       $this->Cantidad = $this->OperarBeneficiarios;
       $this->Anomalia = $this->AnomaliaSobreviviente;
       $this->Paralizados = $this->ParalizadosSobrevivientes;
-    }else if($this->_MapWNomina["nombre"]=="DIFERENCIA DE SUELDO"){
+    }else if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" ){
       $this->KNomina->Cantidad = $this->OperarBeneficiarios;
       $this->Cantidad = $this->OperarBeneficiarios;
     }
     $this->KNomina->Actualizar();
-
     $this->KNomina->RegistrarDetalle($this->OidNomina , $this->ResumenPresupuestario);
     fclose($file);//Para Generar archivo csv 04102017
     return true;
   }
+
+
   /**
   * Generar Codigos por Patrones en la Red de Inteligencia
   *
@@ -466,7 +475,7 @@ class KCargador extends CI_Model{
       if(!isset($Perceptron->Neurona[$patron])){
         $CalculoLote->Ejecutar();
         
-        
+        //print_r($Bnf->Concepto);
 
         $segmentoincial = '';        
         
@@ -476,6 +485,7 @@ class KCargador extends CI_Model{
         //Aplicar conceptos de Asignación
         for ($i= 0; $i < $cant; $i++){
           $rs = $map[$i]['codigo'];
+          
           if (isset($Bnf->Concepto[$rs])) {            
             if( $Bnf->Concepto[$rs]['TIPO'] == 99 ){
               $medida_str = $medida[0] . ";";
@@ -494,8 +504,9 @@ class KCargador extends CI_Model{
               $segmentoincial .=  $monto_aux . ";";
               $asignacion += $Bnf->Concepto[$rs]['TIPO'] == 1? $monto_aux: 0;
               $deduccion += $Bnf->Concepto[$rs]['TIPO'] == 0? $monto_aux: 0;
-              $deduccion += $Bnf->Concepto[$rs]['TIPO'] == 2? $monto_aux: 0;        
-              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'],'mont' => $monto_aux);
+              $deduccion += $Bnf->Concepto[$rs]['TIPO'] == 2? $monto_aux: 0;
+
+              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
               //asgnar prepuesto
               $this->asignarPresupuesto($rs, $Bnf->Concepto[$rs]['mt'], $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
                
@@ -551,7 +562,7 @@ class KCargador extends CI_Model{
         "','" . trim($Bnf->apellidos) . ", " . trim($Bnf->nombres) . "','" . 
         json_encode($this->KRecibo) . "',Now(),'" . $Bnf->banco . "','" . $Bnf->numero_cuenta . 
         "','" . $Bnf->tipo . "','" . $Bnf->situacion . "'," . $Bnf->estatus_activo . 
-        ",'SSSIFANB'," . $neto . ", '" . $base . "','" . $Bnf->grado_nombre . "','','','')";
+        ",'SSSIFANB'," . $neto . ", '" . $base . "','" . $Bnf->grado_nombre . "','','','','TI')";
 
       }else{      //En el caso que exista el recuerdo en la memoria   
         $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf,  $sqlID);
@@ -605,7 +616,7 @@ class KCargador extends CI_Model{
         "','" . trim($Bnf->apellidos) . ", " . trim($Bnf->nombres) . "','" . 
         json_encode($this->KRecibo) . "',Now(),'" . $Bnf->banco . "','" . $Bnf->numero_cuenta . 
         "','" . $Bnf->tipo . "', '" . $Bnf->situacion . "', " . $Bnf->estatus_activo . 
-        ", 'SSSIFANB'," . $neto . ",'" . $base . "','" . $Bnf->grado_nombre . "','','','')";
+        ", 'SSSIFANB'," . $neto . ",'" . $base . "','" . $Bnf->grado_nombre . "','','','', 'TI')";
         
       }
 
@@ -683,14 +694,10 @@ class KCargador extends CI_Model{
    
     $cant = count($this->_MapWNomina['Concepto']);
     $map = $this->_MapWNomina['Concepto'];
-    //    print_r($this->Archivos);
     $recibo_de_pago = array(); // Contruir el recibo de pago para un JSON
 
     //GENERADOR DE CALCULOS DINAMICOS
-    $segmentoincial = '';        
-    
-    //$medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf, $sqlID);
-    
+    $segmentoincial = '';    
     $asignacion = 0;
     $deduccion = 0;
     $sueldo_mensual = 0;
@@ -702,13 +709,15 @@ class KCargador extends CI_Model{
       if($monto > 0 ){
         $monto_str .= $monto . ';';
         $asignacion += $monto;
-        if($monto != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 1,'mont' => $monto );  
+        if($monto != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 1, 'mont' => $monto );  
         $this->asignarPresupuesto( $rs, $asignacion,  '1', $map[$i]['nombre'], $map[$i]['partida']);        
       }else{
         $valor = $monto * -1 ;
         $monto_str .= $valor . ';';
         $deduccion +=  $valor;
-        if($valor != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 1,'mont' => $valor );
+        
+        if($valor != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 2, 'mont' => $valor );
+        
         $this->asignarPresupuesto( $rs, $deduccion, '2', $map[$i]['nombre'], $map[$i]['partida']);
       }
     } 
@@ -719,31 +728,32 @@ class KCargador extends CI_Model{
         ';' . $Bnf->grado_nombre . ';' . $Bnf->tiempo_servicio . ';' . $Bnf->antiguedad_grado . 
         ';' . $Bnf->numero_hijos . ';' . $Bnf->porcentaje . ';' . $monto_str;
 
-
+    
     $neto = $asignacion - $deduccion;
     
     if ($asignacion > 0 ){
         $linea = $Bnf->cedula . ';' . trim($Bnf->apellidos) . ';' . trim($Bnf->nombres) . 
         ';' .  $Bnf->tipo . ";'" . $Bnf->banco . ";'" . $Bnf->numero_cuenta . 
-        ";" . $segmentoincial  . $asignacion . ';' . $deduccion . ';'  . $neto;
-        $this->OperarBeneficiarios++;
-       
+        ";" . $segmentoincial  . $asignacion . ';' . $deduccion . ';'  . $neto;        
+        
         $this->KRecibo->conceptos = $recibo_de_pago;        
         $this->KRecibo->asignaciones = $asignacion;
         $this->KRecibo->deducciones = $deduccion;
-        
+        $this->OperarBeneficiarios++;
+
         //Insert a Postgres
         $base = $Bnf->porcentaje . "|" . $Bnf->componente_id . "|" . $Bnf->grado_codigo . "|" . $Bnf->grado_nombre; 
         $registro = "(" . $sqlID . "," . $Directivas['oid'] . ",'" . $Bnf->cedula . 
         "','" . trim($Bnf->apellidos) . ", " . trim($Bnf->nombres) . "','" . 
         json_encode($this->KRecibo) . "',Now(),'" . $Bnf->banco . "','" . $Bnf->numero_cuenta . 
         "','" . $Bnf->tipo . "','" . $Bnf->situacion . "'," . $Bnf->estatus_activo . 
-        ",'SSSIFANB'," . $neto . ", '" . $base . "', '" . $Bnf->grado_nombre . "','','','')";
+        ",'SSSIFANB'," . $neto . ", '" . $base . "', '" . $Bnf->grado_nombre . "','','','','TI')";
+        
+
         
     
     }else{
-      $log = $Bnf->cedula . ';' . $Bnf->apellidos . ';' . $Bnf->nombres . ';';
-      
+      $log = $Bnf->cedula . ';' . $Bnf->apellidos . ';' . $Bnf->nombres . ';';      
     }
 
     $this->SSueldoBase += $Bnf->sueldo_base;
@@ -825,7 +835,7 @@ class KCargador extends CI_Model{
     //GENERADOR DE CALCULOS DINAMICOS
     // if(!isset($Perceptron->Neurona[$patron])){
     $CalculoLote->Ejecutar();
-
+    
     $segmentoincial = '';
 
      //Aplicar conceptos de Asignación
@@ -854,6 +864,7 @@ class KCargador extends CI_Model{
 
     //$Bnf->pension = $asignacion;
     //print_r( $Bnf->pension );
+    $this->KReciboSobreviviente->primas = $Bnf->Concepto;
 
     $segmentoincial = $Bnf->cedula . ';' . $Bnf->apellidos . ';' . $Bnf->nombres . 
     ';' . $Bnf->grado_nombre . ';' . round($Bnf->total_asignacion,2) . ';' . $Bnf->porcentaje . 
@@ -863,15 +874,25 @@ class KCargador extends CI_Model{
     $netot = 0;
     $linea = "";
     $i = 0;
-    
+    $fondo_cis = (round($Bnf->pension,2) * 6.5 )/100 ;
+    $Bnf->retencion = round( $fondo_cis, 2 );
+    $deducciont += $Bnf->retencion;
+
+    $this->KReciboSobreviviente->grado = $Bnf->grado_nombre;
+    $this->KReciboSobreviviente->fondo_cis = $Bnf->retencion;
+    $this->KReciboSobreviviente->pension = $Bnf->pension;
+    $this->KReciboSobreviviente->cedula = $Bnf->cedula;
+    $this->KReciboSobreviviente->porcentaje = $Bnf->porcentaje;
+    $this->KReciboSobreviviente->titular =  $Bnf->apellidos . " " .  $Bnf->nombres;
+
     if(isset($this->FCP[$Bnf->cedula])){
       $PS = $this->FCP[$Bnf->cedula];
       foreach ($PS as $clv => $val) {
         $medida_str = "";
         $cajaahorro_str = "";
         
-        $asignacionp = (round($Bnf->pension,2) * round($PS[$i]['porcentaje'],2) )/100 ;
-        $deduccionp = round(($asignacionp * 6.5) / 100, 2);
+        $asignacionp = round((( $Bnf->pension - $Bnf->retencion) * round($PS[$i]['porcentaje'],2)) / 100, 2);
+        $deduccionp = 0.00; //round(($asignacionp * 6.5) / 100, 2);
         $neto = $asignacionp - $deduccionp;
 
         
@@ -893,18 +914,25 @@ class KCargador extends CI_Model{
               'tipo' => 97,
               'mont' => $asignacionp
             );
-            $recibo_de_pago[] = array(
-              'desc' =>  'COTIZ 6.5% PENSIONES (FONDO CIS)', 
-              'tipo' => 0,
-              'mont' => $deducciont
-            );
-            $this->KRecibo->conceptos = $recibo_de_pago;        
-            $this->KRecibo->asignaciones = $asignacion;
-            $this->KRecibo->deducciones = $deduccion;
+            // $recibo_de_pago[] = array(
+            //   'desc' =>  'COTIZ 6.5% PENSIONES (FONDO CIS)', 
+            //   'tipo' => 0,
+            //   'mont' => $deducciont
+            // );
+
+            $coma = "";
+            if($this->OperarBeneficiarios > 1){
+              $coma = ",";
+            }
+
+            $this->KReciboSobreviviente->conceptos = $recibo_de_pago;        
+            $this->KReciboSobreviviente->asignaciones = $asignacionp;
+            $this->KReciboSobreviviente->deducciones = $Bnf->retencion + $deduccionp;
+
             $base = $Bnf->porcentaje . "|" . $Bnf->componente_id . "|" . $Bnf->grado_codigo . "|" . $Bnf->grado_nombre;
-            $registro .= $this->ComaFallecidos . "(" . $sqlID . "," . $Directivas['oid'] . ",'" . $Bnf->cedula . 
+            $registro .= $coma . "(" . $sqlID . "," . $Directivas['oid'] . ",'" . $Bnf->cedula . 
             "','" . trim($PS[$i]['apellidos']) . ", " . trim($PS[$i]['nombres']) . "','" . 
-            json_encode($this->KRecibo) . "',Now(),'" . $PS[$i]['banco'] . "','" . $PS[$i]['numero'] . 
+            json_encode($this->KReciboSobreviviente) . "',Now(),'" . $PS[$i]['banco'] . "','" . $PS[$i]['numero'] . 
             "','" . $PS[$i]['tipo'] . "', '" . $Bnf->situacion . "', " . $Bnf->estatus_activo . 
             ", 'SSSIFANB'," . $neto . ", '" . $base . "', '" . $Bnf->grado_nombre . 
             "','" . $PS[$i]['autorizado'] . "','" . strtoupper($PS[$i]['nautorizado']) . "','" . $PS[$i]['cedula'] . "')";
@@ -952,7 +980,7 @@ class KCargador extends CI_Model{
     $this->Neto += $netot;
 
     $obj["csv"] = $linea;
-    $obj["sql"] = "";
+    $obj["sql"] = $registro;
     $obj["log"] = $log;
     return $obj;
 
@@ -1013,7 +1041,7 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
  
   $cant = count($this->_MapWNomina['Concepto']);
   $map = $this->_MapWNomina['Concepto'];
-  //    print_r($this->Archivos);
+  
   $recibo_de_pago = array(); // Contruir el recibo de pago para un JSON
 
   //GENERADOR DE CALCULOS DINAMICOS
@@ -1030,17 +1058,18 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
       for ($j= 0; $j < $cant; $j++){
         $rs = $map[$j]['codigo'];
         $monto = $this->obtenerArchivosFCP($PS[$i]['cedula'], $rs); 
-        //print_r($PS[$i]['cedula'] . "   Ca\n");
+
         if($monto > 0 ){
           $monto_str .= $monto . ';';
           $asignacion += $monto;
-          if($monto != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 1,'mont' => $monto ); 
-          $this->asignarPresupuesto( $rs,$asignacion,  '1', $map[$j]['nombre'], $map[$j]['partida']);         
+          if($monto != 0)$recibo_de_pago[] = array( 'desc' => $map[$j]['nombre'], 'tipo' => 1,'mont' => $monto ); 
+          $this->asignarPresupuesto( $rs, $asignacion,  '1', $map[$j]['nombre'], $map[$j]['partida']);  
+
         }else if($monto < 0) {
           $valor = $monto * -1 ;
           $monto_str .= $valor . ';';
           $deduccion +=  $valor;
-          if($valor != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 1,'mont' => $valor );
+          if($valor != 0)$recibo_de_pago[] = array( 'desc' => $map[$j]['nombre'], 'tipo' => 2,'mont' => $valor );
           $this->asignarPresupuesto( $rs, $deduccion, '2', $map[$j]['nombre'], $map[$j]['partida']);
         }
       } 
@@ -1052,7 +1081,7 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
 
 
 
-      
+     
       $neto = $asignacion - $deduccion;
       
       if ($neto > 0 ){
@@ -1078,7 +1107,8 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
           json_encode($this->KRecibo) . "',Now(),'" .  $PS[$i]['banco']  . "','" . $PS[$i]['numero'] . 
           "','" . $PS[$i]['tipo'] . "','" . $Bnf->situacion . "'," . $Bnf->estatus_activo . 
           ",'SSSIFANB'," . $neto . ", '" . $base . "', '" . $Bnf->grado_nombre . 
-          "','" . $PS[$i]['autorizado'] . "','" . strtoupper($PS[$i]['nautorizado']) . "','" . $PS[$i]['cedula'] . "')";
+          "','" . $PS[$i]['autorizado'] . "','" . strtoupper($PS[$i]['nautorizado']) . 
+          "','" . $PS[$i]['cedula'] . "','" . $PS[$i]['parentesco'] . "')";
           $this->Asignacion += $asignacion;
           $this->Deduccion += $deduccion;
           
@@ -1183,6 +1213,7 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
     
     return $monto;
   }
+  
   private function obtenerArchivos( MBeneficiario &$Bnf, $concepto  ){
     //print_r($this->Archivos[$concepto][$Bnf->cedula]);
     $monto = $this->KArchivos->Ejecutar($Bnf->cedula, $concepto, $this->Archivos);
@@ -1203,7 +1234,6 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
   }
 
   private function asignarPresupuesto($rs, $mt, $tp, $ab, $part){
-    
     if (isset($this->ResumenPresupuestario[$rs])){
       $mt_aux = $this->ResumenPresupuestario[$rs]['mnt'];
       if($mt_aux > 0){
@@ -1241,6 +1271,7 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
         break;
     }
   }
+ 
   /**
   * Crear Txt Para los bancos e insertar movimientos
   *

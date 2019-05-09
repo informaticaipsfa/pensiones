@@ -128,15 +128,18 @@ class KCalculoLote extends CI_Model{
           $rs_mt =  $this->Directiva['fnx'][$c]['rs'] . '_mt';
           $fnx =  $this->Directiva['fnx'][$c]['fn'];
           eval('$valor = ' . $fnx);
+
           $this->Beneficiario->$rs = round($valor,2);
           $this->Beneficiario->$rs_mt = $monto_nominal;
           $this->Beneficiario->monto_total_prima += $this->Beneficiario->$rs;
-          $this->Beneficiario->Concepto[$rs] = array(
-            'mt' => round($valor,2), 
-            'ABV' =>  $rs, 
-            'TIPO' => 97,
-            'part' => '40701010101'
-          );
+          if( $valor != 0 ) {
+            $this->Beneficiario->Concepto[$rs] = array(
+              'mt' => round($valor,2), 
+              'ABV' =>  $rs, 
+              'TIPO' => 97,
+              'part' => '40701010101'
+            );
+          }
         }
         //$this->Beneficiario->Concepto[$rs] =  array('mt' => round($prima_profesionalizacion_mt,2), 'ABV' =>  "prima_profesionalizacion", 'TIPO' => 1 );
         $total_primas = $this->Beneficiario->monto_total_prima + $prima_profesionalizacion_mt;
@@ -154,19 +157,21 @@ class KCalculoLote extends CI_Model{
         'TIPO' => 1,
         'part' => '40701010101'
       );
-      //Formular Conceptos
+      //Formular Conceptos Ryotyonsy | SkiWacHu
       foreach ( $this->Directiva['fnxC'] as $Con => $obj ){
 
         $fnx = $obj['fn'];
-        $rs = $obj['rs'];
-        
+        $rs = $obj['rs'];        
         eval('$valor = ' . $fnx);
-        $this->Beneficiario->Concepto[$rs] = array(
-          'mt' => round($valor,2), 
-          'ABV' =>  $obj['abv'], 
-          'TIPO' => $obj['tipo'],
-          'part' => $obj['part']
-        );
+        if( $valor != 0 ) {
+          $this->Beneficiario->Concepto[$rs] = array(
+            'mt' => round($valor,2), 
+            'ABV' =>  $obj['abv'], 
+            'TIPO' => $obj['tipo'],
+            'part' => $obj['part']
+          );
+        }
+
         $valor = 0;
       } 
     }    

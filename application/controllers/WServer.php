@@ -211,6 +211,7 @@ class WServer extends REST_Controller{
         $this->load->model('kernel/KCargador');
         $data['id'] = $this->post("id"); //Directiva
         $data['fecha'] = $this->post("fechainicio");
+        $data['mes'] = $this->post("mes");
 
         $this->KCargador->_MapWNomina = $this->post();
 

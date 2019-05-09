@@ -43,11 +43,11 @@ class KNomina extends CI_Model{
   public function Cargar($info = ""){
     $oid = 0;
     $p = json_encode($info["Concepto"]);
-    $sConsulta = "INSERT INTO space.nomina ( nomb,obse,fech,desd,hast,tipo,mont,asig, dedu, cant, esta, info, url ) VALUES (
+    $sConsulta = "INSERT INTO space.nomina ( nomb,obse,fech,desd,hast,tipo,mont,asig, dedu, cant, esta, info, url, mes ) VALUES (
     '" . $this->Nombre . "','" . $info["nombre"] . "',Now(),'" . $info["fechainicio"] . "','" . $info["fechafin"] . 
     "','" .  $info["tipo"] . 
     "'," . $this->Monto . "," . $this->Asignacion . "," . $this->Deduccion . 
-    "," . $this->Cantidad  . "," . $this->Estatus  . ",'"  . $p . "','"  . base_url() . "') RETURNING oid";
+    "," . $this->Cantidad  . "," . $this->Estatus  . ",'"  . $p . "','"  . base_url() . "','"  . $info['mes'] . "') RETURNING oid";
 
     $obj = $this->DBSpace->consultar($sConsulta);
     foreach ($obj->rs as $clv => $val) {

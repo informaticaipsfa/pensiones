@@ -317,6 +317,10 @@ class MBeneficiario extends CI_Model{
 	*/
 	var $diferencia_asig_a = 0.00;
 
+	/**
+	* @var double
+	*/
+	var $retencion = 0.00;
 
 	/**
 	* @var double

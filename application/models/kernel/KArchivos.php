@@ -51,5 +51,14 @@ class KArchivos extends CI_Model{
         return $monto;
 	}
 
+	/**
+	 * Cargar Datos de Asignaciones y Deducciones 
+	 * 
+	 */
+	public function CargarAD(){
+		$query = "SELECT cedula, conc, fnxc, tipo  from space.descuentos ";
+	}
+
+
 
 }
