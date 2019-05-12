@@ -409,6 +409,11 @@ class MBeneficiario extends CI_Model{
 	var $Concepto = array();
 
 	/**
+	* @var Retroactivo
+	*/
+	var $Retroactivo = array();
+
+	/**
 	* Iniciando la clase, Cargando Elementos Pace
 	*
 	* @access public

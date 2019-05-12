@@ -361,5 +361,14 @@ class WServer extends REST_Controller{
         $this->response($this->KNomina->VerDetalles());
     }
 
+    function calcularretroactivo_post(){
+        $this->load->model('kernel/KCargador');
+        $fecha = date('d/m/Y H:i:s');
+        $llave = md5($fecha);
+        $arr = $this->KCargador->CalcularRetroactivo($this->post());
+        $this->response($arr);
+
+    }
+
 }
 	

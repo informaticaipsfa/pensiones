@@ -56,8 +56,14 @@ class KCalculoLote extends CI_Model{
     $this->AntiguedadGrado();
     $this->TiempoServicios();
     
+
+    //print_r($this->Directiva);
+
     $cod = $this->Beneficiario->grado_codigo . $this->Beneficiario->antiguedad_grado;
-    $sueldo = $this->Directiva['sb'];    
+    
+    $sueldo = $this->Directiva['sb'];
+    //print_r($sueldo[$cod]);
+    
     if( $this->Beneficiario->situacion != "I" && $this->Beneficiario->situacion != "PG" ){     
       if($this->Beneficiario->antiguedad_grado < 0){
         $cod = $this->Beneficiario->grado_codigo . "0";

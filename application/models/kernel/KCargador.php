@@ -1597,12 +1597,6 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
 
   }
 
-}
-
-
-
-
-
 
 
   /**
@@ -1613,29 +1607,91 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
   * @param object
   * @return void
   */
-  function CalculosIndividual($Bnf, $data, $Directivas){
+  function CalcularRetroactivo($data){
+    $this->load->model('comun/Dbpace');
     $this->load->model('kernel/KDirectiva');
     $this->load->model('fisico/MBeneficiario');
+    $this->load->model('kernel/KCalculoLote');
+    $arrRetroActivo = array();
 
-    $Directivas = $this->KDirectiva->Cargar($id); //Directivas
-    $Bnf = new $this->MBeneficiario;
 
-    $Bnf->cedula = $v->cedula;
-    $Bnf->apellidos = $data['apellidos']; //Individual del Objeto
-    $Bnf->nombres = $data['nombres']; //Individual del Objeto
+    $sConsulta = "SELECT * FROM space.nomina_retroactivo WHERE desd >= '" . $data['inicio'] . "' AND hast <= '" . $data['fin'] . "';";
     
-    $Bnf->fecha_ingreso = $data['fecha_ingreso'];
-    $Bnf->numero_hijos = $data['n_hijos'];
+    //echo $sConsulta;
+    $con = $this->DBSpace->consultar($sConsulta);
+
+
+    $Bnf = new $this->MBeneficiario;
+    $Bnf->cedula = '';
+    // $Bnf->apellidos = $data['apellidos']; //Individual del Objeto
+    // $Bnf->nombres = $data['nombres']; //Individual del Objeto
+    $Bnf->fecha_ingreso = $data['fingreso'];
+    $Bnf->numero_hijos = $data['hijos'];
 
     $Bnf->situacion = 201;
-    $Bnf->componente_nombre = $Directivas['com'][$v->componente_id];
+    $Bnf->componente_id = $data['componente'];
+    
     $Bnf->grado_codigo = $data['codigo'];
-    $Bnf->fecha_ultimo_ascenso = $data['f_ult_ascenso'];
-    $Bnf->fecha_retiro = $data['f_retiro'];
+    $Bnf->fecha_ultimo_ascenso = $data['fascenso'];
+    $Bnf->fecha_retiro = $data['fretiro'];
     $Bnf->porcentaje = $data['porcentaje'];
+    $obj = $con->rs;
+    foreach ($obj as $k => $v) {
+
+      $Directivas = $this->KDirectiva->Cargar($v->oidd); //Directivas   
+      $Bnf->componente_nombre = $Directivas['com'][$data['componente']]; 
+      $this->KCalculoLote->Instanciar($Bnf, $Directivas);
+      $this->KCalculoLote->Ejecutar();
+      $Concepto = array();
+      foreach ($Bnf->Concepto as $cla => $val) {
+        
+        if ($val['mt'] > 0){
+          //0: Mensual. 1: Quincenal. : 2: Semanal.
+          if( $v->forma == 1 ){
+            $val['mt'] = $val['mt'] / 2;
+          }
+          $Concepto[$cla] = $val; 
+          
+        }
+      }
+      if($v->vacac > 0){
+        $valor = $Bnf->pension * $v->vacac;
+        $Concepto['bono_recreacional'] = array(
+          'mt' => round($valor,2), 
+          'ABV' =>  'bono_recreacional', 
+          'TIPO' => 1,
+          'part' => '40701010101'
+        );
+      }
+      if($v->aguin > 0){
+        $valor = $Bnf->pension * $v->aguin;
+        $Concepto['aguinaldos'] = array(
+          'mt' => round($valor,2), 
+          'ABV' =>  'bono_recreacional', 
+          'TIPO' => 1,
+          'part' => '40701010101'
+        );
+      }
+      $valor = $v->respecialcon;
+      $Concepto['retribucion_especial'] = array(
+          'mt' => round($valor,2), 
+          'ABV' =>  'bono_recreacional', 
+          'TIPO' => 1,
+          'part' => '40701010101'
+        );
+
+      $Bnf->Concepto = $Concepto;
+
+      $arrRetroActivo[] = $Bnf->Concepto;     
+
+    }
+
     
+
+
     
-    $CalculoLote->Ejecutar();
+
+    $Bnf->Retroactivo = $arrRetroActivo;
     return $Bnf;
 
   }
