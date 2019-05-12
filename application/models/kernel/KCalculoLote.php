@@ -103,7 +103,8 @@ class KCalculoLote extends CI_Model{
 
       $valor = 0;
       $this->Beneficiario->monto_total_prima = 0;
-      $automatico = 0;
+      $automatico = -1;
+      $manual = -1;
       $grado = $this->Beneficiario->grado_codigo;
       $componente = $this->Beneficiario->componente_id;
       $tiempo_servicio = $this->Beneficiario->tiempo_servicio;
@@ -158,11 +159,28 @@ class KCalculoLote extends CI_Model{
         'part' => '40701010101'
       );
       //Formular Conceptos Ryotyonsy | SkiWacHu
+      // print_r( $this->Directiva['fnxC'] );
       foreach ( $this->Directiva['fnxC'] as $Con => $obj ){
 
-        $fnx = $obj['fn'];
-        $rs = $obj['rs'];        
-        eval('$valor = ' . $fnx);
+        $fnx = strtolower($obj['fn']);
+        $rs = $obj['rs'];
+
+        // echo ">>>>... \r\n";
+        // // print_r( $fnx );
+        // if ($fnx != '$manual;' && $fnx != '' ){
+        //   echo $rs  . "   ---> " . $fnx . " No es manual\r\n";
+          eval('$valor = ' . $fnx);        
+      //  }else if($fnx != '$automatico;') {
+      //     echo $rs  . "   ---> " . $fnx . " No es automatico\r\n";
+      //     eval('$valor = ' . $fnx);
+      //   }else{
+      //     echo $rs  . "   ---> " . $fnx . "es\r\n";
+      //     $valor = -1;
+          
+      //   }
+        
+        
+        //echo "\r\n" . $obj['tipo'] . "  --  " .  $obj['abv'] . " Manual >>>>... \r\n";
         if( $valor != 0 ) {
           $this->Beneficiario->Concepto[$rs] = array(
             'mt' => round($valor,2), 

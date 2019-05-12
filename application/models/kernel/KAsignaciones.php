@@ -3,7 +3,7 @@
 /**
 *
 */
-class KAsginaciones extends CI_Model{
+class KAsignaciones extends CI_Model{
 
 
 	function __construct(){
@@ -12,30 +12,21 @@ class KAsginaciones extends CI_Model{
     }
 
 	
-	public function Cargar($tipoNomina = ""){
+	public function Cargar($Situacion = "RCP"){
 	
-        $query = "SELECT cedula, conc, fnxc, tipo  from space.asig_deduc";
+        $query = "SELECT cedula, conc, fnxc, tipo, familiar  from space.asig_deduc WHERE cedula!=familiar";
         $obj = $this->Dbpace->consultar($query);
 
 		$rs = $obj->rs;
-
+        $arr = array();
 		foreach ($rs as $c => $v) {
-            $medida = array(
-				'cedula' => $v->cedula, //Cedula del titula de la medida
-				'nomb' => $v->nomb,	//Descripcion de la medidaa
-				'pare' => $v->pare, //Parentesco
-				'cben' => $v->cben, //Cedula Beneficiario
-				'bene' => $v->bene, //Nombre Beneficiario
-                'caut' => $v->caut, //Cedula Autorizado
-				'auto' => $v->auto, //Nombre del autorizado
-				'tpag' => $v->tpag, 
-				'inst' => $v->inst, // Institucion bancaria
-				'tcue' => $v->tcue, // Tipo de cuenta
-				'ncue' => $v->ncue, // Numero de Cuenta
-				'fnxm' => $v->fnxm, // Formula monto
+            $asignacion = array(				
+				'tipo' => $v->tipo,	//Descripcion de la medidaa
+				'fnxc' => $v->fnxc, // Formula monto
             );
-            $arr[$v->cedula][] = $medida;
+            $arr[$v->cedula][$v->conc] = $asignacion;
         }
+        //print_r($arr);
 		return $arr;
 	}
 

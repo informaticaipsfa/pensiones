@@ -78,7 +78,7 @@ class KConceptos extends CI_Model{
   */
   public function Cargar(&$Dir){
 
-    $consultaConcepto = "SELECT * FROM space.conceptos WHERE componente = 'TODOS' AND estatus=1";
+    $consultaConcepto = "SELECT * FROM space.conceptos WHERE estatus=1 ORDER BY oid";
     $obj = $this->DBSpace->consultar($consultaConcepto);    
     foreach ($obj->rs as $clv => $v) {    
         $Dir['fnxC'][] = array(
@@ -102,7 +102,7 @@ class KConceptos extends CI_Model{
   */
   public function CargarConceptos(){
 
-    $consultaConcepto = "SELECT * FROM space.conceptos WHERE componente = 'TODOS' AND estatus=1";
+    $consultaConcepto = "SELECT * FROM space.conceptos WHERE estatus=1";
     $obj = $this->DBSpace->consultar($consultaConcepto);    
     foreach ($obj->rs as $clv => $v) {    
       $Dir['fnxC'][] = array(

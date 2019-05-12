@@ -19,7 +19,7 @@ class KArchivos extends CI_Model{
 		if ( $tipoNomina == 'FCP' ){
 			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo WHERE fami != ''  AND fami = '533320';"; // --WHERE fech BETWEEN '2019-04-01' AND '2019-04-30'";
 		}else{
-			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo;"; // --WHERE fech BETWEEN '2019-04-01' AND '2019-04-30'";			
+			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo WHERE conc='1069';"; // --WHERE fech BETWEEN '2019-04-01' AND '2019-04-30'";			
 		}
         $obj = $this->Dbpace->consultar($query);
 
@@ -30,10 +30,10 @@ class KArchivos extends CI_Model{
 			// if(isset($arr[$v->conc][$v->cedu])){
 			// 	$mnt_aux = $arr[$v->conc][$v->cedu];
 			// }   
-			// $resultado = 0;        
+			$resultado = 0;        
 			if($v->tipo == 1){
 				$resultado = $v->mont;
-			}else  if($v->tipo == 2){				
+			}else  if($v->tipo >= 2){				
 				$resultado = $v->mont * -1 ;
 			}
 			$cedula = $v->cedu;
