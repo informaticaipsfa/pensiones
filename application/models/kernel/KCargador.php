@@ -1645,20 +1645,32 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
       $Bnf->Concepto = array();
       $Concepto = array();
       $this->KCalculoLote->Ejecutar();
-      foreach ($Bnf->Concepto as $cla => $val) {        
-        if ($val['mt'] > 0){
-          //0: Mensual. 1: Quincenal. : 2: Semanal.
-          if( $v->forma == 1 ){
-            $val['mt'] = $val['mt'] / 2;
-            $quincenal = true;
+      foreach ($Bnf->Concepto as $cla => $val) { 
+        if ( $v->oidd > 64) {
+          $factor = 1;
+          if ($val['mt'] > 0){
+            //0: Mensual. 1: Quincenal. : 2: Semanal.
+            if( $v->forma == 1 ){
+              $val['mt'] = $val['mt'] / 2;
+              $quincenal = true;
+            }
+            $Concepto[$cla] = $val;   
           }
-          $Concepto[$cla] = $val; 
-          
+        }else{
+          $factor = 100000;
+          if ($val['mt'] > 0){
+            //0: Mensual. 1: Quincenal. : 2: Semanal.            
+            $val['mt'] = $val['mt'] / $factor;
+            $quincenal = true;            
+            $Concepto[$cla] = $val;   
+          }
         }
+        
+
       }
 
       if($v->vacac == 1){
-        $valor = $Bnf->pension * $v->vacac;
+        $valor = ($Bnf->pension/$factor) * $v->vacac;
         $Concepto['vacaciones'] = array(
           'mt' => round($valor,2), 
           'ABV' =>  'vacaciones', 
@@ -1668,7 +1680,7 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
       }
       
       if($v->aguin > 0){
-        $valor = $Bnf->pension * $v->aguin;
+        $valor = ($Bnf->pension/$factor) * $v->aguin;
         $Concepto['aguinaldos'] = array(
           'mt' => round($valor,2), 
           'ABV' =>  'aguinaldos', 
