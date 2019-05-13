@@ -152,7 +152,7 @@ class KCalculoLote extends CI_Model{
         $total_primas = $this->Beneficiario->monto_total_prima + $prima_profesionalizacion_mt;
         $pension = (( $sueldo_basico +  $total_primas ) * $porcentaje_pension  ) / 100;
         $this->Beneficiario->total_asignacion =  $sueldo_basico +  $total_primas;
-
+        
         $sueldo_mensual = $pension;
       }
 
