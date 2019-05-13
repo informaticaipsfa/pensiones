@@ -1636,38 +1636,42 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
     $Bnf->fecha_retiro = $data['fretiro'];
     $Bnf->porcentaje = $data['porcentaje'];
     $obj = $con->rs;
+    $quincenal = false;
     foreach ($obj as $k => $v) {
 
       $Directivas = $this->KDirectiva->Cargar($v->oidd); //Directivas   
       $Bnf->componente_nombre = $Directivas['com'][$data['componente']]; 
       $this->KCalculoLote->Instanciar($Bnf, $Directivas);
-      $this->KCalculoLote->Ejecutar();
+      $Bnf->Concepto = array();
       $Concepto = array();
-      foreach ($Bnf->Concepto as $cla => $val) {
-        
+      $this->KCalculoLote->Ejecutar();
+      foreach ($Bnf->Concepto as $cla => $val) {        
         if ($val['mt'] > 0){
           //0: Mensual. 1: Quincenal. : 2: Semanal.
           if( $v->forma == 1 ){
             $val['mt'] = $val['mt'] / 2;
+            $quincenal = true;
           }
           $Concepto[$cla] = $val; 
           
         }
       }
-      if($v->vacac > 0){
+
+      if($v->vacac == 1){
         $valor = $Bnf->pension * $v->vacac;
-        $Concepto['bono_recreacional'] = array(
+        $Concepto['vacaciones'] = array(
           'mt' => round($valor,2), 
-          'ABV' =>  'bono_recreacional', 
+          'ABV' =>  'vacaciones', 
           'TIPO' => 1,
           'part' => '40701010101'
         );
       }
+      
       if($v->aguin > 0){
         $valor = $Bnf->pension * $v->aguin;
         $Concepto['aguinaldos'] = array(
           'mt' => round($valor,2), 
-          'ABV' =>  'bono_recreacional', 
+          'ABV' =>  'aguinaldos', 
           'TIPO' => 1,
           'part' => '40701010101'
         );
@@ -1675,11 +1679,17 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
       $valor = $v->respecialcon;
       $Concepto['retribucion_especial'] = array(
           'mt' => round($valor,2), 
-          'ABV' =>  'bono_recreacional', 
+          'ABV' =>  'retribucion_especial', 
           'TIPO' => 1,
           'part' => '40701010101'
         );
-
+      $Concepto['detalle'] = array(
+        'mt' => round($valor,2), 
+        'ABV' =>  $v->dire  . ' | ' . $v->anio . ' | ' . $v->mes, 
+        'TIPO' => 101,
+        'part' => '40701010101'
+      );
+      
       $Bnf->Concepto = $Concepto;
 
       $arrRetroActivo[] = $Bnf->Concepto;     
@@ -1692,6 +1702,7 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
     
 
     $Bnf->Retroactivo = $arrRetroActivo;
+    
     return $Bnf;
 
   }
