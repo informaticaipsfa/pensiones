@@ -175,7 +175,13 @@ class KCalculoLote extends CI_Model{
         // // print_r( $fnx );
         // if ($fnx != '$manual;' && $fnx != '' ){
         //   echo $rs  . "   ---> " . $fnx . " No es manual\r\n";
-          eval('$valor = ' . $fnx);        
+        $valor = 0;
+        try {
+          eval('$valor = ' . $fnx); 
+        } catch (ParseError $e) {
+            // Report error somehow
+        }
+                 
       //  }else if($fnx != '$automatico;') {
       //     echo $rs  . "   ---> " . $fnx . " No es automatico\r\n";
       //     eval('$valor = ' . $fnx);
