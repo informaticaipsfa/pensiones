@@ -1616,7 +1616,7 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
 
 
     $sConsulta = "SELECT * FROM space.nomina_retroactivo 
-    WHERE desd >= '" . $data['inicio'] . "' AND hast <= '" . $data['fin'] . "' ORDER BY oidd;";
+    WHERE desd >= '" . $data['inicio'] . "' AND hast <= '" . $data['fin'] . "' ORDER BY oid;";
     
     //echo $sConsulta;
     $con = $this->DBSpace->consultar($sConsulta);
