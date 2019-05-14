@@ -1693,7 +1693,7 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
       $Concepto['retribucion_especial'] = array('mt' => round($valor,2), 
           'ABV' =>  'retribucion_especial', 'TIPO' => 1,'part' => ''
       );
-      $bterr = ( ( $Bnf->pension/$factor ) * $v->bterr ) / 100;
+      $bterr = ( ( $Bnf->sueldo_base/$factor ) * $v->bterr ) / 100;
       $Concepto['bono_terr'] = array('mt' => $bterr, 'ABV' =>  'bono_terr', 'TIPO' => 1);
       $Concepto['bono_paz'] = array('mt' => round($v->bpaz,2), 'ABV' =>  'bono_paz', 'TIPO' => 1);
       $Concepto['bono_ssan'] = array('mt' => round($v->bssan,2), 'ABV' =>  'bono_ssan', 'TIPO' => 1);
