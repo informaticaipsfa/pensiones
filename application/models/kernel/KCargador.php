@@ -1681,11 +1681,13 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
       
       //AGINALDOS
       if($v->aguin > 0){
-        if( $f[1] < 10 && $v->anio != $f[0] ){
-          $valor = ($Bnf->pension/$factor) * $v->aguin;
-          $Concepto['aguinaldos'] = array('mt' => round($valor,2),'ABV' =>  'aguinaldos', 
-            'TIPO' => 1,'part' => ''
-          );
+        if( $f[1] < 10 ){
+          //if ( $v->anio != $f[0] ) {
+            $valor = ($Bnf->pension/$factor) * $v->aguin;
+            $Concepto['aguinaldos'] = array('mt' => round($valor,2),'ABV' =>  'aguinaldos', 
+              'TIPO' => 1,'part' => ''
+            );
+          //}
         }
       }
       //RETRIBUCION ESPECIAL
