@@ -1683,7 +1683,7 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
       if($v->aguin > 0){
         if( $f[1] < 10 ){
           //if ( $v->anio != $f[0] ) {
-            $valor = ($Bnf->pension/$factor) * $v->aguin;
+            $valor = $Bnf->pension * $v->aguin;
             $Concepto['aguinaldos'] = array('mt' => round($valor,2),'ABV' =>  'aguinaldos', 
               'TIPO' => 1,'part' => ''
             );
