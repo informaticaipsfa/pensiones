@@ -17,7 +17,7 @@ class KArchivos extends CI_Model{
 		$donde = '';
 		$tipo = 1;
 		if ( $tipoNomina == 'FCP' ){
-			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo WHERE fami != ''  AND fami = '533320';"; // --WHERE fech BETWEEN '2019-04-01' AND '2019-04-30'";
+			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo WHERE fami != '' ;"; // AND fami = '533320' --WHERE fech BETWEEN '2019-04-01' AND '2019-04-30'";
 		}else{
 			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo;"; // --WHERE fech BETWEEN '2019-04-01' AND '2019-04-30'";			
 		}

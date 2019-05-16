@@ -70,15 +70,25 @@ class KNomina extends CI_Model{
       JOIN beneficiario bnf ON fam.titular=bnf.cedula 
       WHERE fam.estatus = 201 AND bnf.grado_id != 0";
     $obj = $this->DBSpace->consultar($sConsulta);
-    $sobrevive = 0;
+    $sobrevive = array();
     foreach($obj->rs as $c => $v ){
-      $sobrevive = $v->cantidad;
+      $sobrevive['act'] = $v->cantidad;
+    }
+
+    //
+    $sConsulta = "SELECT count(*) as cantidad FROM familiar fam 
+      JOIN beneficiario bnf ON fam.titular=bnf.cedula 
+      WHERE fam.estatus != 201 AND bnf.grado_id != 0";
+    $obj = $this->DBSpace->consultar($sConsulta);
+    
+    foreach($obj->rs as $c => $v ){
+      $sobrevive['par'] = $v->cantidad;
     }
 
 
+
     $sConsulta = "SELECT situacion, count(situacion) AS cantidad FROM beneficiario WHERE
-    grado_id != 0 AND
-    status_id = 201 GROUP BY situacion";
+    grado_id != 0 AND status_id = 201 GROUP BY situacion";
     $obj = $this->DBSpace->consultar($sConsulta);
     $contar = array();
     foreach($obj->rs as $c => $v ){
@@ -86,17 +96,33 @@ class KNomina extends CI_Model{
         $contar[] = array(
                 "situacion" => $v->situacion, 
                 "cantidad" => $v->cantidad);
-      }else{
+      }
+      else{
         $contar[] = array(
           "situacion" => $v->situacion, 
-          "cantidad" => $sobrevive);
+          "cantidad" => $sobrevive['act']);
       }
     }
 
-
+    $sConsulta = "SELECT situacion, count(situacion) AS cantidad FROM beneficiario WHERE
+    grado_id != 0 AND status_id != 201 GROUP BY situacion";
+    $obj = $this->DBSpace->consultar($sConsulta);
+    $paralizado = array();
+    foreach($obj->rs as $c => $v ){
+      if($v->situacion != "FCP"){
+        $paralizado[] = array(
+                "situacion" => $v->situacion, 
+                "cantidad" => $v->cantidad);
+      }
+      else{
+        $paralizado[] = array(
+         "situacion" => $v->situacion, 
+          "cantidad" => $sobrevive['par']);
+      }
+    }
 
     
-    return $contar;
+    return array('act' => $contar, 'par' => $paralizado);
   }
 
   public function Listar($id){

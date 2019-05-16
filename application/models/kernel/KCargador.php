@@ -242,7 +242,7 @@ class KCargador extends CI_Model{
         bnf.situacion = '" . $this->_MapWNomina["tipo"] . "'
         AND
         bnf.status_id = 201
-        -- AND bnf.cedula='4262481' --FCP='15236250' 
+        -- AND bnf.cedula='10008020' --  RCP '4262481' --FCP='15236250' 
         -- grado.codigo NOT IN(8450, 8510, 8500, 8460, 8470, 8480, 5320) 
         ORDER BY grado.codigo
         -- AND grado.codigo IN( 10, 15)
@@ -912,64 +912,84 @@ class KCargador extends CI_Model{
     //GENERADOR DE CALCULOS DINAMICOS
     // if(!isset($Perceptron->Neurona[$patron])){
     $CalculoLote->Ejecutar();
-    
+    $lstAsignacion = array();
     $segmentoincial = '';
-
+    $bonos = 0;
      //Aplicar conceptos de Asignación
-    // for ($i= 0; $i < $cant; $i++){
-    //   $rs = $map[$i]['codigo'];
-    //   if (isset($Bnf->Concepto[$rs])) {            
-    //     if( $Bnf->Concepto[$rs]['TIPO'] == 99 ){
-    //     }else if ( $Bnf->Concepto[$rs]['TIPO'] == 98 ){
-    //     }else{
-    //       $monto_aux = $Bnf->Concepto[$rs]['mt'];
-    //       $segmentoincial .=  $monto_aux . ";";
-    //       $asignacion += $Bnf->Concepto[$rs]['TIPO'] == 1? $monto_aux: 0;
-    //       $deduccion += $Bnf->Concepto[$rs]['TIPO'] == 0? $monto_aux: 0;
-    //       $deduccion += $Bnf->Concepto[$rs]['TIPO'] == 2? $monto_aux: 0;        
-    //       if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'],'mont' => $monto_aux);
+    for ($i= 0; $i < $cant; $i++){
+      $rs = $map[$i]['codigo'];
+      if (isset($Bnf->Concepto[$rs])) {
+        switch ($Bnf->Concepto[$rs]['TIPO']) {
+          case 1: //Leer archivos de texto
+            if($rs != 'sueldo_mensual'){
+              $monto_aux = $Bnf->Concepto[$rs]['mt'];
+              $segmentoincial .=  $monto_aux . ";";
+              $bonos += $monto_aux;
+              $lstAsignacion[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
+              //if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
+              //asgnar prepuesto
+              //$this->asignarPresupuesto($rs, $monto_aux, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
+            }
+            break;
+          case 2: //Leer archivos de texto
+           break;
+          case 3: //Leer archivos de texto                
+            break;
+          case 33:
+            break;
+          case 99:
+            break;
+          case 98:
+            break;
+          case 96:            
+            break;          
+          default:
+           break;
+        }
+      }else{
+        $segmentoincial .= "0;";
+      }
+    }    
 
-    //       $this->asignarPresupuesto($rs, $Bnf->Concepto[$rs]['mt'], $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']) ;     
-    //     }
 
-    //   }else{
-    //     $segmentoincial .= "0;";
-    //   }
-    // }    
-
-
-
+    //print_r( $lstAsignacion );
     //$Bnf->pension = $asignacion;
     //print_r( $Bnf->pension );
     $this->KReciboSobreviviente->primas = $Bnf->Concepto;
+    $this->KReciboSobreviviente->pension = $Bnf->pension;
+    $this->KReciboSobreviviente->cedula = $Bnf->cedula;
+    $this->KReciboSobreviviente->porcentaje = $Bnf->porcentaje;
+    $this->KReciboSobreviviente->titular =  $Bnf->apellidos . " " .  $Bnf->nombres;
+    $this->KReciboSobreviviente->grado = $Bnf->grado_nombre;
+    $pension_distribuir = $Bnf->pension + $bonos;
 
     $segmentoincial = $Bnf->cedula . ';' . $Bnf->apellidos . ';' . $Bnf->nombres . 
     ';' . $Bnf->grado_nombre . ';' . round($Bnf->total_asignacion,2) . ';' . $Bnf->porcentaje . 
-    ';' . $Bnf->sueldo_base . ';' . round($Bnf->pension,2) ;
+    ';' . $Bnf->sueldo_base . ';' . round($pension_distribuir,2) ;
     $asignaciont = 0;
     $deducciont = 0;
     $netot = 0;
     $linea = "";
     $i = 0;
-    $fondo_cis = (round($Bnf->pension,2) * 6.5 )/100 ;
-    $Bnf->retencion = round( $fondo_cis, 2 );
-    $deducciont += $Bnf->retencion;
-
-    $this->KReciboSobreviviente->grado = $Bnf->grado_nombre;
-    $this->KReciboSobreviviente->fondo_cis = $Bnf->retencion;
-    $this->KReciboSobreviviente->pension = $Bnf->pension;
-    $this->KReciboSobreviviente->cedula = $Bnf->cedula;
-    $this->KReciboSobreviviente->porcentaje = $Bnf->porcentaje;
-    $this->KReciboSobreviviente->titular =  $Bnf->apellidos . " " .  $Bnf->nombres;
-
+    $base_pension = ( $Bnf->sueldo_base * $Bnf->porcentaje ) / 100; //La base con el porcentaje
+  
     if(isset($this->FCP[$Bnf->cedula])){
       $PS = $this->FCP[$Bnf->cedula];
       foreach ($PS as $clv => $val) {
         $medida_str = "";
         $cajaahorro_str = "";
+        $cporc = ( $Bnf->pension * $PS[$i]['porcentaje'] ) / 100; //Obtengo la pension del familiar en porcion %
+        $base_porc = ( $base_pension * $PS[$i]['porcentaje'] ) / 100; //Obtengo porcentaje de la base
+        $fondo_cis = (  $base_porc * 6.5 ) / 100 ;
+        $Bnf->retencion = round( $fondo_cis, 2 );
+        $deducciont += $Bnf->retencion;
+    
         
-        $asignacionp = round((( $Bnf->pension - $Bnf->retencion) * round($PS[$i]['porcentaje'],2)) / 100, 2);
-        $deduccionp = 0.00; //round(($asignacionp * 6.5) / 100, 2);
+        $this->KReciboSobreviviente->fondo_cis = $Bnf->retencion;
+        
+        
+        $asignacionp = $cporc;
+        $deduccionp = $fondo_cis; //round(($asignacionp * 6.5) / 100, 2);
         $neto = $asignacionp - $deduccionp;
 
         
@@ -979,7 +999,7 @@ class KCargador extends CI_Model{
             $linea .= $segmentoincial . 
             ';' . $PS[$i]['cedula'] . ';' . $PS[$i]['apellidos'] . ';' . $PS[$i]['nombres'] . 
             ';' . $PS[$i]['parentesco'] . ';' . $PS[$i]['tipo'] . ";'" . $PS[$i]['banco'] . ";'" . $PS[$i]['numero'] . 
-            ';' . round($Bnf->pension,2) . ';' . round($PS[$i]['porcentaje'],2) . 
+            ';' . round($pension_distribuir,2) . ';' . round($PS[$i]['porcentaje'],2) . 
             ";" . round($asignacionp,2) . ';' . round($deduccionp,2) . ';' . round($neto,2) . PHP_EOL;
 
             $asignaciont += $asignacionp;
@@ -991,11 +1011,11 @@ class KCargador extends CI_Model{
               'tipo' => 97,
               'mont' => $asignacionp
             );
-            // $recibo_de_pago[] = array(
-            //   'desc' =>  'COTIZ 6.5% PENSIONES (FONDO CIS)', 
-            //   'tipo' => 0,
-            //   'mont' => $deducciont
-            // );
+            $recibo_de_pago[] = array(
+              'desc' =>  'COTIZ 6.5% PENSIONES (FONDO CIS)', 
+              'tipo' => 0,
+              'mont' => $deduccionp
+            );
 
             $coma = "";
             if($this->OperarBeneficiarios > 1){
@@ -1004,7 +1024,7 @@ class KCargador extends CI_Model{
 
             $this->KReciboSobreviviente->conceptos = $recibo_de_pago;        
             $this->KReciboSobreviviente->asignaciones = $asignacionp;
-            $this->KReciboSobreviviente->deducciones = $Bnf->retencion + $deduccionp;
+            $this->KReciboSobreviviente->deducciones = $deduccionp;
 
             $base = $Bnf->porcentaje . "|" . $Bnf->componente_id . "|" . $Bnf->grado_codigo . "|" . $Bnf->grado_nombre;
             $registro .= $coma . "(" . $sqlID . "," . $Directivas['oid'] . ",'" . $Bnf->cedula . 
