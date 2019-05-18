@@ -242,7 +242,7 @@ class KCargador extends CI_Model{
         bnf.situacion = '" . $this->_MapWNomina["tipo"] . "'
         AND
         bnf.status_id = 201
-        -- AND bnf.cedula='10008020' --  RCP '4262481' --FCP='15236250' 
+        -- AND bnf.cedula='5054836' --  RCP '4262481' --FCP='15236250' 
         -- grado.codigo NOT IN(8450, 8510, 8500, 8460, 8470, 8480, 5320) 
         ORDER BY grado.codigo
         -- AND grado.codigo IN( 10, 15)
@@ -983,12 +983,12 @@ class KCargador extends CI_Model{
         $fondo_cis = (  $base_porc * 6.5 ) / 100 ;
         $Bnf->retencion = round( $fondo_cis, 2 );
         $deducciont += $Bnf->retencion;
-    
+        $cporcdistri = ( $pension_distribuir * $PS[$i]['porcentaje'] ) / 100; //Obtengo la pension del familiar en porcion %
         
         $this->KReciboSobreviviente->fondo_cis = $Bnf->retencion;
         
         
-        $asignacionp = $cporc;
+        $asignacionp = $cporcdistri;
         $deduccionp = $fondo_cis; //round(($asignacionp * 6.5) / 100, 2);
         $neto = $asignacionp - $deduccionp;
 

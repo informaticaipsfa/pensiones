@@ -63,17 +63,25 @@ class KMedidaJudicial extends CI_Model{
 
 
 	public function Ejecutar($sb = 0.00, $estatus = 0, $fnx = ''){
-		$aguinaldos = 0;
-		$bono_recreacional = 0;
-		$sueldo_mensual = $sb;
+		
 
 		if ($fnx != '') {
+			
+			$valor = 0;
 			try {
+				$aguinaldos = 0;
+				$bono_recreacional = 0;
+				$sueldo_mensual = $sb;
+				$salario_minimo = 0;
+				
+				$sueldo_minimo = 0;
+				$unidad_tributaria = 50;
 				$sueldo_base = $sb;
-				eval('$valor = ' . $fnx);
-			} catch (Throwable $t) {
-				$valor = 0;
-			}			
+				//echo $fnx;
+			  	eval('$valor = ' . $fnx); 
+			} catch (ParseError $e) {
+				// Report error somehow
+			}
 			//print_r($sueldo_mensual);
 			return round($valor,2);
 		}else{
