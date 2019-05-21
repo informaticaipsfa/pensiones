@@ -487,7 +487,7 @@ class KCargador extends CI_Model{
           
           if (isset($Bnf->Concepto[$rs])) {
             switch ($Bnf->Concepto[$rs]['TIPO']) {
-              case 2: //Leer archivos de texto
+              case 2: //LEER ARCHIVOS POR ASIGNACION
                 $monto_aux = $this->obtenerArchivos($Bnf, $rs);
                 $segmentoincial .=  $monto_aux . ";";
                 $asignacion += $monto_aux;
@@ -495,7 +495,7 @@ class KCargador extends CI_Model{
                 //asgnar prepuesto
                 $this->asignarPresupuesto($rs, $monto_aux, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
                 break;
-              case 3: //Leer archivos de texto                
+              case 3: //LEER ARCHIVOS POR DEDUCCION               
                 $monto = $this->obtenerArchivos($Bnf, $rs);
                 $monto_aux = $monto<0?$monto*-1:$monto;
                 $segmentoincial .=  $monto_aux . ";";
@@ -504,7 +504,7 @@ class KCargador extends CI_Model{
                 //asgnar prepuesto
                 $this->asignarPresupuesto($rs, $monto_aux, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
                 break;
-              case 33:
+              case 33: //RETROACTIVOS
                 $monto = 0;
                 if ( isset( $this->Retroactivos[$Bnf->cedula][$rs] )){
                   $retroactivo = $this->Retroactivos[$Bnf->cedula][$rs];
@@ -518,7 +518,7 @@ class KCargador extends CI_Model{
                 //asgnar prepuesto
                 $this->asignarPresupuesto($rs, $monto, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
                 break;
-              case 99:
+              case 99: //MEDIDA JUDICIAL
                 //$medida_str = $medida[0] . ";";
                 $segmentoincial .=  $medida[0] . ";";
                 $deduccion +=  $medida[0]; 
@@ -526,7 +526,7 @@ class KCargador extends CI_Model{
                 if($medida[0] != 0)$recibo_de_pago[] = array('desc' =>  $medida[1], 'tipo' => 99,'mont' => $medida[0]);
                 $this->asignarPresupuesto($rs, $medida[0], '99', $abreviatura, $Bnf->Concepto[$rs]['part']); 
                 break;
-              case 98:
+              case 98: // CAJA DE AHORRO
                 //$cajaahorro_str = $cajaahorro . ";";
                 $segmentoincial .= $cajaahorro . ";";
                 $deduccion +=  $cajaahorro;
@@ -560,13 +560,13 @@ class KCargador extends CI_Model{
         
         
         
-        $segmentoincial = $Bnf->fecha_ingreso . ';' . $Bnf->fecha_ultimo_ascenso . 
+        $recuerdo = $Bnf->fecha_ingreso . ';' . $Bnf->fecha_ultimo_ascenso . 
             ';' . $Bnf->fecha_retiro . ';' . $Bnf->componente_nombre . ';' . $Bnf->grado_codigo . 
             ';' . $Bnf->grado_nombre . ';' . $Bnf->tiempo_servicio . ';' . $Bnf->antiguedad_grado . 
-            ';' . $Bnf->numero_hijos . ';' . $Bnf->porcentaje . ';' . $segmentoincial;
+            ';' . $Bnf->numero_hijos . ';' . $Bnf->porcentaje;
 
         $Perceptron->Aprender($patron, array(
-          'RECUERDO' => $segmentoincial,
+          'RECUERDO' => $recuerdo,
           'ASIGNACION' => $asignacion,
           'DEDUCCION' => $deduccion,
           'SUELDOBASE' => $Bnf->sueldo_base,
@@ -575,6 +575,9 @@ class KCargador extends CI_Model{
           'CONCEPTO' => $Bnf->Concepto,
           'RECIBO' => $recibo_de_pago
           ) );
+
+          $segmentoincial = $recuerdo . ';' . $segmentoincial;
+
                
         $neto = $asignacion - $deduccion;
         
@@ -604,7 +607,7 @@ class KCargador extends CI_Model{
 
       }else{      //En el caso que exista el recuerdo en la memoria   
         $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf,  $sqlID);
-        $cajaahorro = $this->obtenerCajaAhorro(  $Bnf );
+        $cajaahorro = ''; //ss $this->obtenerCajaAhorro(  $Bnf );
 
         $deduccion = 0; //$Perceptron->Neurona[$patron]["DEDUCCION"];
         $asignacion = $Perceptron->Neurona[$patron]["ASIGNACION"];
@@ -659,6 +662,8 @@ class KCargador extends CI_Model{
                 if($medida[0] != 0)$recibo_de_pago[] = array('desc' =>  $medida[1], 'tipo' => 99,'mont' => $medida[0]);
                 $this->asignarPresupuesto( $result, $medida[0], '99', $abreviatura, $NConcepto[$result]['part']);
                 break;
+
+                
               
               case 98:
                 $segmentoincial .= $cajaahorro . ";";
@@ -670,20 +675,33 @@ class KCargador extends CI_Model{
                 break;
               
               default:
+                // $monto_aux = $NConcepto[$result]['mt'];
+                // $abreviatura_aux = $NConcepto[$result]['ABV'];
+                // if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $abreviatura_aux, 'tipo' => $NConcepto[$result]['TIPO'],'mont' => $monto_aux);
+                // $this->asignarPresupuesto($result, $monto_aux, $NConcepto[$result]['TIPO'], $abreviatura_aux, $NConcepto[$result]['part']);
+                // break;  
                 $monto_aux = $NConcepto[$result]['mt'];
-                $abreviatura_aux = $NConcepto[$result]['ABV'];
-                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $abreviatura_aux, 'tipo' => $NConcepto[$result]['TIPO'],'mont' => $monto_aux);
-                $this->asignarPresupuesto($result, $monto_aux, $NConcepto[$result]['TIPO'], $abreviatura_aux, $NConcepto[$result]['part']);
-                break;            
+                $segmentoincial .=  $monto_aux . ";";
+                $asignacion += $NConcepto[$result]['TIPO'] == 1? $monto_aux: 0;
+                $deduccion += $NConcepto[$result]['TIPO'] == 0? $monto_aux: 0;
+                //$deduccion += $Bnf->Concepto[$rs]['TIPO'] == 2? $monto_aux: 0;
+
+                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $result, 'tipo' => $NConcepto[$result]['TIPO'], 'mont' => $monto_aux);
+                //asgnar prepuesto
+                $this->asignarPresupuesto($result, $NConcepto[$result]['mt'], $NConcepto[$result]['TIPO'], $NConcepto[$result]['ABV'], $NConcepto[$result]['part']);
+                break;          
             } // Fin de Switch           
+          }else{
+            $segmentoincial .= "0;";
           } // Fin de si
+
         } //Fin de repitas
 
         $neto = $asignacion - $deduccion;
         if($Perceptron->Neurona[$patron]["SUELDOBASE"] > 0   && $Perceptron->Neurona[$patron]["PORCENTAJE"] > 0  && $asignacion > 0 ){
           $linea = $Bnf->cedula . ';' . trim($Bnf->apellidos) . ';' . trim($Bnf->nombres) . 
           ';' .  $Bnf->tipo . ";\"" . $Bnf->banco . "\";\"" . $Bnf->numero_cuenta . 
-          "\";" . $this->generarLineaMemoria($Perceptron->Neurona[$patron]) .
+          "\";" . $Perceptron->Neurona[$patron]["RECUERDO"] . ";" . $segmentoincial .
           $medida_str . $cajaahorro_str . $asignacion . ';' . $deduccion . ';' . $neto;
         }else{
           $log = $Bnf->cedula . ';' . $Bnf->apellidos . ';' . $Bnf->nombres . ';';
