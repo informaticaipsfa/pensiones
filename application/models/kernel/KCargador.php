@@ -255,7 +255,7 @@ class KCargador extends CI_Model{
       $this->cargarFamiliaresFCP();
       if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" || $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO" ){
         $this->functionRefelxion = "generarConPatronesFCPDIF";
-      }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL" ){
+      }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL" || $this->_MapWNomina["nombre"] == "PAGO ESPECIAL ( BONO )"){
         $this->functionRefelxion = "generarConPatronesFCPRetribucionEspecial";
       }else{
         $this->functionRefelxion = "generarConPatronesFCP";
@@ -264,7 +264,7 @@ class KCargador extends CI_Model{
     }else{
       if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" || $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO"){
         $this->functionRefelxion = "generarConPatronesRCPDIF";
-      }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL" ){
+      }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL" || $this->_MapWNomina["nombre"] == "PAGO ESPECIAL ( BONO )"){
         $this->functionRefelxion = "generarConPatronesRetribucionEspecial";
       }
     }
@@ -862,7 +862,7 @@ class KCargador extends CI_Model{
 
   /**
   * Generar Codigos por Patrones en la Red de Inteligencia Pensionados Sobrevivientes
-  *
+  * FALLECIDOS CON PENSION
   * @param MBeneficiario
   * @param KCalculoLote
   * @param KPerceptron
@@ -1051,13 +1051,7 @@ class KCargador extends CI_Model{
             
 
 
-          //   $registro .= $coma . "(" . $sqlID . "," . $Directivas['oid'] . ",'" . $Bnf->cedula . 
-          // "','" . trim($PS[$i]['apellidos']) . ", " . trim($PS[$i]['nombres']) . "','" . 
-          // json_encode($this->KRecibo) . "',Now(),'" .  $PS[$i]['banco']  . "','" . $PS[$i]['numero'] . 
-          // "','" . $PS[$i]['tipo'] . "','" . $Bnf->situacion . "'," . $Bnf->estatus_activo . 
-          // ",'SSSIFANB'," . $neto . ", '" . $base . "', '" . $Bnf->grado_nombre . 
-          // "','" . $PS[$i]['autorizado'] . "','" . strtoupper($PS[$i]['nautorizado']) . 
-          // "','" . $PS[$i]['cedula'] . "','" . $PS[$i]['parentesco'] . "')";
+          
           }else{
             $this->SinPagos++;
             $log .= $segmentoincial . 
@@ -1084,12 +1078,13 @@ class KCargador extends CI_Model{
   
       
     }else{
-      $log .=  $Bnf->cedula . ";Militar fallecido sin familiares " . PHP_EOL;
+      $log .=   $segmentoincial . ';S/N;S/N;S/N;S/N;S/N;S/N;S/N;0;0;0;0;0;Militar fallecido sin familiares' . PHP_EOL;  
+      
       //$this->ParalizadosSobrevivientes++;
     }
     
     $this->asignarPresupuesto( "FCIS-00001", $deducciont , '0', 'FONDO CIS 6.5%', '40700000000');
-    $this->asignarPresupuesto( "PSV0001", $asignaciont , '0', 'PENSION MILITAR', '40700000000');
+    $this->asignarPresupuesto( "PENM-00001", $asignaciont , '0', 'PENSION MILITAR', '40700000000');
 
     // }else{ //Recordando calculos
 
@@ -1113,7 +1108,7 @@ class KCargador extends CI_Model{
 
   /**
   * DIFERENCIAS DE SUELDO PARA PENSIONADOS SOBREVIVIENTES
-  *
+  * DIF. FALLECIDOS CON PENSION
   * @param MBeneficiario
   * @param KCalculoLote
   * @param KPerceptron
