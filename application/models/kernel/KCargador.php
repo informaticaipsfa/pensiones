@@ -606,7 +606,7 @@ class KCargador extends CI_Model{
         $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf,  $sqlID);
         $cajaahorro = $this->obtenerCajaAhorro(  $Bnf );
 
-        $deduccion = $Perceptron->Neurona[$patron]["DEDUCCION"];
+        $deduccion = 0; //$Perceptron->Neurona[$patron]["DEDUCCION"];
         $asignacion = $Perceptron->Neurona[$patron]["ASIGNACION"];
         $NConcepto = $Perceptron->Neurona[$patron]["CONCEPTO"];
         
