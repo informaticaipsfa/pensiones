@@ -993,7 +993,7 @@ class KCargador extends CI_Model{
     $this->KReciboSobreviviente->porcentaje = $Bnf->porcentaje;
     $this->KReciboSobreviviente->titular =  $Bnf->apellidos . " " .  $Bnf->nombres;
     $this->KReciboSobreviviente->grado = $Bnf->grado_nombre;
-    $pension_distribuir = $Bnf->pension + $bonos;
+    $pension_distribuir = $Bnf->pension;
 
     $segmentoincial = $Bnf->cedula . ';' . $Bnf->apellidos . ';' . $Bnf->nombres . 
     ';' . $Bnf->grado_nombre . ';' . round($Bnf->total_asignacion,2) . ';' . $Bnf->porcentaje . 
