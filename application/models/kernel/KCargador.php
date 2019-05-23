@@ -610,7 +610,7 @@ class KCargador extends CI_Model{
         $cajaahorro = ''; //ss $this->obtenerCajaAhorro(  $Bnf );
 
         $deduccion = 0; //$Perceptron->Neurona[$patron]["DEDUCCION"];
-        $asignacion = $Perceptron->Neurona[$patron]["ASIGNACION"];
+        $asignacion = 0; //$Perceptron->Neurona[$patron]["ASIGNACION"];
         $NConcepto = $Perceptron->Neurona[$patron]["CONCEPTO"];
         
         for ($i= 0; $i < $cant; $i++){
