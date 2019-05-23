@@ -705,7 +705,7 @@ class KCargador extends CI_Model{
         if($Perceptron->Neurona[$patron]["SUELDOBASE"] > 0   && $Perceptron->Neurona[$patron]["PORCENTAJE"] > 0  && $asignacion > 0 ){
           
           $linea = $Bnf->cedula . ';' . trim($Bnf->apellidos) . ';' . trim($Bnf->nombres) . 
-          ';' .  $Bnf->tipo . ";\"" . $Bnf->banco . "\";\"" . $Bnf->numero_cuenta . 
+          ';' .  $Bnf->tipo . ";'" . $Bnf->banco . ";'" . $Bnf->numero_cuenta . 
           "\";" . $Perceptron->Neurona[$patron]["RECUERDO"] . ";" . $segmentoincial .
           $medida_str . $cajaahorro_str . $asignacion . ';' . $deduccion . ';' . $neto;
         }else{
