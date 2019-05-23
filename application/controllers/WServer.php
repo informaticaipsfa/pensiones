@@ -327,6 +327,11 @@ class WServer extends REST_Controller{
 		$this->response($lst);
     }
 
+    function listarconceptos_get(){
+        $this->load->model('kernel/KNomina');
+		$lst = $this->KNomina->ListarConceptos();
+		$this->response($lst);
+    }
 
     function nominacerrar_get($nomina, $estatus){
         $this->load->model('kernel/KNomina');

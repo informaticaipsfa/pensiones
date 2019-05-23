@@ -234,6 +234,17 @@ class KNomina extends CI_Model{
     return $lst;
   }
 
+  public function ListarConceptos(){
+    $sConsulta = "SELECT codigo, descripcion FROM space.conceptos";
+   
+    $obj = $this->DBSpace->consultar($sConsulta);
+    $lst = array();
+    foreach($obj->rs as $c => $v ){
+      $lst[] = $v;
+    }
+    return $lst;
+  }
+
 
 
 
