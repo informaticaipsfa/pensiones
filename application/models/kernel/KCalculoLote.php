@@ -155,9 +155,16 @@ class KCalculoLote extends CI_Model{
         
         $sueldo_mensual = $pension;
       }
+      
+      if( $this->Beneficiario->situacion == "PG" ){
+        $this->Beneficiario->pension = $sueldo_minimo;
+        $this->Beneficiario->sueldo_mensual = $sueldo_minimo;
+      }else{
+        $this->Beneficiario->pension = $pension;
+        $this->Beneficiario->sueldo_mensual = $pension;
+      }
 
-      $this->Beneficiario->pension = $pension;
-      $this->Beneficiario->sueldo_mensual = $pension;
+      
       $this->Beneficiario->Concepto["sueldo_mensual"] = array(
         'mt' => round($sueldo_mensual,2), 
         'ABV' =>  "PENSION MILITAR", 
