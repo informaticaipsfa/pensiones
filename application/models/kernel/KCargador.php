@@ -1557,7 +1557,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       $neto = $asignacion - $deduccion;
       if( $neto > 0 ){
         $linea = $Bnf->cedula . ';' . trim($Bnf->apellidos) . ';' . trim($Bnf->nombres) . 
-        ';' .  $Bnf->tipo . ";\"" . $Bnf->banco . "\";\"" . $Bnf->numero_cuenta . 
+        ';' .  $Bnf->tipo . ";'" . $Bnf->banco . ";'" . $Bnf->numero_cuenta . 
         "\";" . $this->generarLineaMemoria($Perceptron->Neurona[$patron]) .
         $medida_str . $cajaahorro_str . $asignacion . ';' . $deduccion . ';' . $neto;
       }else{
