@@ -305,6 +305,8 @@ class KCargador extends CI_Model{
     $map = $this->_MapWNomina['Concepto'];
     $medida_str = "";
     $cajaahorro_str = "";
+    $fcplinea = "";
+    $fcplinea_aux = '';
     for ($i= 0; $i < $cant; $i++){
       // if( $map[$i]['codigo'] == "MJ-00001" ){
       //   $medida_str = "MEDIDA JUDICIAL;";
@@ -312,12 +314,26 @@ class KCargador extends CI_Model{
       //   $cajaahorro_str = "CAJA DE AHORRO;";
       // }else{
         $rs = strtoupper($map[$i]['codigo']);
-        $linea .= $rs . ";";
+
+        if($this->_MapWNomina['tipo'] == "FCP"){ 
+          $nmb = strtoupper($map[$i]['nombre']);
+          if( $nmb == "SUELDO BASE" || $nmb == "DIRECTIVA PRIMAS" || $nmb == "PENSION") {
+            $fcplinea .= $rs . ";";
+          }else{
+            $fcplinea_aux = $rs . ";";
+          }
+        }else{
+          $linea .= $rs . ";";
+        }
       // }
     }
     $linea .= $medida_str . $cajaahorro_str . 'ASIGNACION;DEDUCCION;NETO';
     if($this->_MapWNomina['tipo'] == "FCP"){
-      $linea = 'CEDULA;APELLIDOS;NOMBRES;GRADO DESC.;ASIGNACION;PORCENTAJE;SUELDO BASE;PENSION;';
+      $linea = 'CEDULA;APELLIDOS;NOMBRES;';
+      $linea .= 'FECHA INGRESO;FECHA ASCENSO;FECHA RETIRO;COMPONENTE;GRADO;GRADO DESC.;';
+      $linea .= 'TIEMPO DE SERV.;ANTIGUEDAD;NUM. HIJOS;PORCENTAJE;';
+      $linea .= $fcplinea;
+      //$linea .= 'PENSION;';
       $linea .= 'CEDULA;APELLIDOS;NOMBRES;PARENTESCO;TIPO;BANCO;NUMERO CUENTA;PENSION MIL;';
       $linea .= 'PORCENTAJE;ASIGNACION;DEDUCCION;NETO';
     }
@@ -944,16 +960,18 @@ class KCargador extends CI_Model{
     $CalculoLote->Ejecutar();
     $lstAsignacion = array();
     $segmentoincial = '';
+    $fcplinea = '';
     $bonos = 0;
      //Aplicar conceptos de Asignación
     for ($i= 0; $i < $cant; $i++){
       $rs = $map[$i]['codigo'];
-      if (isset($Bnf->Concepto[$rs])) {
 
+      if (isset($Bnf->Concepto[$rs])) {
+        $monto_aux = $Bnf->Concepto[$rs]['mt'];        
         switch ($Bnf->Concepto[$rs]['TIPO']) {
           case 1: //Leer archivos de texto
+            $fcplinea .=  $monto_aux . ";";
             if($rs != 'sueldo_mensual'){
-              $monto_aux = $Bnf->Concepto[$rs]['mt'];
               $segmentoincial .=  $monto_aux . ";";
               $bonos += $monto_aux;
               $lstAsignacion[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
@@ -961,6 +979,7 @@ class KCargador extends CI_Model{
               //asgnar prepuesto
               //$this->asignarPresupuesto($rs, $monto_aux, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
             }
+
             break;
           case 2: //Leer archivos de texto
            break;
@@ -971,8 +990,8 @@ class KCargador extends CI_Model{
           case 96:
             break;
           case 97:
-            $monto_aux = $Bnf->Concepto[$rs]['mt'];
-            $segmentoincial .=  $monto_aux . ";";
+            
+            $fcplinea .=  $monto_aux . ";";
             $bonos += $monto_aux;
             if($monto_aux > 0) $lstAsignacion[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
             break;
@@ -984,6 +1003,7 @@ class KCargador extends CI_Model{
            break;
         }
       }else{
+        $fcplinea .=  "0;";
         $segmentoincial .= "0;";
       }
     }    
@@ -1001,8 +1021,11 @@ class KCargador extends CI_Model{
     $pension_distribuir = $Bnf->pension;
 
     $segmentoincial = $Bnf->cedula . ';' . $Bnf->apellidos . ';' . $Bnf->nombres . 
-    ';' . $Bnf->grado_nombre . ';' . round($Bnf->total_asignacion,2) . ';' . $Bnf->porcentaje . 
-    ';' . $Bnf->sueldo_base . ';' . round($pension_distribuir,2) ;
+            ';' . $Bnf->fecha_ingreso . ';' . $Bnf->fecha_ultimo_ascenso . 
+            ';' . $Bnf->fecha_retiro . ';' . $Bnf->componente_nombre . ';' . $Bnf->grado_codigo . 
+            ';' . $Bnf->grado_nombre . ';' . $Bnf->tiempo_servicio . ';' . $Bnf->antiguedad_grado . 
+            ';' . $Bnf->numero_hijos . ';' . $Bnf->porcentaje . ';' . $fcplinea;
+            //. round($pension_distribuir,2)
     $asignaciont = 0;
     $deducciont = 0;
     $netot = 0;
@@ -1033,8 +1056,7 @@ class KCargador extends CI_Model{
         
         if( $PS[$i]['estatus'] == 201  ){
           if ($neto > 0 ){            
-            $linea .= $segmentoincial . 
-            ';' . $PS[$i]['cedula'] . ';' . $PS[$i]['apellidos'] . ';' . $PS[$i]['nombres'] . 
+            $linea .= $segmentoincial . $PS[$i]['cedula'] . ';' . $PS[$i]['apellidos'] . ';' . $PS[$i]['nombres'] . 
             ';' . $PS[$i]['parentesco'] . ';' . $PS[$i]['tipo'] . ";'" . $PS[$i]['banco'] . ";'" . $PS[$i]['numero'] . 
             ';' . round($pension_distribuir,2) . ';' . round($PS[$i]['porcentaje'],2) . 
             ";" . round($asignacionp,2) . ';' . round($deduccionp,2) . ';' . round($neto,2) . PHP_EOL;
