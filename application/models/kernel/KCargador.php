@@ -242,7 +242,7 @@ class KCargador extends CI_Model{
         bnf.situacion = '" . $this->_MapWNomina["tipo"] . "'
         AND
         bnf.status_id = 201
-        -- AND bnf.cedula='15236250' --  RCP '4262481' --FCP='15236250' 
+        -- AND bnf.cedula='10305564' --  RCP '4262481' --FCP='15236250' 
         -- grado.codigo NOT IN(8450, 8510, 8500, 8460, 8470, 8480, 5320) 
         ORDER BY grado.codigo
         -- AND grado.codigo IN( 10, 15)
@@ -495,7 +495,7 @@ class KCargador extends CI_Model{
         
         
               
-        $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf, $sqlID);
+        $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf, $sqlID, $Directivas);
         $cajaahorro = 0; 
         //Aplicar conceptos de Asignación
         for ($i= 0; $i < $cant; $i++){
@@ -622,7 +622,7 @@ class KCargador extends CI_Model{
         ",'SSSIFANB'," . $neto . ", '" . $base . "','" . $Bnf->grado_nombre . "','','','','TI')";
 
       }else{      //En el caso que exista el recuerdo en la memoria   
-        $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf,  $sqlID);
+        $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf,  $sqlID, $Directivas);
         $cajaahorro = ''; //ss $this->obtenerCajaAhorro(  $Bnf );
 
         $deduccion = 0; //$Perceptron->Neurona[$patron]["DEDUCCION"];
@@ -1376,7 +1376,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       
       
             
-      $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf, $sqlID);
+      $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf, $sqlID, $Directivas);
       $cajaahorro = 0; 
       //Aplicar conceptos de Asignación
       for ($i= 0; $i < $cant; $i++){
@@ -1500,7 +1500,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       ",'SSSIFANB'," . $neto . ", '" . $base . "','" . $Bnf->grado_nombre . "','','','','TI')";
 
     }else{      //En el caso que exista el recuerdo en la memoria   
-      $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf,  $sqlID);
+      $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf,  $sqlID, $Directivas);
       $cajaahorro = $this->obtenerCajaAhorro(  $Bnf );
 
       $deduccion = $Perceptron->Neurona[$patron]["DEDUCCION"];
@@ -1592,7 +1592,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       $this->KRecibo->deducciones = $deduccion;
       //Insert a Postgres
       $base = $Bnf->porcentaje . "|" . $Bnf->componente_id . "|" . $Bnf->grado_codigo . "|" . $Bnf->grado_nombre;
-      $registro = "(" . $sqlID . "," . $Directivas['oid'] . ",'" . $Bnf->cedula . 
+      $registro = "(" . $sqlID . "," . qd['oid'] . ",'" . $Bnf->cedula . 
       "','" . trim($Bnf->apellidos) . ", " . trim($Bnf->nombres) . "','" . 
       json_encode($this->KRecibo) . "',Now(),'" . $Bnf->banco . "','" . $Bnf->numero_cuenta . 
       "','" . $Bnf->tipo . "', '" . $Bnf->situacion . "', " . $Bnf->estatus_activo . 
@@ -1892,7 +1892,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
 
 
   //MEDIDA JUDICIAL INDIVIDUAL
-  private function calcularMedidaJudicial( KMedidaJudicial &$KMedida, MBeneficiario &$Bnf,  $sqlID ){
+  private function calcularMedidaJudicial( KMedidaJudicial &$KMedida, MBeneficiario &$Bnf,  $sqlID, $Directiva ){
     $monto = 0;
     $nombre = "";
     $cuenta = "";
@@ -1904,7 +1904,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
 
       $cantMJ = count($MJ);
       for($i = 0; $i < $cantMJ; $i++){
-        $monto += $KMedida->Ejecutar($Bnf->pension, 1, $MJ[$i]['fnxm']);
+        $monto += $KMedida->Ejecutar($Bnf->pension, 1, $MJ[$i]['fnxm'], $Directiva);
         $nombre = $MJ[$i]['nomb'];
         $parentesco = $MJ[$i]['pare'];
         $cbenef = $MJ[$i]['cben'];
