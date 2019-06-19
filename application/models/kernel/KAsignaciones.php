@@ -1,4 +1,4 @@
-<?php
+'<?php
 
 /**
 *
@@ -12,11 +12,11 @@ class KAsignaciones extends CI_Model{
     }
 
 	
-	public function Cargar($Situacion = "RCP"){
-	
-        $query = "SELECT cedula, conc, fnxc, tipo, familiar  from space.asig_deduc WHERE cedula!=familiar";
-        $obj = $this->Dbpace->consultar($query);
-
+	public function Cargar( $map ){	
+		
+        $query = "SELECT cedula, conc, fnxc, tipo, familiar  from space.asig_deduc WHERE cedula!=familiar AND fini >= '" . $map['fechainicio']  . "' AND ffin <= '" . $map['fechafin'] . "'";
+		
+		$obj = $this->Dbpace->consultar($query);
 		$rs = $obj->rs;
         $arr = array();
 		foreach ($rs as $c => $v) {
@@ -26,7 +26,6 @@ class KAsignaciones extends CI_Model{
             );
             $arr[$v->cedula][$v->conc] = $asignacion;
         }
-        //print_r($arr);
 		return $arr;
 	}
 

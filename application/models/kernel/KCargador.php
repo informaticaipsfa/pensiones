@@ -223,9 +223,10 @@ class KCargador extends CI_Model{
     $this->load->model('kernel/KArchivos');
     
     $this->MedidaJudicial = $this->KMedidaJudicial->Cargar($this->_MapWNomina["nombre"]);
-    $this->MedidaJudicial = $this->KMedidaJudicial->Cargar($this->_MapWNomina["nombre"]);
-    $this->Archivos = $this->KArchivos->Cargar($this->_MapWNomina["nombre"],  $this->_MapWNomina["tipo"]);
-    
+    //$this->MedidaJudicial = $this->KMedidaJudicial->Cargar($this->_MapWNomina["nombre"]);
+    //$this->Archivos = $this->KArchivos->Cargar($this->_MapWNomina["nombre"],  $this->_MapWNomina["tipo"]);
+    $this->Archivos = $this->KArchivos->Cargar($this->_MapWNomina);
+
     $sConsulta = "
       SELECT
         regexp_replace(bnf.nombres, '[^a-zA-Y0-9 ]', '', 'g') as nombres,
@@ -280,7 +281,7 @@ class KCargador extends CI_Model{
     $this->load->model('kernel/KPerceptron'); //Red Perceptron Aprendizaje de patrones
     $this->load->model('kernel/KAsignaciones'); //Red Perceptron Aprendizaje de patrones
     $this->KNomina->Cargar( $this->_MapWNomina );
-    $this->Retroactivos = $this->KAsignaciones->Cargar( $this->_MapWNomina["tipo"] );
+    $this->Retroactivos = $this->KAsignaciones->Cargar( $this->_MapWNomina );
 
     // semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/SSSIFANBW/pensiones/tmp'
     // restorecon -v '/var/www/html/SSSIFANBW/pensiones/tmp'
@@ -361,7 +362,7 @@ class KCargador extends CI_Model{
       }
 
       $this->Cantidad++;
-      $this->CantidadMedida++;
+      //$this->CantidadMedida++;
       
       if($linea["csv"] != ""){
         if( $this->_MapWNomina['tipo'] == "FCP" ){
@@ -375,9 +376,9 @@ class KCargador extends CI_Model{
         if ( $this->Cantidad > 1 ){
           $coma = ",";
         }
-        if( $this->CantidadMedida > 1){
-          $this->ComaMedida = ",";
-        }
+        // if( $this->CantidadMedida > 1){
+        //   $this->ComaMedida = ",";
+        // }
         if($this->_MapWNomina['tipo'] == "FCP"){
           $lineaSQL = $linea["sql"]; //INSERT PARA SPACE.PAGOS
         }else{
@@ -496,6 +497,8 @@ class KCargador extends CI_Model{
         
               
         $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf, $sqlID, $Directivas);
+
+
         $cajaahorro = 0; 
         //Aplicar conceptos de Asignación
         for ($i= 0; $i < $cant; $i++){
@@ -524,8 +527,14 @@ class KCargador extends CI_Model{
                 $monto = 0;
                 if ( isset( $this->Retroactivos[$Bnf->cedula][$rs] )){
                   $retroactivo = $this->Retroactivos[$Bnf->cedula][$rs];
-                  $fn = $retroactivo['fnxc'];
-                  eval('$valor = ' . $fn);
+                  $valor = 0;
+                  try {
+                    //eval('$valor = ' . $fnx); 
+                    $fn = $retroactivo['fnxc'];
+                    eval('$valor = ' . $fn);
+                  } catch (ParseError $e) {
+                      // Report error somehow
+                  }
                   $monto = $valor;
                 }
                 $segmentoincial .=  $monto . ";";
@@ -1901,9 +1910,10 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     if(isset($this->MedidaJudicial[$Bnf->cedula])){          
       $MJ = $this->MedidaJudicial[$Bnf->cedula];
       //( cedu, cben, bene, caut, naut, inst, tcue, ncue, pare, crea, usua, esta, mont ) VALUES ";
-
       $cantMJ = count($MJ);
-      for($i = 0; $i < $cantMJ; $i++){
+      
+      for($i = 0; $i < $cantMJ; $i++){        
+        $this->CantidadMedida++;      
         $monto += $KMedida->Ejecutar($Bnf->pension, 1, $MJ[$i]['fnxm'], $Directiva);
         $nombre = $MJ[$i]['nomb'];
         $parentesco = $MJ[$i]['pare'];
@@ -1915,6 +1925,10 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
         $instituto = $MJ[$i]['auto'];
         $tipobanco = $MJ[$i]['tcue'];
         $cuenta = $MJ[$i]['ncue'];
+
+        if( $this->CantidadMedida > 1){
+          $this->ComaMedida = ",";
+        }
 
         $this->SQLMedidaJudicial .= $this->ComaMedida . "('" . $sqlID . "','" . $Bnf->cedula . "','" .
         $cbenef . "','" . $nbenef . "','" . $cedula . "','" . $autorizado . "','" . $instituto . 
