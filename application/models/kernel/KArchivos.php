@@ -16,6 +16,7 @@ class KArchivos extends CI_Model{
 		$arr = array();
 		$donde = '';
 		$tipo = 1;
+		
 		if ( $map["nombre"] == 'FCP' ){
 			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo WHERE fami != '' ;"; // AND fami = '533320' --WHERE fech BETWEEN '2019-04-01' AND '2019-04-30'";
 		}else{
@@ -26,10 +27,6 @@ class KArchivos extends CI_Model{
 		$rs = $obj->rs;
 
 		foreach ($rs as $c => $v) {
-			// $mnt_aux = 0;
-			// if(isset($arr[$v->conc][$v->cedu])){
-			// 	$mnt_aux = $arr[$v->conc][$v->cedu];
-			// }   
 			$resultado = 0;        
 			if($v->tipo == 1){
 				$resultado = $v->mont;

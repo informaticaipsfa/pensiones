@@ -214,12 +214,13 @@ class WServer extends REST_Controller{
         $data['mes'] = $this->post("mes");
 
         $this->KCargador->_MapWNomina = $this->post();
-
+        
         $this->KCargador->IniciarLote($data, $firma, "SSSIFANB");
+        
         $neto = round( $this->KCargador->Neto, 2 );
         $asig = round( $this->KCargador->Asignacion, 2 );
         $dedu = round( $this->KCargador->Deduccion, 2 );
-
+        
         $segmento = array(
             'neto' => number_format($neto, 2, ',','.'),
             'asignacion' => number_format($asig, 2, ',','.'),

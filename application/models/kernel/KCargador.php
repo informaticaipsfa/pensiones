@@ -282,7 +282,6 @@ class KCargador extends CI_Model{
     $this->load->model('kernel/KAsignaciones'); //Red Perceptron Aprendizaje de patrones
     $this->KNomina->Cargar( $this->_MapWNomina );
     $this->Retroactivos = $this->KAsignaciones->Cargar( $this->_MapWNomina );
-
     // semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/SSSIFANBW/pensiones/tmp'
     // restorecon -v '/var/www/html/SSSIFANBW/pensiones/tmp'
     // setsebool -P httpd_unified 1
