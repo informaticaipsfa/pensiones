@@ -663,9 +663,15 @@ class KCargador extends CI_Model{
               case 33:
                 $monto = 0;
                 if ( isset($this->Retroactivos[$Bnf->cedula][$result])){
-                  $retroactivo = $this->Retroactivos[$Bnf->cedula][$result];
-                  $fn = $retroactivo['fnxc'];
-                  eval('$valor = ' . $fn);
+                  $retroactivo = $this->Retroactivos[$Bnf->cedula][$result];                 
+                  $valor = 0;
+                  try {                    
+                    $fn = $retroactivo['fnxc'];
+                    eval('$valor = ' . $fn);
+                  } catch (ParseError $e) {
+                      // Report error somehow
+                  }
+
                   $monto = $valor;
                 }
                 $segmentoincial .=  $monto . ";";
