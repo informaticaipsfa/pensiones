@@ -1085,6 +1085,8 @@ class KCargador extends CI_Model{
               'tipo' => 0,
               'mont' => $deduccionp
             );
+            $clave = $Bnf->cedula . "|" . $PS[$i]['cedula'];
+            $this->recorrerConceptos($map, $Bnf->Concepto, $clave, $recibo_de_pago);
 
             $coma = "";
             if($this->OperarBeneficiarios > 1){
@@ -1962,6 +1964,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
   //MEDIDA JUDICIAL INDIVIDUAL
   private function calcularMedidaJudicial( KMedidaJudicial &$KMedida, MBeneficiario &$Bnf,  $sqlID, $Directiva ){
     $monto = 0;
+    $monto_aux = 0;
     $nombre = "";
     $cuenta = "";
     $autorizado = "";
@@ -1973,7 +1976,9 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       
       for($i = 0; $i < $cantMJ; $i++){        
         $this->CantidadMedida++;      
-        $monto += $KMedida->Ejecutar($Bnf->pension, 1, $MJ[$i]['fnxm'], $Directiva);
+        $monto = $KMedida->Ejecutar($Bnf->pension, 1, $MJ[$i]['fnxm'], $Directiva);
+        $monto_aux += $monto;
+
         $nombre = $MJ[$i]['nomb'];
         $parentesco = $MJ[$i]['pare'];
         $cbenef = $MJ[$i]['cben'];
@@ -1997,7 +2002,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       }   
       
     }
-    return [ $monto, $nombre, $cuenta, $autorizado, $cedula];
+    return [ $monto_aux, $nombre, $cuenta, $autorizado, $cedula];
   }
 
   private function obtenerArchivosFCP( $cedula, $concepto  ){
