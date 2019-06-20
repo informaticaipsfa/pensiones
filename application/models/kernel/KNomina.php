@@ -188,13 +188,13 @@ class KNomina extends CI_Model{
   public function RegistrarDetalle($oidn, $presupuesto){
     $i = 0;
     $coma = '';
-    $insert = 'INSERT INTO space.nomina_detalle (oidn, part, estr, conc,  fech, tipo, mont  ) VALUES ';
+    $insert = 'INSERT INTO space.nomina_detalle (oidn, part, estr, conc,  fech, tipo, mont, codi, cuenta  ) VALUES ';
     foreach ($presupuesto as $c => $v) {     
       if ($v['tp'] != 97 ) {
         $i++;
         $coma = $i > 1?",":"";      
         $insert .= $coma . "(" . $oidn . ",'" . $v['part'] . "','" . $v['estr'] . "','" . $v['abv'] . 
-        "',Now()," . $v['tp'] . "," . round($v['mnt'],2) . ")";
+        "',Now()," . $v['tp'] . "," . round($v['mnt'],2) . ",'" . $v['codi'] . "','" . $v['cuen'] . "')";
       }
 
     }

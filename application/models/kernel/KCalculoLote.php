@@ -84,8 +84,10 @@ class KCalculoLote extends CI_Model{
     $this->Beneficiario->Concepto['sueldo_base'] = array(
       'mt' => round($this->Beneficiario->sueldo_base,2), 
       'ABV' =>  'sueldo_base', 
+      'codi' => 'sueldo_base',
       'TIPO' => 97,
-      'part' => '40701010101'
+      'part' => '40701010101',
+      'cuen' => ''
     );
     //if ( $this->Beneficiario->situacion != "FCP"){
       $this->OperarCalculos();
@@ -142,9 +144,11 @@ class KCalculoLote extends CI_Model{
           if( $valor != 0 ) {
             $this->Beneficiario->Concepto[$rs] = array(
               'mt' => round($valor,2), 
-              'ABV' =>  $rs, 
+              'ABV' =>  $rs,
+              'codi' => $rs,
               'TIPO' => 97,
-              'part' => '40701010101'
+              'part' => '40701010101',
+              'cuen' => ''
             );
           }
         }
@@ -167,48 +171,33 @@ class KCalculoLote extends CI_Model{
       
       $this->Beneficiario->Concepto["sueldo_mensual"] = array(
         'mt' => round($sueldo_mensual,2), 
+        'codi' => 'sueldo_mensual',
         'ABV' =>  "PENSION MILITAR", 
         'TIPO' => 1,
-        'part' => '40701010101'
+        'part' => '40701010101',
+        'cuen' => ''
       );
-      //Formular Conceptos Ryotyonsy | SkiWacHu
-      // print_r( $this->Directiva['fnxC'] );
+      
+      //Formular Conceptos Ryotyonsy
       foreach ( $this->Directiva['fnxC'] as $Con => $obj ){
-
         $fnx = strtolower($obj['fn']);
         $rs = $obj['rs'];
-
-        // echo ">>>>... \r\n";
-        // // print_r( $fnx );
-        // if ($fnx != '$manual;' && $fnx != '' ){
-        //   echo $rs  . "   ---> " . $fnx . " No es manual\r\n";
         $valor = 0;
         try {
           eval('$valor = ' . $fnx); 
         } catch (ParseError $e) {
             // Report error somehow
-        }
-                 
-      //  }else if($fnx != '$automatico;') {
-      //     echo $rs  . "   ---> " . $fnx . " No es automatico\r\n";
-      //     eval('$valor = ' . $fnx);
-      //   }else{
-      //     echo $rs  . "   ---> " . $fnx . "es\r\n";
-      //     $valor = -1;
-          
-      //   }
-        
-        
-        //echo "\r\n" . $obj['tipo'] . "  --  " .  $obj['abv'] . " Manual >>>>... \r\n";
+        }                 
         if( $valor != 0 ) {
           $this->Beneficiario->Concepto[$rs] = array(
             'mt' => round($valor,2), 
             'ABV' =>  $obj['abv'], 
+            'codi' => $obj['rs'],
             'TIPO' => $obj['tipo'],
-            'part' => $obj['part']
+            'part' => $obj['part'],
+            'cuen' => $obj['cuen']
           );
         }
-
         $valor = 0;
       } 
     }    
@@ -243,8 +232,10 @@ class KCalculoLote extends CI_Model{
       $this->Beneficiario->Concepto["sueldo_mensual"] = array(
         'mt' => round($sueldo_mensual,2), 
         'ABV' =>  "PENSION MILITAR", 
+        'codi' => 'sueldo_mensual',
         'TIPO' => 1,
-        'part' => '40701010101'
+        'part' => '40701010101',
+        'cuen' => ''
       );
       //Formular Conceptos
       foreach ( $this->Directiva['fnxC'] as $Con => $obj ){
@@ -254,8 +245,10 @@ class KCalculoLote extends CI_Model{
         $this->Beneficiario->Concepto[$rs] = array(
           'mt' => round($valor,2), 
           'ABV' =>  $obj['abv'], 
+          'codi' => $obj['rs'],
           'TIPO' => $obj['tipo'],
-          'part' => $obj['part']
+          'part' => $obj['part'],
+          'cuen' => ''
         );
         $valor = 0;
       } 
@@ -294,9 +287,11 @@ class KCalculoLote extends CI_Model{
       $sueldo_mensual = $pension;     
       $this->Beneficiario->Concepto["sueldo_mensual"] = array(
         'mt' => round($sueldo_mensual,2), 
-        'ABV' =>  "PENSION MILITAR", 
+        'ABV' =>  "PENSION MILITAR",
+        'codi' => 'sueldo_mensual',
         'TIPO' => 1,
-        'part' => '40701010101'
+        'part' => '40701010101',
+        'cuen' => ''
       );
       //Formular Conceptos
       foreach ( $this->Directiva['fnxC'] as $Con => $obj ){
@@ -306,8 +301,10 @@ class KCalculoLote extends CI_Model{
         $this->Beneficiario->Concepto[$rs] = array(
           'mt' => round($valor,2), 
           'ABV' =>  $obj['abv'], 
+          'codi' => $obj['rs'],
           'TIPO' => $obj['tipo'],
-          'part' => $obj['part']
+          'part' => $obj['part'],
+          'cuen' => ''
         );
         $valor = 0;
       }  

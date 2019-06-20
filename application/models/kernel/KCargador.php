@@ -335,7 +335,9 @@ class KCargador extends CI_Model{
       $linea .= $fcplinea;
       //$linea .= 'PENSION;';
       $linea .= 'CEDULA;APELLIDOS;NOMBRES;PARENTESCO;TIPO;BANCO;NUMERO CUENTA;PENSION MIL;';
-      $linea .= 'PORCENTAJE;ASIGNACION;DEDUCCION;NETO';
+      $linea .= 'PORCENTAJE;';
+      //$linea .= $fcplinea_aux;
+      $linea .= 'ASIGNACION;DEDUCCION;NETO';
     }
     fputs($file,$linea);//Para Generar archivo csv 04102017
     fputs($file,"\n");//Salto de linea
@@ -502,25 +504,27 @@ class KCargador extends CI_Model{
         //Aplicar conceptos de Asignación
         for ($i= 0; $i < $cant; $i++){
           $rs = $map[$i]['codigo'];
-          
-          if (isset($Bnf->Concepto[$rs])) {
-            switch ($Bnf->Concepto[$rs]['TIPO']) {
+         
+          if (isset( $Bnf->Concepto[$rs] )) {
+            $concp = $Bnf->Concepto[$rs];
+
+            switch ( $concp['TIPO'] ) {
               case 2: //LEER ARCHIVOS POR ASIGNACION
                 $monto_aux = $this->obtenerArchivos($Bnf, $rs);
                 $segmentoincial .=  $monto_aux . ";";
                 $asignacion += $monto_aux;
-                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
+                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $concp['TIPO'], 'mont' => $monto_aux);
                 //asgnar prepuesto
-                $this->asignarPresupuesto($rs, $monto_aux, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
+                $this->asignarPresupuesto( $rs, $monto_aux, $concp['TIPO'], $concp['ABV'], $concp['part'], $concp['cuen'], $concp['codi'] );
                 break;
               case 3: //LEER ARCHIVOS POR DEDUCCION               
                 $monto = $this->obtenerArchivos($Bnf, $rs);
                 $monto_aux = $monto<0?$monto*-1:$monto;
                 $segmentoincial .=  $monto_aux . ";";
                 $deduccion += $monto_aux;
-                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
+                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $concp['TIPO'], 'mont' => $monto_aux);
                 //asgnar prepuesto
-                $this->asignarPresupuesto($rs, $monto_aux, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
+                $this->asignarPresupuesto($rs, $monto_aux, $concp['TIPO'], $concp['ABV'], $concp['part'], $concp['cuen'], $concp['codi'] );
                 break;
               case 33: //RETROACTIVOS
                 $monto = 0;
@@ -538,40 +542,40 @@ class KCargador extends CI_Model{
                 }
                 $segmentoincial .=  $monto . ";";
                 $asignacion += $monto;
-                if($monto != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto);
+                if($monto != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $concp['TIPO'], 'mont' => $monto);
                 //asgnar prepuesto
-                $this->asignarPresupuesto($rs, $monto, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
+                $this->asignarPresupuesto($rs, $monto, $concp['TIPO'], $concp['ABV'], $concp['part'], $concp['cuen'], $concp['codi'] );
                 break;
               case 99: //MEDIDA JUDICIAL
                 //$medida_str = $medida[0] . ";";
                 $segmentoincial .=  $medida[0] . ";";
                 $deduccion +=  $medida[0]; 
-                $abreviatura = $Bnf->Concepto[$rs]['ABV'];
+                $abreviatura = $concp['ABV'];
                 if($medida[0] != 0)$recibo_de_pago[] = array('desc' =>  $medida[1], 'tipo' => 99,'mont' => $medida[0]);
-                $this->asignarPresupuesto($rs, $medida[0], '99', $abreviatura, $Bnf->Concepto[$rs]['part']); 
+                $this->asignarPresupuesto($rs, $medida[0], '99', $abreviatura, $concp['part'], $concp['cuen'], $concp['codi'] ); 
                 break;
               case 98: // CAJA DE AHORRO
                 //$cajaahorro_str = $cajaahorro . ";";
                 $segmentoincial .= $cajaahorro . ";";
                 $deduccion +=  $cajaahorro;
-                $abreviatura = $Bnf->Concepto[$rs]['ABV'];
+                $abreviatura = $concp['ABV'];
                 if($cajaahorro != 0)$recibo_de_pago[] = array('desc' =>  $abreviatura, 'tipo' => 98,'mont' => $cajaahorro);  
-                $this->asignarPresupuesto( $rs, $cajaahorro, '99', $abreviatura, $Bnf->Concepto[$rs]['part']);      
+                $this->asignarPresupuesto( $rs, $cajaahorro, '99', $abreviatura, $concp['part'], $concp['cuen'], $concp['codi'] );      
                 break;
               case 96:
                 
                 break;
               
               default:
-                $monto_aux = $Bnf->Concepto[$rs]['mt'];
+                $monto_aux = $concp['mt'];
                 $segmentoincial .=  $monto_aux . ";";
-                $asignacion += $Bnf->Concepto[$rs]['TIPO'] == 1? $monto_aux: 0;
-                $deduccion += $Bnf->Concepto[$rs]['TIPO'] == 0? $monto_aux: 0;
-                //$deduccion += $Bnf->Concepto[$rs]['TIPO'] == 2? $monto_aux: 0;
+                $asignacion += $concp['TIPO'] == 1? $monto_aux: 0;
+                $deduccion += $concp['TIPO'] == 0? $monto_aux: 0;
+                //$deduccion += $concp['TIPO'] == 2? $monto_aux: 0;
 
-                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
+                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $concp['TIPO'], 'mont' => $monto_aux);
                 //asgnar prepuesto
-                $this->asignarPresupuesto($rs, $Bnf->Concepto[$rs]['mt'], $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
+                $this->asignarPresupuesto($rs, $concp['mt'], $concp['TIPO'], $concp['ABV'], $concp['part'], $concp['cuen'], $concp['codi'] );
                 break;
             }
             
@@ -640,24 +644,25 @@ class KCargador extends CI_Model{
         for ($i= 0; $i < $cant; $i++){
           $result = $map[$i]['codigo'];
           if (isset($NConcepto[$result])) {
+            $concp = $NConcepto[$result];
 
-            switch ( $NConcepto[$result]['TIPO'] ) {
+            switch ( $concp['TIPO'] ) {
               case 2: //Leer archivos de texto
                 $monto_aux = $this->obtenerArchivos($Bnf, $result);
                 $segmentoincial .=  $monto_aux . ";";
                 $asignacion += $monto_aux;
-                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $result, 'tipo' => $NConcepto[$result]['TIPO'], 'mont' => $monto_aux);
+                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $result, 'tipo' => $concp['TIPO'], 'mont' => $monto_aux);
                 //asgnar prepuesto
-                $this->asignarPresupuesto($result, $monto_aux, $NConcepto[$result]['TIPO'], $NConcepto[$result]['ABV'], $NConcepto[$result]['part']);
+                $this->asignarPresupuesto($result, $monto_aux, $concp['TIPO'], $concp['ABV'], $concp['part'],$concp['cuen'], $concp['codi']);
                 break;
               case 3: //Leer archivos de texto                
                 $monto = $this->obtenerArchivos($Bnf, $result);
                 $monto_aux = $monto<0?$monto*-1:$monto;
                 $segmentoincial .=  $monto_aux . ";";
                 $deduccion += $monto_aux;
-                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $result, 'tipo' => $NConcepto[$result]['TIPO'], 'mont' => $monto_aux);
+                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $result, 'tipo' => $concp['TIPO'], 'mont' => $monto_aux);
                 //asgnar prepuesto
-                $this->asignarPresupuesto($result, $monto_aux, $NConcepto[$result]['TIPO'], $NConcepto[$result]['ABV'], $NConcepto[$result]['part']);
+                $this->asignarPresupuesto($result, $monto_aux, $concp['TIPO'], $concp['ABV'], $concp['part'],$concp['cuen'], $concp['codi']);
                 break;
               case 33:
                 $monto = 0;
@@ -677,20 +682,18 @@ class KCargador extends CI_Model{
                 $asignacion += $monto;
                 if($monto != 0)$recibo_de_pago[] = array(
                   'desc' =>  $result, 
-                  'tipo' => $NConcepto[$result]['TIPO'], 
+                  'tipo' => $concp['TIPO'], 
                   'mont' => $monto
                 );
                 //asgnar prepuesto
-                $this->asignarPresupuesto($result, $monto, $NConcepto[$result]['TIPO'], $NConcepto[$result]['ABV'], $NConcepto[$result]['part']);
+                $this->asignarPresupuesto($result, $monto, $concp['TIPO'], $concp['ABV'], $concp['part'],$concp['cuen'], $concp['codi']);
                 break;
               case 99:
-                //echo "_Imp... MEDIDA \r\n";
-                //$medida_str = $medida[0] . ";";
                 $segmentoincial .= $medida[0] . ";";
                 $deduccion +=  $medida[0];
-                $abreviatura = $NConcepto[$result]['ABV'];
+                $abreviatura = $concp['ABV'];
                 if($medida[0] != 0)$recibo_de_pago[] = array('desc' =>  $medida[1], 'tipo' => 99,'mont' => $medida[0]);
-                $this->asignarPresupuesto( $result, $medida[0], '99', $abreviatura, $NConcepto[$result]['part']);
+                $this->asignarPresupuesto( $result, $medida[0], '99', $abreviatura, $concp['part'],$concp['cuen'], $concp['codi']);
                 break;
 
                 
@@ -699,26 +702,19 @@ class KCargador extends CI_Model{
                 $segmentoincial .= $cajaahorro . ";";
                 //$cajaahorro_str = $cajaahorro . ";";
                 $deduccion +=  $cajaahorro;
-                $abreviatura = $NConcepto[$result]['ABV'];
+                $abreviatura = $concp['ABV'];
                 if($cajaahorro != 0)$recibo_de_pago[] = array('desc' =>  $abreviatura, 'tipo' => 98,'mont' => $cajaahorro);
-                $this->asignarPresupuesto($result, $cajaahorro, '98', $abreviatura, $NConcepto[$result]['part']); 
+                $this->asignarPresupuesto($result, $cajaahorro, '98', $abreviatura, $concp['part'],$concp['cuen'], $concp['codi']); 
                 break;
               
               default:
-                // $monto_aux = $NConcepto[$result]['mt'];
-                // $abreviatura_aux = $NConcepto[$result]['ABV'];
-                // if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $abreviatura_aux, 'tipo' => $NConcepto[$result]['TIPO'],'mont' => $monto_aux);
-                // $this->asignarPresupuesto($result, $monto_aux, $NConcepto[$result]['TIPO'], $abreviatura_aux, $NConcepto[$result]['part']);
-                // break;  
-                $monto_aux = $NConcepto[$result]['mt'];
+                $monto_aux = $concp['mt'];
                 $segmentoincial .=  $monto_aux . ";";
-                $asignacion += $NConcepto[$result]['TIPO'] == 1? $monto_aux: 0;
-                $deduccion += $NConcepto[$result]['TIPO'] == 0? $monto_aux: 0;
-                //$deduccion += $Bnf->Concepto[$rs]['TIPO'] == 2? $monto_aux: 0;
-
-                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $result, 'tipo' => $NConcepto[$result]['TIPO'], 'mont' => $monto_aux);
+                $asignacion += $concp['TIPO'] == 1? $monto_aux: 0;
+                $deduccion += $concp['TIPO'] == 0? $monto_aux: 0;
+                if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $result, 'tipo' => $concp['TIPO'], 'mont' => $monto_aux);
                 //asgnar prepuesto
-                $this->asignarPresupuesto($result, $NConcepto[$result]['mt'], $NConcepto[$result]['TIPO'], $NConcepto[$result]['ABV'], $NConcepto[$result]['part']);
+                $this->asignarPresupuesto($result, $concp['mt'], $concp['TIPO'], $concp['ABV'], $concp['part'],$concp['cuen'], $concp['codi']);
                 break;          
             } // Fin de Switch           
           }else{
@@ -846,7 +842,7 @@ class KCargador extends CI_Model{
         $monto_str .= $monto . ';';
         $asignacion += $monto;
         if($monto != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 1, 'mont' => $monto );  
-        $this->asignarPresupuesto( $rs, $asignacion,  '1', $map[$i]['nombre'], $map[$i]['partida']);        
+        $this->asignarPresupuesto( $rs, $asignacion,  '1', $map[$i]['nombre'], $map[$i]['partida'], '');        
       }else{
         $valor = $monto * -1 ;
         $monto_str .= $valor . ';';
@@ -854,7 +850,7 @@ class KCargador extends CI_Model{
         
         if($valor != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 2, 'mont' => $valor );
         
-        $this->asignarPresupuesto( $rs, $deduccion, '2', $map[$i]['nombre'], $map[$i]['partida']);
+        $this->asignarPresupuesto( $rs, $deduccion, '2', $map[$i]['nombre'], $map[$i]['partida'], '');
       }
     } 
   
@@ -1142,8 +1138,8 @@ class KCargador extends CI_Model{
       //$this->ParalizadosSobrevivientes++;
     }
     
-    $this->asignarPresupuesto( "FCIS-00001", $deducciont , '0', 'FONDO CIS 6.5%', '40700000000');
-    $this->asignarPresupuesto( "PENM-00001", $asignaciont , '0', 'PENSION MILITAR', '40700000000');
+    $this->asignarPresupuesto( "FCIS-00001", $deducciont , '0', 'FONDO CIS 6.5%', '40700000000', '');
+    $this->asignarPresupuesto( "PENM-00001", $asignaciont , '0', 'PENSION MILITAR', '40700000000', '');
 
     // }else{ //Recordando calculos
 
@@ -1161,7 +1157,66 @@ class KCargador extends CI_Model{
 
   }
 
+  /**
+   * Permite recorrer nuevamente la lista de los conceptos para la tabla o excel
+   * @param map array
+   * @param conceptos array
+   * @param clave string Cedula del beneficiario con el familiar 1100|00001
+   */
+  private function recorrerConceptos( $map = array(), $conceptos = array(), $clave = '', &$recibo_de_pago ) {
+    $lst = array();
+    $segmentoincial = '';
+    $asignacion = 0;
+    $deduccion = 0;
+    for ($i= 0; $i < $cant; $i++){
+      $rs = $map[$i]['codigo'];
 
+      if (isset($conceptos[$rs])) {
+        $monto_aux = $conceptos[$rs]['mt'];        
+        switch ($conceptos[$rs]['TIPO']) {
+          case 1: //Leer archivos de texto  
+            break;
+          case 2: //Leer archivos de texto
+           break;
+          case 3: //Leer archivos de texto                
+            break;
+          case 33: //Retroactivos
+            $monto = 0;
+            if ( isset( $this->Retroactivos[$clave][$rs] )){
+              $retroactivo = $this->Retroactivos[$clave][$rs];
+              $valor = 0;
+              try {
+                //eval('$valor = ' . $fnx); 
+                $fn = $retroactivo['fnxc'];
+                eval('$valor = ' . $fn);
+              } catch (ParseError $e) {
+                  // Report error somehow
+              }
+              $monto = $valor;
+            }
+            $segmentoincial .=  $monto . ";";
+            $asignacion += $monto;
+            if($monto != 0) $recibo_de_pago[] = array('desc' =>  $rs, 'tipo' =>$conceptos[$rs]['TIPO'], 'mont' => $monto );
+            //asgnar prepuesto
+            $this->asignarPresupuesto($rs, $monto, $conceptos[$rs]['TIPO'], $conceptos[$rs]['ABV'], $conceptos[$rs]['part']);
+            break;
+          case 96:
+            break;
+          case 97:
+            break;
+          case 98:            
+            break;
+          case 99:            
+            break;       
+          default:
+           break;
+        }
+      }else{
+        $fcplinea .=  "0;";
+        $segmentoincial .= "0;";
+      }
+    }
+  }
 
 
 
@@ -1238,14 +1293,14 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
           $monto_str .= $monto . ';';
           $asignacion += $monto;
           if($monto != 0)$recibo_de_pago[] = array( 'desc' => $map[$j]['nombre'], 'tipo' => 1,'mont' => $monto ); 
-          $this->asignarPresupuesto( $rs, $asignacion,  '1', $map[$j]['nombre'], $map[$j]['partida']);  
+          $this->asignarPresupuesto( $rs, $asignacion,  '1', $map[$j]['nombre'], $map[$j]['partida'], '');  
 
         }else if($monto < 0) {
           $valor = $monto * -1 ;
           $monto_str .= $valor . ';';
           $deduccion +=  $valor;
           if($valor != 0)$recibo_de_pago[] = array( 'desc' => $map[$j]['nombre'], 'tipo' => 2,'mont' => $valor );
-          $this->asignarPresupuesto( $rs, $deduccion, '2', $map[$j]['nombre'], $map[$j]['partida']);
+          $this->asignarPresupuesto( $rs, $deduccion, '2', $map[$j]['nombre'], $map[$j]['partida'], '');
         }
       } 
 
@@ -1397,23 +1452,24 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
         $rs = $map[$i]['codigo'];
         
         if (isset($Bnf->Concepto[$rs])) {
-          switch ($Bnf->Concepto[$rs]['TIPO']) {
+          $concp = $Bnf->Concepto[$rs]; 
+          switch ($concp['TIPO']) {
             case 2: //Leer archivos de texto
               $monto_aux = $this->obtenerArchivos($Bnf, $rs);
               $segmentoincial .=  $monto_aux . ";";
               $asignacion += $monto_aux;
-              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
+              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $concp['TIPO'], 'mont' => $monto_aux);
               //asgnar prepuesto
-              $this->asignarPresupuesto($rs, $monto_aux, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
+              $this->asignarPresupuesto($rs, $monto_aux, $concp['TIPO'], $concp['ABV'], $concp['part'],$concp['cuen'], $concp['codi']);
               break;
             case 3: //Leer archivos de texto                
               $monto = $this->obtenerArchivos($Bnf, $rs);
               $monto_aux = $monto<0?$monto*-1:$monto;
               $segmentoincial .=  $monto_aux . ";";
               $deduccion += $monto_aux;
-              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
+              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $concp['TIPO'], 'mont' => $monto_aux);
               //asgnar prepuesto
-              $this->asignarPresupuesto($rs, $monto_aux, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
+              $this->asignarPresupuesto($rs, $monto_aux, $concp['TIPO'], $concp['ABV'], $concp['part'],$concp['cuen'], $concp['codi']);
               break;
             case 33:
               $monto = 0;
@@ -1425,40 +1481,40 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
               }
               $segmentoincial .=  $monto . ";";
               $asignacion += $monto;
-              if($monto != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto);
+              if($monto != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $concp['TIPO'], 'mont' => $monto);
               //asgnar prepuesto
-              $this->asignarPresupuesto($rs, $monto, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
+              $this->asignarPresupuesto($rs, $monto, $concp['TIPO'], $concp['ABV'], $concp['part'],$concp['cuen'], $concp['codi']);
               break;
             case 99:
               //$medida_str = $medida[0] . ";";
               $segmentoincial .=  $medida[0] . ";";
               $deduccion +=  $medida[0]; 
-              $abreviatura = $Bnf->Concepto[$rs]['ABV'];
+              $abreviatura = $concp['ABV'];
               if($medida[0] != 0)$recibo_de_pago[] = array('desc' =>  $medida[1], 'tipo' => 99,'mont' => $medida[0]);
-              $this->asignarPresupuesto($rs, $medida[0], '99', $abreviatura, $Bnf->Concepto[$rs]['part']); 
+              $this->asignarPresupuesto($rs, $medida[0], '99', $abreviatura, $concp['part'],$concp['cuen'], $concp['codi']); 
               break;
             case 98:
               //$cajaahorro_str = $cajaahorro . ";";
               $segmentoincial .= $cajaahorro . ";";
               $deduccion +=  $cajaahorro;
-              $abreviatura = $Bnf->Concepto[$rs]['ABV'];
+              $abreviatura = $concp['ABV'];
               if($cajaahorro != 0)$recibo_de_pago[] = array('desc' =>  $abreviatura, 'tipo' => 98,'mont' => $cajaahorro);  
-              $this->asignarPresupuesto( $rs, $cajaahorro, '99', $abreviatura, $Bnf->Concepto[$rs]['part']);      
+              $this->asignarPresupuesto( $rs, $cajaahorro, '99', $abreviatura, $concp['part'],$concp['cuen'], $concp['codi']);      
               break;
             case 96:
               
               break;
             
             default:
-              $monto_aux = $Bnf->Concepto[$rs]['mt'];
+              $monto_aux = $concp['mt'];
               $segmentoincial .=  $monto_aux . ";";
-              $asignacion += $Bnf->Concepto[$rs]['TIPO'] == 1? $monto_aux: 0;
-              $deduccion += $Bnf->Concepto[$rs]['TIPO'] == 0? $monto_aux: 0;
-              //$deduccion += $Bnf->Concepto[$rs]['TIPO'] == 2? $monto_aux: 0;
+              $asignacion += $concp['TIPO'] == 1? $monto_aux: 0;
+              $deduccion += $concp['TIPO'] == 0? $monto_aux: 0;
+              //$deduccion += $concp['TIPO'] == 2? $monto_aux: 0;
 
-              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
+              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $concp['TIPO'], 'mont' => $monto_aux);
               //asgnar prepuesto
-              $this->asignarPresupuesto($rs, $Bnf->Concepto[$rs]['mt'], $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
+              $this->asignarPresupuesto($rs, $concp['mt'], $concp['TIPO'], $concp['ABV'], $concp['part'],$concp['cuen'], $concp['codi']);
               break;
           }
           
@@ -1524,24 +1580,25 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       for ($i= 0; $i < $cant; $i++){
         $result = $map[$i]['codigo'];
         if (isset($NConcepto[$result])) {
+          $concp = $NConcepto[$result];
 
-          switch ( $NConcepto[$result]['TIPO'] ) {
+          switch ( $concp['TIPO'] ) {
             case 2: //Leer archivos de texto
               $monto_aux = $this->obtenerArchivos($Bnf, $result);
               $segmentoincial .=  $monto_aux . ";";
               $asignacion += $monto_aux;
-              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $result, 'tipo' => $NConcepto[$result]['TIPO'], 'mont' => $monto_aux);
+              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $result, 'tipo' => $concp['TIPO'], 'mont' => $monto_aux);
               //asgnar prepuesto
-              $this->asignarPresupuesto($result, $monto_aux, $NConcepto[$result]['TIPO'], $NConcepto[$result]['ABV'], $NConcepto[$result]['part']);
+              $this->asignarPresupuesto($result, $monto_aux, $concp['TIPO'], $concp['ABV'], $concp['part'],$concp['cuen'], $concp['codi']);
               break;
             case 3: //Leer archivos de texto                
               $monto = $this->obtenerArchivos($Bnf, $result);
               $monto_aux = $monto<0?$monto*-1:$monto;
               $segmentoincial .=  $monto_aux . ";";
               $deduccion += $monto_aux;
-              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $result, 'tipo' => $NConcepto[$result]['TIPO'], 'mont' => $monto_aux);
+              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $result, 'tipo' => $concp['TIPO'], 'mont' => $monto_aux);
               //asgnar prepuesto
-              $this->asignarPresupuesto($result, $monto_aux, $NConcepto[$result]['TIPO'], $NConcepto[$result]['ABV'], $NConcepto[$result]['part']);
+              $this->asignarPresupuesto($result, $monto_aux, $concp['TIPO'], $concp['ABV'], $concp['part'],$concp['cuen'], $concp['codi']);
               break;
             case 33:
               $monto = 0;
@@ -1555,36 +1612,36 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
               $asignacion += $monto;
               if($monto != 0)$recibo_de_pago[] = array(
                 'desc' =>  $result, 
-                'tipo' => $NConcepto[$result]['TIPO'], 
+                'tipo' => $concp['TIPO'], 
                 'mont' => $monto
               );
               //asgnar prepuesto
-              $this->asignarPresupuesto($result, $monto, $NConcepto[$result]['TIPO'], $NConcepto[$result]['ABV'], $NConcepto[$result]['part']);
+              $this->asignarPresupuesto($result, $monto, $concp['TIPO'], $concp['ABV'], $concp['part'],$concp['cuen'], $concp['codi']);
               break;
             case 99:
               //echo "_Imp... MEDIDA \r\n";
               //$medida_str = $medida[0] . ";";
               $segmentoincial .= $medida[0] . ";";
               $deduccion +=  $medida[0];
-              $abreviatura = $NConcepto[$result]['ABV'];
+              $abreviatura = $concp['ABV'];
               if($medida[0] != 0)$recibo_de_pago[] = array('desc' =>  $medida[1], 'tipo' => 99,'mont' => $medida[0]);
-              $this->asignarPresupuesto( $result, $medida[0], '99', $abreviatura, $NConcepto[$result]['part']);
+              $this->asignarPresupuesto( $result, $medida[0], '99', $abreviatura, $concp['part'],$concp['cuen'], $concp['codi']);
               break;
             
             case 98:
               $segmentoincial .= $cajaahorro . ";";
               //$cajaahorro_str = $cajaahorro . ";";
               $deduccion +=  $cajaahorro;
-              $abreviatura = $NConcepto[$result]['ABV'];
+              $abreviatura = $concp['ABV'];
               if($cajaahorro != 0)$recibo_de_pago[] = array('desc' =>  $abreviatura, 'tipo' => 98,'mont' => $cajaahorro);
-              $this->asignarPresupuesto($result, $cajaahorro, '98', $abreviatura, $NConcepto[$result]['part']); 
+              $this->asignarPresupuesto($result, $cajaahorro, '98', $abreviatura, $concp['part'], $concp['part'],$concp['cuen'], $concp['codi']); 
               break;
             
             default:
-              $monto_aux = $NConcepto[$result]['mt'];
-              $abreviatura_aux = $NConcepto[$result]['ABV'];
-              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $abreviatura_aux, 'tipo' => $NConcepto[$result]['TIPO'],'mont' => $monto_aux);
-              $this->asignarPresupuesto($result, $monto_aux, $NConcepto[$result]['TIPO'], $abreviatura_aux, $NConcepto[$result]['part']);
+              $monto_aux = $concp['mt'];
+              $abreviatura_aux = $concp['ABV'];
+              if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $abreviatura_aux, 'tipo' => $concp['TIPO'],'mont' => $monto_aux);
+              $this->asignarPresupuesto($result, $monto_aux, $concp['TIPO'], $abreviatura_aux, $concp['part'],$concp['cuen'], $concp['codi']);
               break;            
           } // Fin de Switch           
         } // Fin de si
@@ -1719,9 +1776,6 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
               $segmentoincial .=  $monto_aux . ";";
               $bonos += $monto_aux;
               $lstAsignacion[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
-              //if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
-              //asgnar prepuesto
-              //$this->asignarPresupuesto($rs, $monto_aux, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
             }
             break;
           case 2: //Leer archivos de texto
@@ -1860,7 +1914,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     }
     
     //$this->asignarPresupuesto( "FCIS-00001", $deducciont , '0', 'FONDO CIS 6.5%', '40700000000');
-    $this->asignarPresupuesto( "RE00001", $asignaciont , '0', 'RETRIBUCION ESPECIAL', '40700000000');
+    $this->asignarPresupuesto( "RE00001", $asignaciont , '0', 'RETRIBUCION ESPECIAL', '40700000000', '');
 
     // }else{ //Recordando calculos
 
@@ -1977,7 +2031,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
 
   }
 
-  private function asignarPresupuesto($rs, $mt, $tp, $ab, $part){
+  private function asignarPresupuesto($rs, $mt, $tp, $ab, $part, $cuen, $codi){
     if (isset($this->ResumenPresupuestario[$rs])){
       $mt_aux = $this->ResumenPresupuestario[$rs]['mnt'];
       if($mt_aux > 0){
@@ -1986,7 +2040,9 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
           'tp' => $tp, 
           'abv' => $ab,
           'estr' => '',
-          'part' => $part
+          'part' => $part,
+          'cuen' => $cuen,
+          'codi' => $codi
         );
       }
     }else{
@@ -1996,7 +2052,9 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
           'tp' => $tp, 
           'abv' => $ab,
           'estr' => '',
-          'part' => $part
+          'part' => $part,
+          'cuen' => $cuen,
+          'codi' => $codi
         );
       }
     }

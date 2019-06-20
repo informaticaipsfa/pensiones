@@ -86,6 +86,8 @@ class KConceptos extends CI_Model{
           'rs' => $v->codigo, 
           'abv' => $v->descripcion, 
           'tipo' => $v->tipo,
+          'estr' => $v->estructura,
+          'cuen' => $v->cuenta,
           'part' => $v->partida
         ); 
 
