@@ -20,10 +20,11 @@ class KArchivos extends CI_Model{
 		if ( $map["nombre"] == 'FCP' ){
 			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo WHERE fami != '' ;"; // AND fami = '533320' --WHERE fech BETWEEN '2019-04-01' AND '2019-04-30'";
 		}else{
-			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo;"; // --WHERE fech BETWEEN '2019-04-01' AND '2019-04-30'";			
+			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo WHERE fech > '2019-06-20';"; //fech BETWEEN '" . $map["fechainicio"]  . "' AND '" . $map["fechafin"]  . "'";			
 		}
-        $obj = $this->Dbpace->consultar($query);
+		//print_r( $query );
 
+        $obj = $this->Dbpace->consultar($query);
 		$rs = $obj->rs;
 
 		foreach ($rs as $c => $v) {

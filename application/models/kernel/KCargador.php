@@ -336,7 +336,7 @@ class KCargador extends CI_Model{
       //$linea .= 'PENSION;';
       $linea .= 'CEDULA;APELLIDOS;NOMBRES;PARENTESCO;TIPO;BANCO;NUMERO CUENTA;PENSION MIL;';
       $linea .= 'PORCENTAJE;';
-      //$linea .= $fcplinea_aux;
+      $linea .= 'RETROACTIVO;';
       $linea .= 'ASIGNACION;DEDUCCION;NETO';
     }
     fputs($file,$linea);//Para Generar archivo csv 04102017
@@ -1066,15 +1066,7 @@ class KCargador extends CI_Model{
         
         if( $PS[$i]['estatus'] == 201  ){
           if ($neto > 0 ){            
-            $linea .= $segmentoincial . $PS[$i]['cedula'] . ';' . $PS[$i]['apellidos'] . ';' . $PS[$i]['nombres'] . 
-            ';' . $PS[$i]['parentesco'] . ';' . $PS[$i]['tipo'] . ";'" . $PS[$i]['banco'] . ";'" . $PS[$i]['numero'] . 
-            ';' . round($pension_distribuir,2) . ';' . round($PS[$i]['porcentaje'],2) . 
-            ";" . round($asignacionp,2) . ';' . round($deduccionp,2) . ';' . round($neto,2) . PHP_EOL;
-
-            $asignaciont += $asignacionp;
-            $deducciont += $deduccionp;
-            $netot +=  $asignacionp - $deduccionp;
-            $this->OperarBeneficiarios++;
+            
             $recibo_de_pago[] = array(
               'desc' =>  'PENSION SOBREVIVIENTE', 
               'tipo' => 97,
@@ -1086,7 +1078,26 @@ class KCargador extends CI_Model{
               'mont' => $deduccionp
             );
             $clave = $Bnf->cedula . "|" . $PS[$i]['cedula'];
-            $this->recorrerConceptos($map, $Bnf->Concepto, $clave, $recibo_de_pago);
+            $retroactivo = $this->recorrerConceptos($map, $Bnf->Concepto, $clave, $recibo_de_pago);
+            
+            $asignacionp += $retroactivo;
+            $neto =  round($asignacionp,2) - round($deduccionp,2);        
+            $recibo_de_pago[0] = array(
+              'desc' =>  'PENSION SOBREVIVIENTE', 
+              'tipo' => 97,
+              'mont' => $asignacionp
+            );
+
+            $linea .= $segmentoincial . $PS[$i]['cedula'] . ';' . $PS[$i]['apellidos'] . ';' . $PS[$i]['nombres'] . 
+            ';' . $PS[$i]['parentesco'] . ';' . $PS[$i]['tipo'] . ";'" . $PS[$i]['banco'] . ";'" . $PS[$i]['numero'] . 
+            ';' . round($pension_distribuir,2) . ';' . round($PS[$i]['porcentaje'],2) . ';' . $retroactivo . ';' . 
+            round($asignacionp,2) . ';' . round($deduccionp,2) . ';' . round($neto,2) . PHP_EOL;
+
+            $asignaciont += $asignacionp;
+            $deducciont += $deduccionp;
+            $netot +=  $asignacionp - $deduccionp;
+            $this->OperarBeneficiarios++;
+           
 
             $coma = "";
             if($this->OperarBeneficiarios > 1){
@@ -1114,8 +1125,7 @@ class KCargador extends CI_Model{
             $log .= $segmentoincial . 
             ';' . $PS[$i]['cedula'] . ';' . $PS[$i]['apellidos'] . ';' . $PS[$i]['nombres'] . 
             ';' . $PS[$i]['parentesco'] . ';' . $PS[$i]['tipo'] . ";'" . $PS[$i]['banco'] . ";'" . $PS[$i]['numero'] . 
-            ';' . round($Bnf->pension,2) . ';' . round($PS[$i]['porcentaje'],2) . 
-            ';0;0;0;Sin monto a cobrar' . PHP_EOL;            
+            ';' . round($Bnf->pension,2) . ';' . round($PS[$i]['porcentaje'],2) . ';0;0;0;0;0;Sin monto a cobrar' . PHP_EOL;            
           }
           
         }else{
@@ -1140,8 +1150,8 @@ class KCargador extends CI_Model{
       //$this->ParalizadosSobrevivientes++;
     }
     
-    $this->asignarPresupuesto( "FCIS-00001", $deducciont , '0', 'FONDO CIS 6.5%', '40700000000', '');
-    $this->asignarPresupuesto( "PENM-00001", $asignaciont , '0', 'PENSION MILITAR', '40700000000', '');
+    $this->asignarPresupuesto( "FCIS-00001", $deducciont , '0', 'FONDO CIS 6.5%', '40700000000', '', '');
+    $this->asignarPresupuesto( "PENM-00001", $asignaciont , '0', 'PENSION MILITAR', '40700000000', '', '');
 
     // }else{ //Recordando calculos
 
@@ -1168,8 +1178,11 @@ class KCargador extends CI_Model{
   private function recorrerConceptos( $map = array(), $conceptos = array(), $clave = '', &$recibo_de_pago ) {
     $lst = array();
     $segmentoincial = '';
+    $fcplinea = '';
+    $monto = 0;
     $asignacion = 0;
     $deduccion = 0;
+    $cant = count( $map );
     for ($i= 0; $i < $cant; $i++){
       $rs = $map[$i]['codigo'];
 
@@ -1196,11 +1209,11 @@ class KCargador extends CI_Model{
               }
               $monto = $valor;
             }
-            $segmentoincial .=  $monto . ";";
+            $segmentoincial =  $monto . ";";
             $asignacion += $monto;
             if($monto != 0) $recibo_de_pago[] = array('desc' =>  $rs, 'tipo' =>$conceptos[$rs]['TIPO'], 'mont' => $monto );
             //asgnar prepuesto
-            $this->asignarPresupuesto($rs, $monto, $conceptos[$rs]['TIPO'], $conceptos[$rs]['ABV'], $conceptos[$rs]['part']);
+            $this->asignarPresupuesto($rs, $monto, $conceptos[$rs]['TIPO'], $conceptos[$rs]['ABV'], $conceptos[$rs]['part'], $conceptos[$rs]['cuen'], $conceptos[$rs]['codi'] );
             break;
           case 96:
             break;
@@ -1214,10 +1227,11 @@ class KCargador extends CI_Model{
            break;
         }
       }else{
-        $fcplinea .=  "0;";
-        $segmentoincial .= "0;";
+        // $fcplinea .=  "0;";
+        // $segmentoincial .= "0;";
       }
     }
+    return $monto;
   }
 
 
