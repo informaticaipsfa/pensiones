@@ -1679,7 +1679,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       $this->KRecibo->deducciones = $deduccion;
       //Insert a Postgres
       $base = $Bnf->porcentaje . "|" . $Bnf->componente_id . "|" . $Bnf->grado_codigo . "|" . $Bnf->grado_nombre;
-      $registro = "(" . $sqlID . "," . qd['oid'] . ",'" . $Bnf->cedula . 
+      $registro = "(" . $sqlID . "," . $Directivas['oid'] . ",'" . $Bnf->cedula . 
       "','" . trim($Bnf->apellidos) . ", " . trim($Bnf->nombres) . "','" . 
       json_encode($this->KRecibo) . "',Now(),'" . $Bnf->banco . "','" . $Bnf->numero_cuenta . 
       "','" . $Bnf->tipo . "', '" . $Bnf->situacion . "', " . $Bnf->estatus_activo . 
