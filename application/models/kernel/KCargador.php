@@ -1930,7 +1930,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     }
     
     //$this->asignarPresupuesto( "FCIS-00001", $deducciont , '0', 'FONDO CIS 6.5%', '40700000000');
-    $this->asignarPresupuesto( "RE00001", $asignaciont , '0', 'RETRIBUCION ESPECIAL', '40700000000', '');
+    $this->asignarPresupuesto( "RE00001", $asignaciont , '0', 'RETRIBUCION ESPECIAL', '40700000000', '', '');
 
     // }else{ //Recordando calculos
 
