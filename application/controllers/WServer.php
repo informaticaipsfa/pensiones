@@ -334,6 +334,13 @@ class WServer extends REST_Controller{
 		$this->response($lst);
     }
 
+    function listarnominadt_get($llav){
+        $this->load->model('kernel/KNomina');
+		$lst = $this->KNomina->ListarNominaDetalle($llav);
+		$this->response($lst);
+    }
+
+
     function nominacerrar_get($nomina, $estatus){
         $this->load->model('kernel/KNomina');
         $this->KNomina->ID = $nomina;

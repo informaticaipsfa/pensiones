@@ -245,7 +245,19 @@ class KNomina extends CI_Model{
     return $lst;
   }
 
+  public function ListarNominaDetalle( $llav = ''){
+    //85cb4d8068fd39e9fdba111d1c168ca3
+    $sConsulta = "SELECT * FROM space.nomina_detalle AS ndt JOIN (select oid,tipo from space.nomina
+    where llav = '" . $llav ."') as nomi ON ndt.oidn=nomi.oid";
+    echo $sConsulta;
+    $obj = $this->DBSpace->consultar($sConsulta);
+    $lst = array();
+    foreach($obj->rs as $c => $v ){
+      $lst[] = $v;
+    }
+    return $lst;
 
+  }
 
 
 }
