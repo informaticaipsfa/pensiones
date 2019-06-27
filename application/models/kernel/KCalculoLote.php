@@ -375,9 +375,6 @@ class KCalculoLote extends CI_Model{
     $ano_r = $fecha_r[0];
     $mes_r = $fecha_r[1];
     $dia_r = $fecha_r[2];
-    list($ano,$mes,$dia) = explode("-",$fecha);
-
-
     if ($dia_r < $dia){
       $dia_dif =  ($dia_r+30) - $dia; //27 -5
       $mes_r--;

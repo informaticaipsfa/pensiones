@@ -249,7 +249,7 @@ class KNomina extends CI_Model{
     //85cb4d8068fd39e9fdba111d1c168ca3
     $sConsulta = "SELECT * FROM space.nomina_detalle AS ndt JOIN (select oid,tipo from space.nomina
     where llav = '" . $llav ."') as nomi ON ndt.oidn=nomi.oid";
-    echo $sConsulta;
+    //echo $sConsulta;
     $obj = $this->DBSpace->consultar($sConsulta);
     $lst = array();
     foreach($obj->rs as $c => $v ){
