@@ -98,4 +98,18 @@ class KMedidaJudicial extends CI_Model{
 			$this->Dbpace->consultar($sModificar);
 		}
 	}
+
+	public function ListarPagosM( $llav = ''){
+		//85cb4d8068fd39e9fdba111d1c168ca3
+		$sConsulta = "select * from space.medidajudicial_detalle ndt JOIN (select oid,tipo from space.nomina
+		where llav = '" . $llav ."') as nom ON ndt.nomi=nom.oid";
+		//echo $sConsulta;
+		$obj = $this->Dbpace->consultar($sConsulta);
+		$lst = array();
+		foreach($obj->rs as $c => $v ){
+		  $lst[] = $v;
+		}
+		return $lst;
+	
+	  }
 }

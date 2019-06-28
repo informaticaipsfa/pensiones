@@ -339,6 +339,11 @@ class WServer extends REST_Controller{
 		$lst = $this->KNomina->ListarNominaDetalle($llav);
 		$this->response($lst);
     }
+    function listarmedidajudicialdt_get($llav){
+        $this->load->model('kernel/KMedidaJudicial');
+		$lst = $this->KMedidaJudicial->ListarPagosM($llav);
+		$this->response($lst);
+    }
 
 
     function nominacerrar_get($nomina, $estatus){

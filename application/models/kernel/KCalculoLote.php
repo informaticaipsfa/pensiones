@@ -361,20 +361,17 @@ class KCalculoLote extends CI_Model{
   * @return int
   */
   private function __restarFecha($fecha = '', $fecha_r = '', $ant = FALSE){
-
-
-
     if($fecha_r == ''){
       $fecha_retiro = date('Y-m-d');
     }else{
       $fecha_retiro =  $fecha_r;
-
     }
-
     $fecha_r = explode("-", $fecha_retiro);
     $ano_r = $fecha_r[0];
     $mes_r = $fecha_r[1];
     $dia_r = $fecha_r[2];
+    list($ano,$mes,$dia) = explode("-",$fecha);
+
     if ($dia_r < $dia){
       $dia_dif =  ($dia_r+30) - $dia; //27 -5
       $mes_r--;
