@@ -304,18 +304,24 @@ class WServer extends REST_Controller{
 		$this->response($Contar);
     }
 
-    function listartpendientes_get($id){
+    function listartpendientes_get($mes, $id){
         $this->load->model('kernel/KNomina');
-		$lst = $this->KNomina->Listar($id);
+		$lst = $this->KNomina->Listar($mes, $id);
 		$this->response($lst);
     }
+
+    function verpagosindividual_get($llav, $ced){
+        $this->load->model('kernel/KNomina');
+		$lst = $this->KNomina->VerPagosIndividual($llav, $ced);
+		$this->response($lst);
+    }
+
     function listarpagos_get(){
         $this->load->model('kernel/KNomina');
 		$lst = $this->KNomina->ListarPagos();
 		$this->response($lst);
     }
-    function listarpagosdetalles_post(){
-        
+    function listarpagosdetalles_post(){        
         $this->load->model('kernel/KNomina');
         $data = $this->post();
 		$lst = $this->KNomina->ListarPagosDetalles($data);

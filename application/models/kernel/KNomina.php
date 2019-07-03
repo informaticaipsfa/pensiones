@@ -125,11 +125,11 @@ class KNomina extends CI_Model{
     return array('act' => $contar, 'par' => $paralizado);
   }
 
-  public function Listar($id){
-    if ( $id != "4"){
+  public function Listar($mes = "", $id){
+    if ( $id < 4 ){
       $sConsulta = "SELECT * FROM space.nomina WHERE esta IN ( 1, 2, 3) ";
     }else{
-      $sConsulta = "SELECT * FROM space.nomina WHERE esta = 4 ";
+      $sConsulta = "SELECT * FROM space.nomina WHERE esta BETWEEN 4 AND 6  AND mes = '" . $mes . "'";
     }
     $obj = $this->DBSpace->consultar($sConsulta);
     $lst = array();
@@ -259,5 +259,18 @@ class KNomina extends CI_Model{
 
   }
 
+  public function VerPagosIndividual($llav = '', $cedula = ''){
+    
 
+    $sConsulta = "SELECT *, pag.oid AS oidpago FROM space.nomina nom 
+      JOIN space.pagos pag ON pag.nomi=nom.oid
+      WHERE nom.llav = '" . $llav ."' AND ( pag.cedu='" . $cedula ."' OR pag.cfam='" . $cedula ."' )";
+    //echo $sConsulta;
+    $obj = $this->DBSpace->consultar($sConsulta);
+    $lst = array();
+    foreach($obj->rs as $c => $v ){
+      $lst[] = $v;
+    }
+    return $lst;
+  }
 }
