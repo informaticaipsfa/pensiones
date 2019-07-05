@@ -394,5 +394,13 @@ class WServer extends REST_Controller{
 
     }
 
+    function rechazosagregar_post(){
+        $this->load->model('kernel/KRechazos');
+        $arr =  $this->post(); 
+        $this->KRechazos->Agregar($arr);
+        
+        $this->response($arr);
+    }
+
 }
 	
