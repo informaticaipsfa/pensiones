@@ -328,9 +328,9 @@ class WServer extends REST_Controller{
 		$this->response($lst);
     }
 
-    function cuadrebanco_get($id){
+    function cuadrebanco_get($id, $tbl){
         $this->load->model('kernel/KNomina');
-		$lst = $this->KNomina->ListarCuadreBanco($id);
+		$lst = $this->KNomina->ListarCuadreBanco($id, $tbl);
 		$this->response($lst);
     }
 
@@ -398,9 +398,16 @@ class WServer extends REST_Controller{
         $this->load->model('kernel/KRechazos');
         $arr =  $this->post(); 
         $this->KRechazos->Agregar($arr);
-        
+
         $this->response($arr);
     }
+
+    function rechazoslistar_get($id){
+        $this->load->model('kernel/KRechazos');        
+        $arr = $this->KRechazos->Listar($id);
+        $this->response($arr);
+    }
+    
 
 }
 	

@@ -154,11 +154,12 @@ class KNomina extends CI_Model{
     return $lst;
   }
 
-  public function ListarCuadreBanco($firma){
+  public function ListarCuadreBanco($firma, $tabla){
     
 
-    $sConsulta = "  SELECT banc, bnc.nomb, tp, cant, neto FROM (
-      SELECT  pg.banc, pg.tipo as tp, count(pg.banc) AS cant, SUM(neto) AS neto FROM space.nomina nm JOIN space.pagos pg ON pg.nomi=nm.oid
+    $sConsulta = "SELECT banc, bnc.nomb, tp, cant, neto FROM (
+      SELECT  pg.banc, pg.tipo as tp, count(pg.banc) AS cant, 
+      SUM(neto) AS neto FROM space.nomina nm JOIN space." . $tabla . " pg ON pg.nomi=nm.oid
       WHERE nm.llav='" . $firma . "'
       GROUP BY  pg.banc, pg.tipo
       ORDER BY pg.banc) AS mt
@@ -185,10 +186,10 @@ class KNomina extends CI_Model{
     return true;
   }
 
-  public function RegistrarDetalle($oidn, $presupuesto){
+  public function RegistrarDetalle( $oidn, $presupuesto ){
     $i = 0;
     $coma = '';
-    $insert = 'INSERT INTO space.nomina_detalle (oidn, part, estr, conc,  fech, tipo, mont, codi, cuenta  ) VALUES ';
+    $insert = 'INSERT INTO space.nomina_detalle ( oidn, part, estr, conc,  fech, tipo, mont, codi, cuenta  ) VALUES ';
     foreach ($presupuesto as $c => $v) {     
       if ($v['tp'] != 97 ) {
         $i++;
