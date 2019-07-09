@@ -265,7 +265,7 @@ class KNomina extends CI_Model{
 
     $sConsulta = "SELECT *, pag.oid AS oidpago FROM space.nomina nom 
       JOIN space.pagos pag ON pag.nomi=nom.oid
-      WHERE nom.llav = '" . $llav ."' AND ( pag.cedu='" . $cedula ."' OR pag.cfam='" . $cedula ."' )";
+      WHERE nom.llav = '" . $llav ."' AND ( pag.cedu='" . $cedula ."' OR pag.cfam='" . $cedula ."' OR pag.caut='" . $cedula ."' )";
     //echo $sConsulta;
     $obj = $this->DBSpace->consultar($sConsulta);
     $lst = array();
