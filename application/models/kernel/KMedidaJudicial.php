@@ -72,6 +72,7 @@ class KMedidaJudicial extends CI_Model{
 		$unidad_tributaria = $Directiva['ut'];
 		$sueldo_base = $sb;
 		$gastos_escolares = 0;
+		$gastos_escolar = 0;
 
 		if ($fnx != '') {
 			
