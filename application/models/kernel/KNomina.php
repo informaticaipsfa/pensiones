@@ -159,7 +159,7 @@ class KNomina extends CI_Model{
 
     $sConsulta = "SELECT banc, bnc.nomb, tp, cant, neto FROM (
       SELECT  pg.banc, pg.tipo as tp, count(pg.banc) AS cant, 
-      SUM(neto) AS neto FROM space.nomina nm JOIN space.pension pg ON pg.nomi=nm.oid
+      SUM(neto) AS neto FROM space.nomina nm JOIN space.'" . $tabla . "' pg ON pg.nomi=nm.oid
       WHERE nm.llav='" . $firma . "'
       GROUP BY  pg.banc, pg.tipo
       ORDER BY pg.banc) AS mt
