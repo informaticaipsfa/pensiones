@@ -49,5 +49,14 @@ class KRechazos extends CI_Model{
     }
 	
 
+    public function Eliminar( $oid ){
+        $sConsulta = "DELETE FROM space.rechazos WHERE oid='$oid'";
+        
+        $obj = $this->DBSpace->consultar($sConsulta);
+        $lst = array();
+     
+        return $lst;
+    }
+	
 
 }

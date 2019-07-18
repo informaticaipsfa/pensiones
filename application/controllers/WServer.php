@@ -407,6 +407,12 @@ class WServer extends REST_Controller{
         $arr = $this->KRechazos->Listar($id);
         $this->response($arr);
     }
+
+    function rechazoseliminar_get($id){
+        $this->load->model('kernel/KRechazos');        
+        $arr = $this->KRechazos->Eliminar($id);
+        $this->response($arr);
+    }
     
 
 }
