@@ -725,8 +725,8 @@ class KCargador extends CI_Model{
 
         $neto = $asignacion - $deduccion;
         if( $Bnf->situacion == "PG" ){
-          $asignacion = 40000;
-          $neto = 40000;
+          $asignacion = 150000;
+          $neto = 150000;
         }
         if($Perceptron->Neurona[$patron]["SUELDOBASE"] > 0   && $Perceptron->Neurona[$patron]["PORCENTAJE"] > 0  && $asignacion > 0 ){
           
