@@ -29,9 +29,9 @@ class KArchivos extends CI_Model{
 
 		foreach ($rs as $c => $v) {
 			$resultado = 0;        
-			if($v->tipo == 1){
+			if($v->tipo < 3){
 				$resultado = $v->mont;
-			}else  if($v->tipo >= 2){				
+			}else  if($v->tipo > 2){				
 				$resultado = $v->mont * -1 ;
 			}
 			$cedula = $v->cedu;

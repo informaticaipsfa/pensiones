@@ -250,11 +250,12 @@ class KCargador extends CI_Model{
         -- LIMIT 3
         ";
     //echo $sConsulta;
+    //print_r($this->_MapWNomina);
     $con = $this->DBSpace->consultar($sConsulta);
     $this->functionRefelxion = "generarConPatrones";
     if($this->_MapWNomina["tipo"] == "FCP"){
       $this->cargarFamiliaresFCP();
-      if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" || $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO" ){
+      if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" ||  $this->_MapWNomina["nombre"] == "DIFERENCIA DE CESTA TICKET" || $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO" ){
         $this->functionRefelxion = "generarConPatronesFCPDIF";
       }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL" || $this->_MapWNomina["nombre"] == "PAGO ESPECIAL ( BONO )"){
         $this->functionRefelxion = "generarConPatronesFCPRetribucionEspecial";
@@ -263,7 +264,7 @@ class KCargador extends CI_Model{
       }
       
     }else{
-      if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" || $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO"){
+      if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" ||  $this->_MapWNomina["nombre"] == "DIFERENCIA DE CESTA TICKET" ||$this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO"){
         $this->functionRefelxion = "generarConPatronesRCPDIF";
       }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL" || $this->_MapWNomina["nombre"] == "PAGO ESPECIAL ( BONO )"){
         $this->functionRefelxion = "generarConPatronesRetribucionEspecial";
@@ -766,15 +767,6 @@ class KCargador extends CI_Model{
 
 
 
-
-
-
-
-
-
-
-
-
   /**
   * DIFERENCIAS DE SUELDO PARA RETIRADOS CON PENSION
   *
@@ -837,12 +829,15 @@ class KCargador extends CI_Model{
     
     for ($i= 0; $i < $cant; $i++){
       $rs = $map[$i]['codigo'];
-      $monto = $this->obtenerArchivos($Bnf, $rs);      
+      $monto = $this->obtenerArchivos($Bnf, $rs);
+      //print_r($monto);
       if($monto > 0 ){
         $monto_str .= $monto . ';';
         $asignacion += $monto;
+
         if($monto != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 1, 'mont' => $monto );  
-        $this->asignarPresupuesto( $rs, $asignacion,  '1', $map[$i]['nombre'], $map[$i]['partida'], '');        
+        //$this->asignarPresupuesto( $rs, $monto_aux, $concp['TIPO'], $concp['ABV'], $concp['part'], $concp['cuen'], $concp['codi'] );
+        $this->asignarPresupuesto( $rs, $asignacion,  '1', $map[$i]['nombre'], $map[$i]['partida'], '',  $map[$i]['codigo']);        
       }else{
         $valor = $monto * -1 ;
         $monto_str .= $valor . ';';
@@ -850,7 +845,7 @@ class KCargador extends CI_Model{
         
         if($valor != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 2, 'mont' => $valor );
         
-        $this->asignarPresupuesto( $rs, $deduccion, '2', $map[$i]['nombre'], $map[$i]['partida'], '');
+        $this->asignarPresupuesto( $rs, $deduccion, '2', $map[$i]['nombre'], $map[$i]['partida'], '',  $map[$i]['codigo']);
       }
     } 
   
@@ -898,13 +893,6 @@ class KCargador extends CI_Model{
     return $obj;
 
 }
-
-
-
-
-
-
-
 
 
 
@@ -1169,6 +1157,8 @@ class KCargador extends CI_Model{
 
   }
 
+  
+  
   /**
    * Permite recorrer nuevamente la lista de los conceptos para la tabla o excel
    * @param map array
@@ -1309,14 +1299,16 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
           $monto_str .= $monto . ';';
           $asignacion += $monto;
           if($monto != 0)$recibo_de_pago[] = array( 'desc' => $map[$j]['nombre'], 'tipo' => 1,'mont' => $monto ); 
-          $this->asignarPresupuesto( $rs, $asignacion,  '1', $map[$j]['nombre'], $map[$j]['partida'], '');  
+          
+          $this->asignarPresupuesto( $rs, $asignacion,  '1', $map[$j]['nombre'], $map[$j]['partida'],  '',  $map[$j]['codigo']);  
 
         }else if($monto < 0) {
           $valor = $monto * -1 ;
           $monto_str .= $valor . ';';
           $deduccion +=  $valor;
           if($valor != 0)$recibo_de_pago[] = array( 'desc' => $map[$j]['nombre'], 'tipo' => 2,'mont' => $valor );
-          $this->asignarPresupuesto( $rs, $deduccion, '2', $map[$j]['nombre'], $map[$j]['partida'], '');
+          //$this->asignarPresupuesto( $rs, $deduccion, '2', $map[$i]['nombre'], $map[$i]['partida'], '',  $map[$i]['codigo']);
+          $this->asignarPresupuesto( $rs, $deduccion, '2', $map[$j]['nombre'], $map[$j]['partida'],  '',  $map[$j]['codigo']);
         }
       } 
 
@@ -1382,17 +1374,6 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
   return $obj;
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1697,21 +1678,6 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     return $obj;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
