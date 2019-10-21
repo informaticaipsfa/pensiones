@@ -125,6 +125,9 @@ class KCalculoLote extends CI_Model{
       $numero_hijos = $this->Beneficiario->numero_hijos;
       $prima_profesionalizacion_mt = $this->Beneficiario->prima_profesionalizacion_mt;
       $porcentaje_profesionalizacion = $this->Beneficiario->prima_profesionalizacion_mt; 
+
+      
+
       $total_primas = 0;
       $sueldo_mensual = $sueldo_base;
       $pension = $sueldo_base;
@@ -155,9 +158,17 @@ class KCalculoLote extends CI_Model{
         //$this->Beneficiario->Concepto[$rs] =  array('mt' => round($prima_profesionalizacion_mt,2), 'ABV' =>  "prima_profesionalizacion", 'TIPO' => 1 );
         $total_primas = $this->Beneficiario->monto_total_prima + $prima_profesionalizacion_mt;
         $pension = (( $sueldo_basico +  $total_primas ) * $porcentaje_pension  ) / 100;
+        
+        
         $this->Beneficiario->total_asignacion =  $sueldo_basico +  $total_primas;
         
         $sueldo_mensual = $pension;
+        $bono_recreacional = $sueldo_mensual;
+        $bono_fin_ano = 120 * ($pension / 30);
+        $pension_integral = ( ($pension * 12) + $bono_recreacional + $bono_fin_ano ) / 12; 
+        $pension_diaria_integral = $pension_integral / 30;
+        $aguinaldo = 120 * $pension_diaria_integral;
+
       }
       
       if( $this->Beneficiario->situacion == "PG" ){
