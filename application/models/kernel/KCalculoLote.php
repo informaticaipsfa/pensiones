@@ -107,7 +107,7 @@ class KCalculoLote extends CI_Model{
     if ( isset ( $this->Directiva['sb'][$this->Beneficiario->grado_codigo.'M']['mt']) ){
       $lst =  $this->Directiva['sb'][$this->Beneficiario->grado_codigo.'M']['mt'];
    
-      
+      $aguinaldo = 0;
 
       $valor = 0;
       $this->Beneficiario->monto_total_prima = 0;
