@@ -830,7 +830,7 @@ class KCargador extends CI_Model{
     for ($i= 0; $i < $cant; $i++){
       $rs = $map[$i]['codigo'];
       $monto = $this->obtenerArchivos($Bnf, $rs);
-      print_r($monto);
+      //print_r($monto);
       if($monto > 0 ){
         $monto_str .= $monto . ';';
         $asignacion += $monto;
