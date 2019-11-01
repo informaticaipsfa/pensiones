@@ -144,7 +144,9 @@ class KNomina extends CI_Model{
     $sConsulta = "select * FROM (
       select llav as firma, sum(mont) as monto, sum(asig) as asignacion, 
           sum(dedu) as deduccion, sum(cant) as cantidad, min(oid) as minimo from     
-          space.nomina WHERE llav != '' group by llav ORDER BY minimo) as tb JOIN space.nomina sp ON tb.minimo=sp.oid";
+          space.nomina WHERE 
+            llav != '' AND esta = 5 GROUP BY llav ORDER BY minimo
+      ) as tb JOIN space.nomina sp ON tb.minimo=sp.oid";
    
     $obj = $this->DBSpace->consultar($sConsulta);
     $lst = array();
