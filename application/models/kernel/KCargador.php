@@ -247,7 +247,7 @@ class KCargador extends CI_Model{
         -- grado.codigo NOT IN(8450, 8510, 8500, 8460, 8470, 8480, 5320) 
         ORDER BY grado.codigo
         -- AND grado.codigo IN( 10, 15)
-        LIMIT 3
+        -- LIMIT 3
         ";
     //echo $sConsulta;
     //print_r($this->_MapWNomina);
