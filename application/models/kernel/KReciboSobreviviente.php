@@ -17,6 +17,9 @@ class KReciboSobreviviente extends CI_Model{
     var $pension = 0.00;
     var $fondo_cis = 0.00;
 
+    var $aguinaldos = 0.00;
+    var $bono_recreacional = 0.00;
+
     
 
 	function __construct(){
