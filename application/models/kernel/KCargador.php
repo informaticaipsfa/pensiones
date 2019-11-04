@@ -731,7 +731,7 @@ class KCargador extends CI_Model{
         $neto = $asignacion - $deduccion;
         if( $Bnf->situacion == "PG" ){
           if($this->_MapWNomina["nombre"] == "AGUINALDOS"){
-            $asignacion = (150000 * 5.66666666 ) /4;
+            $asignacion = round((150000 * 5.66666666 ) /4 , 2);
             $neto = $asignacion;
           }else{
             $asignacion = 150000;
