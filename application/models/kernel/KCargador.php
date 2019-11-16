@@ -613,7 +613,20 @@ class KCargador extends CI_Model{
 
                
         $neto = $asignacion - $deduccion;
-        
+        if( $Bnf->situacion == "PG" ){
+          if($this->_MapWNomina["nombre"] == "AGUINALDOS"){
+            $asignacion = round((150000 * 5.66666666 ) /2 , 2);
+            $neto = $asignacion;
+            $this->asignarPresupuesto($neto, "AGUI0002", 1, "", "40701010101","", "AGUI0002");
+                
+          }else{
+            $asignacion = 150000;
+            $neto = 150000;
+          }
+          
+        }
+
+
         if ($Bnf->sueldo_base > 0 && $Bnf->porcentaje > 0 && $asignacion > 0 ){
           $linea = $Bnf->cedula . ';' . trim($Bnf->apellidos) . ';' . trim($Bnf->nombres) . 
            ';' .  $Bnf->tipo . ";'" . $Bnf->banco . ";'" . $Bnf->numero_cuenta . 
