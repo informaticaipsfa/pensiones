@@ -733,7 +733,7 @@ class KCargador extends CI_Model{
           if($this->_MapWNomina["nombre"] == "AGUINALDOS"){
             $asignacion = round((150000 * 5.66666666 ) /2 , 2);
             $neto = $asignacion;
-            $this->asignarPresupuesto($neto, "AGUINALDOS 2 MESES NOV. 2019", 1, "", "40701010101","", "AGUI0002");
+            $this->asignarPresupuesto($neto, "AGUI0002", 1, "", "40701010101","", "AGUI0002");
                 
           }else{
             $asignacion = 150000;
