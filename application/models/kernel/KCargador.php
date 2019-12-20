@@ -1067,7 +1067,7 @@ class KCargador extends CI_Model{
         $cajaahorro_str = "";
         $cporc = ( $Bnf->pension * $PS[$i]['porcentaje'] ) / 100; //Obtengo la pension del familiar en porcion %
         $base_porc = ( $base_pension * $PS[$i]['porcentaje'] ) / 100; //Obtengo porcentaje de la base
-        $fondo_cis = (  $base_porc * 8 ) / 100 ;
+        $fondo_cis = (  $base_porc * 6.5 ) / 100 ;
         $Bnf->retencion = round( $fondo_cis, 2 );
         $deducciont += $Bnf->retencion;
         $cporcdistri = ( $pension_distribuir * $PS[$i]['porcentaje'] ) / 100; //Obtengo la pension del familiar en porcion %
