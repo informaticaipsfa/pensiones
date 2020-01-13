@@ -342,7 +342,7 @@ class KCargador extends CI_Model{
       $linea .= 'CEDULA;APELLIDOS;NOMBRES;PARENTESCO;TIPO;BANCO;NUMERO CUENTA;PENSION MIL;';
       $linea .= 'PORCENTAJE;';
       $linea .= 'RETROACTIVO;';
-      $linea .= 'ASIGNACION;DEDUCCION;NETO';
+      $linea .= 'ASIGNACION;FCIS;FCIR;NETO';
     }
     fputs($file,$linea);//Para Generar archivo csv 04102017
     fputs($file,"\n");//Salto de linea
@@ -1055,6 +1055,8 @@ class KCargador extends CI_Model{
             //. round($pension_distribuir,2)
     $asignaciont = 0;
     $deducciont = 0;
+    $fondo_cis = 0;
+    $fondo_circulo = 0;
     $netot = 0;
     $linea = "";
     $i = 0;
@@ -1067,16 +1069,19 @@ class KCargador extends CI_Model{
         $cajaahorro_str = "";
         $cporc = ( $Bnf->pension * $PS[$i]['porcentaje'] ) / 100; //Obtengo la pension del familiar en porcion %
         $base_porc = ( $base_pension * $PS[$i]['porcentaje'] ) / 100; //Obtengo porcentaje de la base
-        $fondo_cis = (  $base_porc * 8 ) / 100 ;
-        $Bnf->retencion = round( $fondo_cis, 2 );
+        $fondo_cis = round ( (  $base_porc * 6.5 ) / 100, 2) ;
+        $fondo_circulo = round ( (  $base_porc * 1.5 ) / 100, 2) ;
+        $retencionesG = $fondo_cis + $fondo_circulo;
+        $Bnf->retencion = $retencionesG;
         $deducciont += $Bnf->retencion;
         $cporcdistri = ( $pension_distribuir * $PS[$i]['porcentaje'] ) / 100; //Obtengo la pension del familiar en porcion %
         
-        $this->KReciboSobreviviente->fondo_cis = $Bnf->retencion;
+        $this->KReciboSobreviviente->fondo_cis = $fondo_cis;
+        $this->KReciboSobreviviente->fondo_circulo = $fondo_circulo;
         
         
         $asignacionp = $cporcdistri;
-        $deduccionp = $fondo_cis; //round(($asignacionp * 6.5) / 100, 2);
+        $deduccionp = $retencionesG; //$fondo_circulo + $fondo_cis
         $neto = $asignacionp - $deduccionp;
 
         
@@ -1092,13 +1097,18 @@ class KCargador extends CI_Model{
             $recibo_de_pago[] = array(
               'desc' =>  'COTIZ 6.5% PENSIONES (FONDO CIS)', 
               'tipo' => 0,
-              'mont' => $deduccionp
+              'mont' => $fondo_cis
+            );
+            $recibo_de_pago[] = array(
+              'desc' =>  'COTIZ 1.5% CIRCULO MILITAR', 
+              'tipo' => 0,
+              'mont' => $fondo_circulo
             );
             $clave = $Bnf->cedula . "|" . $PS[$i]['cedula'];
             $retroactivo = $this->recorrerConceptos($map, $Bnf->Concepto, $clave, $recibo_de_pago);
             
             $asignacionp += $retroactivo;
-            $neto =  round($asignacionp,2) - round($deduccionp,2);        
+            $neto =  round($asignacionp,2) - $deduccionp;
             $recibo_de_pago[0] = array(
               'desc' =>  'PENSION SOBREVIVIENTE', 
               'tipo' => 97,
@@ -1108,7 +1118,7 @@ class KCargador extends CI_Model{
             $linea .= $segmentoincial . $PS[$i]['cedula'] . ';' . $PS[$i]['apellidos'] . ';' . $PS[$i]['nombres'] . 
             ';' . $PS[$i]['parentesco'] . ';' . $PS[$i]['tipo'] . ";'" . $PS[$i]['banco'] . ";'" . $PS[$i]['numero'] . 
             ';' . round($pension_distribuir,2) . ';' . round($PS[$i]['porcentaje'],2) . ';' . $retroactivo . ';' . 
-            round($asignacionp,2) . ';' . round($deduccionp,2) . ';' . round($neto,2) . PHP_EOL;
+            round($asignacionp,2) . ';' . $fondo_cis . ';' . $fondo_circulo . ';' . round($neto,2) . PHP_EOL;
 
             $asignaciont += $asignacionp;
             $deducciont += $deduccionp;
@@ -1167,7 +1177,8 @@ class KCargador extends CI_Model{
       //$this->ParalizadosSobrevivientes++;
     }
     
-    $this->asignarPresupuesto( "FCIS-00001", $deducciont , '0', 'FONDO CIS 6.5%', '40700000000', '', '');
+    $this->asignarPresupuesto( "FCIS-00001", $fondo_cis , '0', 'COTIZ 6.5% PENSIONES (FONDO CIS)', '40700000000', '', '');
+    $this->asignarPresupuesto( "FCIR-00001", $fondo_circulo , '0', 'COTIZ 1.5% CIRCULO MILITAR', '40700000000', '', '');
     $this->asignarPresupuesto( "PENM-00001", $asignaciont , '0', 'PENSION MILITAR', '40700000000', '', '');
 
     // }else{ //Recordando calculos
