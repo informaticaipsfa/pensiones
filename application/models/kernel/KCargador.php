@@ -616,13 +616,13 @@ class KCargador extends CI_Model{
         if( $Bnf->situacion == "PG" ){
           //print_r("Pasando" + $this->_MapWNomina["nombre"]);
           if($this->_MapWNomina["nombre"] == "AGUINALDOS"){
-            $asignacion = round((150000 * 5.66666666 ) /4 , 2);
+            $asignacion = round((250000 * 5.66666666 ) /4 , 2);
             $neto = $asignacion;
             $this->asignarPresupuesto("AGUI0001", $neto, 1, "", "40701010101","", "AGUI0001");
                 
           }else{
-            $asignacion = 150000;
-            $neto = 150000;
+            $asignacion = 250000;
+            $neto = 250000;
           }
           
         }
@@ -748,14 +748,14 @@ class KCargador extends CI_Model{
           //print_r("Pasando" + $this->_MapWNomina["nombre"]);
           if($this->_MapWNomina["nombre"] == "AGUINALDOS"){
 
-            $asignacion = round((150000 * 5.66666666 ) /4 , 2);
+            $asignacion = round((250000 * 5.66666666 ) /4 , 2);
             $neto = $asignacion;
             
             $this->asignarPresupuesto("AGUI0001", $neto,  1, "", "40701010101","", "AGUI0001");
                 
           }else{
-            $asignacion = 150000;
-            $neto = 150000;
+            $asignacion = 250000;
+            $neto = 250000;
           }
           
         }
