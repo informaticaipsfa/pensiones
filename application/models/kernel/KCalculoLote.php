@@ -436,7 +436,7 @@ class KCalculoLote extends CI_Model{
   function TiempoServicios(){
       //echo "Fechas ", $this->Beneficiario->fecha_ingreso, "   ", $this->Beneficiario->fecha_retiro ;
       //echo "<br>";
-      if($this->Beneficiario->ano_reconocido != 0){
+      if( $this->Beneficiario->ano_reconocido != 0 ||  $this->Beneficiario->mes_reconocido != 0 ){
         $anos = $this->__fechaReconocida();
         $this->Beneficiario->tiempo_servicio = $anos['e'];
         $this->Beneficiario->tiempo_servicio_aux = $anos['n'];
