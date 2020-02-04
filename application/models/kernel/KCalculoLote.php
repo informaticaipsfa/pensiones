@@ -78,9 +78,6 @@ class KCalculoLote extends CI_Model{
     }else{
       $this->Beneficiario->sueldo_base = $this->Directiva['salario'];
     }
-
-
-    // $this->Beneficiario->sueldo_base = ($this->Beneficiario->sueldo_base * $this->Beneficiario->porcentaje) / 100;
     $this->Beneficiario->Concepto['sueldo_base'] = array(
       'mt' => round($this->Beneficiario->sueldo_base,2), 
       'ABV' =>  'sueldo_base', 
@@ -89,11 +86,9 @@ class KCalculoLote extends CI_Model{
       'part' => '40701010101',
       'cuen' => ''
     );
-    //if ( $this->Beneficiario->situacion != "FCP"){
-      $this->OperarCalculos();
-      $this->OperarConceptos();
-      $this->SueldoMensual();
-   // }
+    $this->OperarCalculos();
+    $this->OperarConceptos();
+    $this->SueldoMensual();
 
   }
 

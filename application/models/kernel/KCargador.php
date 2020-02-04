@@ -619,13 +619,13 @@ class KCargador extends CI_Model{
         if( $Bnf->situacion == "PG" ){
           //print_r("Pasando" + $this->_MapWNomina["nombre"]);
           if($this->_MapWNomina["nombre"] == "AGUINALDOS"){
-            $asignacion = round((250000 * 5.66666666 ) /4 , 2);
+            $asignacion = round(($Directivas['salario'] * 5.66666666 ) /4 , 2);
             $neto = $asignacion;
             $this->asignarPresupuesto("AGUI0001", $neto, 1, "", "40701010101","", "AGUI0001");
                 
           }else{
-            $asignacion = 250000;
-            $neto = 250000;
+            $asignacion = $Directivas['salario'];
+            $neto = $Directivas['salario'];
           }
           
         }
@@ -751,14 +751,14 @@ class KCargador extends CI_Model{
           //print_r("Pasando" + $this->_MapWNomina["nombre"]);
           if($this->_MapWNomina["nombre"] == "AGUINALDOS"){
 
-            $asignacion = round((250000 * 5.66666666 ) /4 , 2);
+            $asignacion = round(($Directivas['salario'] * 5.66666666 ) /4 , 2);
             $neto = $asignacion;
             
             $this->asignarPresupuesto("AGUI0001", $neto,  1, "", "40701010101","", "AGUI0001");
                 
           }else{
-            $asignacion = 250000;
-            $neto = 250000;
+            $asignacion = $Directivas['salario'];
+            $neto = $Directivas['salario'];
           }
           
         }
@@ -2639,15 +2639,16 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     //echo $sConsulta;
     $con = $this->DBSpace->consultar($sConsulta);
 
-
+    
     $Bnf = new $this->MBeneficiario;
     $Bnf->cedula = '';
     // $Bnf->apellidos = $data['apellidos']; //Individual del Objeto
     // $Bnf->nombres = $data['nombres']; //Individual del Objeto
     $Bnf->fecha_ingreso = $data['fingreso'];
     $Bnf->numero_hijos = $data['hijos'];
-
-    $Bnf->situacion = 201;
+    
+    $Bnf->situacion = $data['situacion'];
+    $Bnf->estatus_activo = 201;
     $Bnf->componente_id = $data['componente'];
     
     $Bnf->grado_codigo = $data['codigo'];
@@ -2665,7 +2666,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       $Concepto = array();
       $this->KCalculoLote->Ejecutar();
 
-
+      //print_r($Bnf->Concepto);
       foreach ($Bnf->Concepto as $cla => $val) { 
         if ( $v->oidd > 64) {
           $factor = 1;
@@ -2711,18 +2712,20 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
         }
       }
       //RETRIBUCION ESPECIAL
-      $valor = $v->respecialcon;
+      $valor = $data['situacion'] != 'I'? $v->respecialcon: 0;
       $Concepto['retribucion_especial'] = array('mt' => round($valor,2), 
           'ABV' =>  'retribucion_especial', 'TIPO' => 1,'part' => ''
       );
       $bterr = ( ( ( $Bnf->sueldo_base * $Bnf->porcentaje ) / 100 ) * $v->bterr ) / 100;
-      $Concepto['bono_terr'] = array('mt' => $bterr, 'ABV' =>  'bono_terr', 'TIPO' => 1);
-      $Concepto['bono_paz'] = array('mt' => round($v->bpaz,2), 'ABV' =>  'bono_paz', 'TIPO' => 1);
-      $Concepto['bono_ssan'] = array('mt' => round($v->bssan,2), 'ABV' =>  'bono_ssan', 'TIPO' => 1);
-      $Concepto['bono_utra'] = array('mt' => round($v->butra,2), 'ABV' =>  'bono_utra', 'TIPO' => 1);
-      $Concepto['bono_espe'] = array('mt' => round($v->bespe,2), 'ABV' =>  'bono_espe', 'TIPO' => 1);
-      $Concepto['bono_smed'] = array('mt' => round($v->bsmed,2), 'ABV' =>  'bono_smed', 'TIPO' => 1);
-      $Concepto['bono_fanb'] = array('mt' => round($v->bfanb,2), 'ABV' =>  'bono_fanb', 'TIPO' => 1);
+      if ( $data['situacion'] != 'I' ) {
+        $Concepto['bono_terr'] = array('mt' => $bterr, 'ABV' =>  'bono_terr', 'TIPO' => 1);
+        $Concepto['bono_paz'] = array('mt' => round($v->bpaz,2), 'ABV' =>  'bono_paz', 'TIPO' => 1);
+        $Concepto['bono_ssan'] = array('mt' => round($v->bssan,2), 'ABV' =>  'bono_ssan', 'TIPO' => 1);
+        $Concepto['bono_utra'] = array('mt' => round($v->butra,2), 'ABV' =>  'bono_utra', 'TIPO' => 1);
+        $Concepto['bono_espe'] = array('mt' => round($v->bespe,2), 'ABV' =>  'bono_espe', 'TIPO' => 1);
+        $Concepto['bono_smed'] = array('mt' => round($v->bsmed,2), 'ABV' =>  'bono_smed', 'TIPO' => 1);
+        $Concepto['bono_fanb'] = array('mt' => round($v->bfanb,2), 'ABV' =>  'bono_fanb', 'TIPO' => 1);
+      }
 
       $Concepto['detalle'] = array(
         'mt' => round($valor,2), 
