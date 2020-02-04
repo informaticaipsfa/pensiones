@@ -2665,8 +2665,8 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       $Bnf->Concepto = array();
       $Concepto = array();
       $this->KCalculoLote->Ejecutar();
-
       //print_r($Bnf->Concepto);
+      
       foreach ($Bnf->Concepto as $cla => $val) { 
         if ( $v->oidd > 64) {
           $factor = 1;
@@ -2712,12 +2712,18 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
         }
       }
       //RETRIBUCION ESPECIAL
-      $valor = $data['situacion'] != 'I'? $v->respecialcon: 0;
+      $valor = 0;
+      if (  $data['situacion'] != 'PG' ) {
+        $valor = $v->respecialcon;
+      }
+      
       $Concepto['retribucion_especial'] = array('mt' => round($valor,2), 
           'ABV' =>  'retribucion_especial', 'TIPO' => 1,'part' => ''
       );
-      $bterr = ( ( ( $Bnf->sueldo_base * $Bnf->porcentaje ) / 100 ) * $v->bterr ) / 100;
-      if ( $data['situacion'] != 'I' ) {
+      $bterr = 0;
+      if (  $data['situacion'] != 'PG'  ) {
+
+        $bterr = ( ( ( $Bnf->sueldo_base * $Bnf->porcentaje ) / 100 ) * $v->bterr ) / 100;
         $Concepto['bono_terr'] = array('mt' => $bterr, 'ABV' =>  'bono_terr', 'TIPO' => 1);
         $Concepto['bono_paz'] = array('mt' => round($v->bpaz,2), 'ABV' =>  'bono_paz', 'TIPO' => 1);
         $Concepto['bono_ssan'] = array('mt' => round($v->bssan,2), 'ABV' =>  'bono_ssan', 'TIPO' => 1);
