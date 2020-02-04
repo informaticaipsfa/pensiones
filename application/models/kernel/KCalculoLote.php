@@ -341,12 +341,28 @@ class KCalculoLote extends CI_Model{
   * @param Date
   * @return int
   */
-  private function __fechaReconocida($ano_reconocido = 0, $mes_reconocido = 0, $dia_reconocido = 0){
+  private function __fechaReconocida(){
 
     list($ano,$mes,$dia) = explode("-",$this->Beneficiario->fecha_ingreso);
-    $anoR = $ano - $this->Beneficiario->ano_reconocido;
-    $mesR = $mes - $this->Beneficiario->mes_reconocido;
-    $diaR = $dia - $this->Beneficiario->dia_reconocido;
+    $arecono = $this->Beneficiario->ano_reconocido;
+    $mrecono = $this->Beneficiario->mes_reconocido;
+    $drecono = $this->Beneficiario->dia_reconocido;
+    
+    if($drecono > 30){
+      $mrecono +=1;
+      $drecono = $drecono - 30;
+    }
+
+    if ($mrecono > 11 ) {
+      $arecono += 1;
+      $mrecono = $mrecono - 12;
+    }
+
+
+
+    $anoR = $ano - $arecono;
+    $mesR = $mes - $mrecono;
+    $diaR = $dia - $drecono;
 
     if($diaR < 0) {
       $mesR--;
@@ -359,8 +375,10 @@ class KCalculoLote extends CI_Model{
     }
 
     $fecha = $anoR .'-' . $mesR  . '-' . $diaR;
+    //print_r($fecha);
+    
     $this->Beneficiario->fecha_ingreso_reconocida = $fecha;
-    $anos = $this->__restarFecha($fecha, $this->Beneficiario->fecha_retiro);
+    $anos = $this->__restarFecha($this->Beneficiario->fecha_ingreso_reconocida, $this->Beneficiario->fecha_retiro);
     return $anos;
   }
 
@@ -382,11 +400,11 @@ class KCalculoLote extends CI_Model{
     $mes_r = $fecha_r[1];
     $dia_r = $fecha_r[2];
     list($ano,$mes,$dia) = explode("-",$fecha);
-
     if ($dia_r < $dia){
-      $dia_dif =  ($dia_r+30) - $dia; //27 -5
+      $dia_dif =  ($dia_r + 30) - $dia; //27 -5
       $mes_r--;
     }else{
+      //print_r("VD.- " . $this->Beneficiario->cedula . " ". $this->Beneficiario->fecha_retiro);
       $dia_dif =  $dia_r - $dia; //27 -5
     }
 
@@ -436,7 +454,7 @@ class KCalculoLote extends CI_Model{
   function TiempoServicios(){
       //echo "Fechas ", $this->Beneficiario->fecha_ingreso, "   ", $this->Beneficiario->fecha_retiro ;
       //echo "<br>";
-      if( $this->Beneficiario->ano_reconocido != 0 ||  $this->Beneficiario->mes_reconocido != 0 ){
+      if( $this->Beneficiario->ano_reconocido != 0 && $this->Beneficiario->mes_reconocido != 0 && $this->Beneficiario->dia_reconocido != 0){
         $anos = $this->__fechaReconocida();
         $this->Beneficiario->tiempo_servicio = $anos['e'];
         $this->Beneficiario->tiempo_servicio_aux = $anos['n'];
