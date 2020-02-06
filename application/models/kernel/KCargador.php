@@ -2736,6 +2736,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       $Concepto['detalle'] = array(
         'mt' => round($valor,2), 
         'ABV' =>  $v->dire  . ' | ' . $v->anio . ' | ' . $v->mes, 
+        'mes' =>  $v->mes,
         'TIPO' => 101,
         'part' => ''
       );

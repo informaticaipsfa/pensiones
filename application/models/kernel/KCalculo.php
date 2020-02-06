@@ -187,33 +187,41 @@ class KCalculo extends CI_Model{
   private function __fechaReconocida($ano_reconocido = 0, $mes_reconocido = 0, $dia_reconocido = 0){
     
     list($ano,$mes,$dia) = explode("-",$this->Beneficiario->fecha_ingreso);
-    $anoR = $ano - $this->Beneficiario->ano_reconocido;
+    $arecono = $this->Beneficiario->ano_reconocido;
+    $mrecono = $this->Beneficiario->mes_reconocido;
+    $drecono = $this->Beneficiario->dia_reconocido;
     
-    $mesR = $mes - $this->Beneficiario->mes_reconocido;
+    if($drecono > 30){
+      $mrecono +=1;
+      $drecono = $drecono - 30;
+    }
 
-    //$mesR = $mes; //$this->Beneficiario->mes_reconocido;
-    
-    $diaR = $dia - $this->Beneficiario->dia_reconocido; 
-    
-    //$diaR = $dia; // - $this->Beneficiario->dia_reconocido; 
-    
+    if ($mrecono > 11 ) {
+      $arecono += 1;
+      $mrecono = $mrecono - 12;
+    }
+
+
+
+    $anoR = $ano - $arecono;
+    $mesR = $mes - $mrecono;
+    $diaR = $dia - $drecono;
 
     if($diaR < 0) {
       $mesR--;
       $diaR = 30 + $diaR;
     }
-    
+
     if($mesR < 0){
       $anoR--;
-      //$mesR = $mesR - 12; // Se cambio por estar calculando con un numero negativo resultado errado
       $mesR = 12 + $mesR;
-    } 
-   
-    $fecha = $anoR .'-' . $mesR  . '-' . $diaR;
+    }
 
+    $fecha = $anoR .'-' . $mesR  . '-' . $diaR;
+    //print_r($fecha);
+    
     $this->Beneficiario->fecha_ingreso_reconocida = $fecha;
-    $anos = $this->__restarFecha($fecha, $this->Beneficiario->fecha_retiro);
-    //n | e __restarFecha
+    $anos = $this->__restarFecha($this->Beneficiario->fecha_ingreso_reconocida, $this->Beneficiario->fecha_retiro);
     return $anos;
   } 
 
@@ -232,7 +240,6 @@ class KCalculo extends CI_Model{
       $fecha_retiro = date('Y-m-d');
     }else{
       $fecha_retiro =  $fecha_r; 
-
     }
 
     $fecha_r = explode("-", $fecha_retiro);
