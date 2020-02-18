@@ -105,12 +105,14 @@ class KCalculoLote extends CI_Model{
       $automatico = -1;
       $manual = -1;
       $grado = $this->Beneficiario->grado_codigo;
-      $bono_recreacional = $sueldo_mensual;
+      
       $componente = $this->Beneficiario->componente_id;
       $tiempo_servicio = $this->Beneficiario->tiempo_servicio;
       $sueldo_base = $this->Beneficiario->sueldo_base;
       $sueldo_basico = $this->Beneficiario->sueldo_base;
       $sueldo_minimo = $this->Directiva['salario'];
+      $sueldo_mensual = $sueldo_base;
+      $bono_recreacional = $sueldo_mensual;
       $unidad_tributaria = $this->Directiva['ut'];
       $porcentaje_pension = $this->Beneficiario->porcentaje;
       $no_ascenso = $this->Beneficiario->no_ascenso;
@@ -121,7 +123,6 @@ class KCalculoLote extends CI_Model{
       
 
       $total_primas = 0;
-      $sueldo_mensual = $sueldo_base;
       $pension = $sueldo_base;
       $this->Beneficiario->total_asignacion = $sueldo_base;
       if( $this->Beneficiario->situacion != "PG" ){
