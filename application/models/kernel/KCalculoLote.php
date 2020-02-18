@@ -105,6 +105,7 @@ class KCalculoLote extends CI_Model{
       $automatico = -1;
       $manual = -1;
       $grado = $this->Beneficiario->grado_codigo;
+      $bono_recreacional = $sueldo_mensual;
       $componente = $this->Beneficiario->componente_id;
       $tiempo_servicio = $this->Beneficiario->tiempo_servicio;
       $sueldo_base = $this->Beneficiario->sueldo_base;
