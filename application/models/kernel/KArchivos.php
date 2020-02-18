@@ -13,6 +13,7 @@ class KArchivos extends CI_Model{
 
 	
 	public function Cargar($map = array() ){
+		ini_set('memory_limit', '3024M');
 		$arr = array();
 		$donde = '';
 		$tipo = 1;

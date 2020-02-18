@@ -94,7 +94,7 @@ class KCalculoLote extends CI_Model{
 
 
   function OperarCalculos(){
-
+    ini_set('memory_limit', '3024M');
     if ( isset ( $this->Directiva['sb'][$this->Beneficiario->grado_codigo.'M']['mt']) ){
       $lst =  $this->Directiva['sb'][$this->Beneficiario->grado_codigo.'M']['mt'];
    

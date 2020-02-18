@@ -454,6 +454,7 @@ class KCargador extends CI_Model{
   * @return void
   */
   private function generarConPatrones(MBeneficiario &$Bnf, KCalculoLote &$CalculoLote, KPerceptron &$Perceptron, $fecha, $Directivas, $v, $sqlID){
+      ini_set('memory_limit', '3024M');
       $Bnf->cedula = $v->cedula;
       $Bnf->deposito_banco = ""; //$v->cap_banco; //Individual de la Red
       $Bnf->apellidos = $v->apellidos; //Individual del Objeto
