@@ -260,9 +260,9 @@ class KCargador extends CI_Model{
       $this->cargarFamiliaresFCP();
       if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" ||  $this->_MapWNomina["nombre"] == "DIFERENCIA DE CESTA TICKET" || $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO" ){
         $this->functionRefelxion = "generarConPatronesFCPDIF";
-      }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL" || $this->_MapWNomina["nombre"] == "PAGO ESPECIAL ( BONO )"){
+      }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL"  || $this->_MapWNomina["nombre"] == "BONO RECREACIONAL" || $this->_MapWNomina["nombre"] == "PAGO ESPECIAL ( BONO )"){
         $this->functionRefelxion = "generarConPatronesFCPRetribucionEspecial";
-      }else if ($this->_MapWNomina["nombre"] == "AGUINALDOS") {
+      }else if ($this->_MapWNomina["nombre"] == "AGUINALDOS" ) {
         $this->functionRefelxion = "gCPatronesFCPAguinaldos";
       }else{
         $this->functionRefelxion = "generarConPatronesFCP";
@@ -271,7 +271,7 @@ class KCargador extends CI_Model{
     }else{
       if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" ||  $this->_MapWNomina["nombre"] == "DIFERENCIA DE CESTA TICKET" ||$this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO"){
         $this->functionRefelxion = "generarConPatronesRCPDIF";
-      }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL" || $this->_MapWNomina["nombre"] == "PAGO ESPECIAL ( BONO )"){
+      }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL"  || $this->_MapWNomina["nombre"] == "BONO RECREACIONAL" || $this->_MapWNomina["nombre"] == "PAGO ESPECIAL ( BONO )"){
         $this->functionRefelxion = "generarConPatronesRetribucionEspecial";
       }
     }
