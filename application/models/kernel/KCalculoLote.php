@@ -113,7 +113,7 @@ class KCalculoLote extends CI_Model{
       $sueldo_minimo = $this->Directiva['salario'];
       $sueldo_mensual = $sueldo_base;
       $bono_recreacional = $sueldo_mensual;
-      $bono_recreacionalN = ( $sueldo_mensual / 30 ) * 40;
+      $bono_recreacionaln = ( $sueldo_mensual / 30 ) * 40;
       $unidad_tributaria = $this->Directiva['ut'];
       $porcentaje_pension = $this->Beneficiario->porcentaje;
       $no_ascenso = $this->Beneficiario->no_ascenso;
@@ -158,11 +158,14 @@ class KCalculoLote extends CI_Model{
         
         $sueldo_mensual = $pension;
         $bono_recreacional = $sueldo_mensual;
-        $bono_recreacionalN = ( $sueldo_mensual / 30 ) * 40;
+        $bono_recreacionaln = ( $sueldo_mensual / 30 ) * 40;
 
         $bono_fin_ano = 120 * ($pension / 30);
-        $pension_integral = ( ($pension * 12) + $bono_recreacional + $bono_fin_ano ) / 12; 
+        $pension_integral = ( ($pension * 12) + $bono_recreacional + $bono_fin_ano ) / 12;
+        $pension_integraln = ( ($pension * 12) + $bono_recreacionaln + $bono_fin_ano ) / 12;
         $pension_diaria_integral = $pension_integral / 30;
+        $pension_diaria_integraln = $pension_integraln / 30;
+        
         $aguinaldo = 120 * $pension_diaria_integral;
 
       }
