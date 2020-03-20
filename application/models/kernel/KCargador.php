@@ -223,7 +223,7 @@ class KCargador extends CI_Model{
     $this->load->model('kernel/KArchivos');
     
     $this->MedidaJudicial = $this->KMedidaJudicial->Cargar($this->_MapWNomina["nombre"]);
-    //$this->MedidaJudicial = $this->KMedidaJudicial->Cargar($this->_MapWNomina["nombre"]);
+    
     //$this->Archivos = $this->KArchivos->Cargar($this->_MapWNomina["nombre"],  $this->_MapWNomina["tipo"]);
     $this->Archivos = $this->KArchivos->Cargar($this->_MapWNomina);
 
@@ -252,8 +252,7 @@ class KCargador extends CI_Model{
         -- AND grado.codigo IN( 10, 15)
         -- LIMIT 190 OFFSET 10
         ";
-    //echo $sConsulta;
-    //print_r($this->_MapWNomina);
+    
     $con = $this->DBSpace->consultar($sConsulta);
     $this->functionRefelxion = "generarConPatrones";
     if($this->_MapWNomina["tipo"] == "FCP"){
@@ -314,13 +313,7 @@ class KCargador extends CI_Model{
     $fcplinea = "";
     $fcplinea_aux = '';
     for ($i= 0; $i < $cant; $i++){
-      // if( $map[$i]['codigo'] == "MJ-00001" ){
-      //   $medida_str = "MEDIDA JUDICIAL;";
-      // }else if( substr($map[$i]['codigo'], 0, 2) == "CA" ){
-      //   $cajaahorro_str = "CAJA DE AHORRO;";
-      // }else{
         $rs = strtoupper($map[$i]['codigo']);
-
         if($this->_MapWNomina['tipo'] == "FCP"){ 
           $nmb = strtoupper($map[$i]['nombre']);
           if( $nmb == "SUELDO BASE" || $nmb == "DIRECTIVA PRIMAS" || $nmb == "PENSION") {
@@ -331,7 +324,6 @@ class KCargador extends CI_Model{
         }else{
           $linea .= $rs . ";";
         }
-      // }
     }
     $linea .= $medida_str . $cajaahorro_str . 'ASIGNACION;DEDUCCION;NETO';
     if($this->_MapWNomina['tipo'] == "FCP"){
@@ -357,22 +349,18 @@ class KCargador extends CI_Model{
     fputs($file_sqlCVS, $sqlCVS);//INSERT SPACE.PAGOS
     fputs($file_medida, $sqlMJ);//INSERT SPACE.MEDIDAJUDICIALES    
     
-    $funcion = $this->functionRefelxion;
-    //print_r($Directivas);
+    $funcion = $this->functionRefelxion;  
     $coma = "";
     $linea = '';
     foreach ($obj as $k => $v) {
       $Bnf = new $this->MBeneficiario;
       $this->KCalculoLote->Instanciar($Bnf, $Directivas);
       $linea = $this->$funcion($Bnf,  $this->KCalculoLote, $this->KPerceptron, $fecha, $Directivas, $v, $this->KNomina->ID);
-      //print_r($linea);
       if( $Bnf->estatus_activo != '201' ){
         $this->Paralizados++;
       }
 
-      $this->Cantidad++;
-      //$this->CantidadMedida++;
-      
+      $this->Cantidad++;      
       if($linea["csv"] != ""){
         if( $this->_MapWNomina['tipo'] == "FCP" ){
           fputs($file, $linea["csv"]); //Generacion CSV -> EXCEL
@@ -385,9 +373,6 @@ class KCargador extends CI_Model{
         if ( $this->Cantidad > 1 ){
           $coma = ",";
         }
-        // if( $this->CantidadMedida > 1){
-        //   $this->ComaMedida = ",";
-        // }
         if($this->_MapWNomina['tipo'] == "FCP"){
           $lineaSQL = $linea["sql"]; //INSERT PARA SPACE.PAGOS
         }else{
@@ -418,7 +403,6 @@ class KCargador extends CI_Model{
 
     }
     
-    //echo "Sueldo Base Total: " . $this->Neto;
     $this->OidNomina = $this->KNomina->ID;
     $this->KNomina->Nombre = $archivo;
     $this->KNomina->Monto = $this->Neto;
@@ -580,8 +564,6 @@ class KCargador extends CI_Model{
                 $segmentoincial .=  $monto_aux . ";";
                 $asignacion += $concp['TIPO'] == 1? $monto_aux: 0;
                 $deduccion += $concp['TIPO'] == 0? $monto_aux: 0;
-                //$deduccion += $concp['TIPO'] == 2? $monto_aux: 0;
-
                 if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $concp['TIPO'], 'mont' => $monto_aux);
                 //asgnar prepuesto
                 $this->asignarPresupuesto($rs, $concp['mt'], $concp['TIPO'], $concp['ABV'], $concp['part'], $concp['cuen'], $concp['codi'] );
@@ -617,8 +599,7 @@ class KCargador extends CI_Model{
 
                
         $neto = $asignacion - $deduccion;
-        if( $Bnf->situacion == "PG" ){
-          //print_r("Pasando" + $this->_MapWNomina["nombre"]);
+        if( $Bnf->situacion == "PG" ){          
           if($this->_MapWNomina["nombre"] == "AGUINALDOS"){
             $asignacion = round(($Directivas['salario'] * 5.66666666 ) /4 , 2);
             $neto = $asignacion;
@@ -658,7 +639,7 @@ class KCargador extends CI_Model{
 
       }else{      //En el caso que exista el recuerdo en la memoria   
         $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf,  $sqlID, $Directivas);
-        $cajaahorro = ''; //ss $this->obtenerCajaAhorro(  $Bnf );
+        $cajaahorro = ''; // $this->obtenerCajaAhorro(  $Bnf );
 
         $deduccion = 0; //$Perceptron->Neurona[$patron]["DEDUCCION"];
         $asignacion = 0; //$Perceptron->Neurona[$patron]["ASIGNACION"];
@@ -864,13 +845,11 @@ class KCargador extends CI_Model{
     for ($i= 0; $i < $cant; $i++){
       $rs = $map[$i]['codigo'];
       $monto = $this->obtenerArchivos($Bnf, $rs);
-      //print_r($monto);
       if($monto > 0 ){
         $monto_str .= $monto . ';';
         $asignacion += $monto;
 
         if($monto != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 1, 'mont' => $monto );  
-        //$this->asignarPresupuesto( $rs, $monto_aux, $concp['TIPO'], $concp['ABV'], $concp['part'], $concp['cuen'], $concp['codi'] );
         $this->asignarPresupuesto( $rs, $asignacion,  '1', $map[$i]['nombre'], $map[$i]['partida'], '',  $map[$i]['codigo']);        
       }else{
         $valor = $monto * -1 ;
@@ -988,7 +967,6 @@ class KCargador extends CI_Model{
     $recibo_de_pago_aux = array();
 
     //GENERADOR DE CALCULOS DINAMICOS
-    // if(!isset($Perceptron->Neurona[$patron])){
     $CalculoLote->Ejecutar();
     $lstAsignacion = array();
     $segmentoincial = '';
@@ -1005,10 +983,7 @@ class KCargador extends CI_Model{
             if($rs != 'sueldo_mensual'){
               $segmentoincial .=  $monto_aux . ";";
               $bonos += $monto_aux;
-              $lstAsignacion[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
-              //if($monto_aux != 0)$recibo_de_pago[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);
-              //asgnar prepuesto
-              //$this->asignarPresupuesto($rs, $monto_aux, $Bnf->Concepto[$rs]['TIPO'], $Bnf->Concepto[$rs]['ABV'], $Bnf->Concepto[$rs]['part']);
+              $lstAsignacion[] = array('desc' =>  $rs, 'tipo' => $Bnf->Concepto[$rs]['TIPO'], 'mont' => $monto_aux);            
             }
 
             break;
@@ -1040,9 +1015,6 @@ class KCargador extends CI_Model{
     }    
 
 
-    //print_r( $lstAsignacion );
-    //$Bnf->pension = $asignacion;
-    //print_r( $Bnf->pension );
     $this->KReciboSobreviviente->primas = $lstAsignacion;
     $this->KReciboSobreviviente->pension = $Bnf->pension;
     $this->KReciboSobreviviente->cedula = $Bnf->cedula;
@@ -1056,7 +1028,7 @@ class KCargador extends CI_Model{
             ';' . $Bnf->fecha_retiro . ';' . $Bnf->componente_nombre . ';' . $Bnf->grado_codigo . 
             ';' . $Bnf->grado_nombre . ';' . $Bnf->tiempo_servicio . ';' . $Bnf->antiguedad_grado . 
             ';' . $Bnf->numero_hijos . ';' . $Bnf->porcentaje . ';' . $fcplinea;
-            //. round($pension_distribuir,2)
+
     $asignaciont = 0;
     $deducciont = 0;
     $fondo_cis = 0;
@@ -1176,20 +1148,13 @@ class KCargador extends CI_Model{
   
       
     }else{
-      $log .=   $segmentoincial . ';S/N;S/N;S/N;S/N;S/N;S/N;S/N;0;0;0;0;0;Militar fallecido sin familiares' . PHP_EOL;  
-      
-      //$this->ParalizadosSobrevivientes++;
+      $log .=   $segmentoincial . ';S/N;S/N;S/N;S/N;S/N;S/N;S/N;0;0;0;0;0;Militar fallecido sin familiares' . PHP_EOL;        
     }
     
     $this->asignarPresupuesto( "FCIS-00001", $fondo_cis , '0', 'COTIZ 6.5% PENSIONES (FONDO CIS)', '40700000000', '', '');
     $this->asignarPresupuesto( "FCIR-00001", $fondo_circulo , '0', 'COTIZ 1.5% CIRCULO MILITAR', '40700000000', '', '');
     $this->asignarPresupuesto( "PENM-00001", $asignaciont , '0', 'PENSION MILITAR', '40700000000', '', '');
 
-    // }else{ //Recordando calculos
-
-    // }
-    //$this->Cantidad += $i;
-    //$this->SSueldoBase += $Bnf->pension;
     $this->Asignacion += $asignaciont;
     $this->Deduccion += $deducciont;
     $this->Neto += $netot;

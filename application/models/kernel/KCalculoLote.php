@@ -152,7 +152,6 @@ class KCalculoLote extends CI_Model{
             );
           }
         }
-        //$this->Beneficiario->Concepto[$rs] =  array('mt' => round($prima_profesionalizacion_mt,2), 'ABV' =>  "prima_profesionalizacion", 'TIPO' => 1 );
         $total_primas = $this->Beneficiario->monto_total_prima + $prima_profesionalizacion_mt;
         $pension = (( $sueldo_basico +  $total_primas ) * $porcentaje_pension  ) / 100;
         
@@ -454,8 +453,6 @@ class KCalculoLote extends CI_Model{
   * @return int
   */
   function TiempoServicios(){
-      //echo "Fechas ", $this->Beneficiario->fecha_ingreso, "   ", $this->Beneficiario->fecha_retiro ;
-      //echo "<br>";
       if( $this->Beneficiario->ano_reconocido != 0 && $this->Beneficiario->mes_reconocido != 0 && $this->Beneficiario->dia_reconocido != 0){
         $anos = $this->__fechaReconocida();
         $this->Beneficiario->tiempo_servicio = $anos['e'];
@@ -464,9 +461,7 @@ class KCalculoLote extends CI_Model{
         $anos = $this->__restarFecha($this->Beneficiario->fecha_ingreso, $this->Beneficiario->fecha_retiro);
         $this->Beneficiario->tiempo_servicio = $anos['e'];
         $this->Beneficiario->tiempo_servicio_aux = $anos['n'];
-      }
-      //print_r($this->Beneficiario->tiempo_servicio);
-      //print_r("<br>");
+      }    
   }
 
   /**
