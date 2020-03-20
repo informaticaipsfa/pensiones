@@ -126,6 +126,9 @@ class KCalculoLote extends CI_Model{
       $total_primas = 0;
       $pension = $sueldo_base;
       $this->Beneficiario->total_asignacion = $sueldo_base;
+      $pension_diaria_integral = 0;
+      $pension_diaria_integraln = 0;
+
       if( $this->Beneficiario->situacion != "PG" ){
         //Establecer Primras
         foreach ($lst as $c => $v) {
