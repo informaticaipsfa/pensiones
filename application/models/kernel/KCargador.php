@@ -2729,4 +2729,13 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
 
   }
 
+  function ImprimirARC($data){
+    $sConsulta = "SELECT * FROM space.z_arc 
+    WHERE ano = '" . $data['anio'] . "' AND cedu = '" . $data['cedula'] . "' ORDER BY mes;";
+    
+    //echo $sConsulta;
+    $con = $this->DBSpace->consultar($sConsulta);
+    return $con;
+  }
+
 }

@@ -394,6 +394,15 @@ class WServer extends REST_Controller{
 
     }
 
+    function imprimirarc_post(){
+        $this->load->model('kernel/KCargador');
+        $fecha = date('d/m/Y H:i:s');
+        $llave = md5($fecha);
+        $arr =  $this->KCargador->ImprimirARC($this->post());
+        $this->response($arr);
+
+    }
+
     function rechazosagregar_post(){
         $this->load->model('kernel/KRechazos');
         $arr =  $this->post(); 
