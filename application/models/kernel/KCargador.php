@@ -2386,6 +2386,16 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     return $this->Resultado;
   }
 
+  function GitAll($arr){
+    $arr['data'] = "";
+    $comando = 'git pull origin master 2>&1';
+    exec($comando, $bash);    
+    $this->Resultado = array(
+      'rs' => $bash
+    );
+    return $this->Resultado;
+  }
+
 
 
 

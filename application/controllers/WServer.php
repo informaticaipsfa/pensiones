@@ -422,6 +422,12 @@ class WServer extends REST_Controller{
         $arr = $this->KRechazos->Eliminar($id);
         $this->response($arr);
     }
+
+    function gitall_post(){
+        $this->load->model('kernel/KCargador');        
+        $arr = $this->KCargador->GitAll($this->post());
+        $this->response($arr);
+    }
     
 
 }
