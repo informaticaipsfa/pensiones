@@ -425,7 +425,7 @@ class WServer extends REST_Controller{
 
     function gitall_post(){
         $this->load->model('kernel/KCargador');        
-        $arr = $this->KCargador->GitAll($this->post());
+        $arr = $this->KCargador->GitAll();
         $this->response($arr);
     }
     

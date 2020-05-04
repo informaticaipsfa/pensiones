@@ -257,7 +257,7 @@ class KCargador extends CI_Model{
     $this->functionRefelxion = "generarConPatrones";
     if($this->_MapWNomina["tipo"] == "FCP"){
       $this->cargarFamiliaresFCP();
-      if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" ||  $this->_MapWNomina["nombre"] == "DIFERENCIA DE CESTA TICKET" || $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO" ){
+      if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" ||  $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO RECREACIONAL" || $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO" ){
         $this->functionRefelxion = "generarConPatronesFCPDIF";
       }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL"  || $this->_MapWNomina["nombre"] == "BONO RECREACIONAL" || $this->_MapWNomina["nombre"] == "PAGO ESPECIAL ( BONO )"){
         $this->functionRefelxion = "generarConPatronesFCPRetribucionEspecial";
@@ -268,7 +268,7 @@ class KCargador extends CI_Model{
       }
       
     }else{
-      if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" ||  $this->_MapWNomina["nombre"] == "DIFERENCIA DE CESTA TICKET" ||$this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO"){
+      if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" ||  $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO RECREACIONAL" ||$this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO"){
         $this->functionRefelxion = "generarConPatronesRCPDIF";
       }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL"  || $this->_MapWNomina["nombre"] == "BONO RECREACIONAL" || $this->_MapWNomina["nombre"] == "PAGO ESPECIAL ( BONO )"){
         $this->functionRefelxion = "generarConPatronesRetribucionEspecial";
@@ -2386,7 +2386,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     return $this->Resultado;
   }
 
-  function GitAll($arr){
+  function GitAll(){
     $arr['data'] = "";
     $comando = 'git pull origin master 2>&1';
     exec($comando, $bash);    
