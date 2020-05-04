@@ -223,10 +223,7 @@ class KCargador extends CI_Model{
     $this->load->model('kernel/KArchivos');
     
     $this->MedidaJudicial = $this->KMedidaJudicial->Cargar($this->_MapWNomina["nombre"]);
-    
-    //$this->Archivos = $this->KArchivos->Cargar($this->_MapWNomina["nombre"],  $this->_MapWNomina["tipo"]);
     $this->Archivos = $this->KArchivos->Cargar($this->_MapWNomina);
-
     $sConsulta = "
       SELECT
         regexp_replace(bnf.nombres, '[^a-zA-Y0-9 ]', '', 'g') as nombres,
