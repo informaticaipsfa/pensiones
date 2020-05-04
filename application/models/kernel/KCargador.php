@@ -245,8 +245,8 @@ class KCargador extends CI_Model{
         bnf.status_id = 201
         -- AND bnf.anio_reconocido > 0 AND bnf.mes_reconocido > 0 AND bnf.dia_reconocido > 0
         -- AND bnf.anio_reconocido IS NULL
-        -- AND bnf.cedula IN (  '6445211' )
-        -- AND bnf.cedula='10186808' --RCP '4262481' --FCP='15236250' 
+        -- AND bnf.cedula IN (  '20955773 )
+        -- AND bnf.cedula='20955773' --RCP '4262481' --FCP='15236250' 
         -- grado.codigo NOT IN(8450, 8510, 8500, 8460, 8470, 8480, 5320) 
         ORDER BY grado.codigo
         -- AND grado.codigo IN( 10, 15)
@@ -1559,7 +1559,7 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
   $map = $this->_MapWNomina['Concepto'];
   
   $recibo_de_pago = array(); // Contruir el recibo de pago para un JSON
-
+  //print_r( $this->Archivos );
   //GENERADOR DE CALCULOS DINAMICOS
   $segmentoincial = '';        
   $i = 0;
@@ -1573,7 +1573,8 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
       $monto_str = '';
       for ($j= 0; $j < $cant; $j++){
         $rs = $map[$j]['codigo'];
-        $monto = $this->obtenerArchivosFCP($PS[$i]['cedula'], $rs); 
+        $sCedula =  $Bnf->cedula . $PS[$i]['cedula'] ;
+        $monto = $this->obtenerArchivosFCP($sCedula, $rs); 
 
         if($monto > 0 ){
           $monto_str .= $monto . ';';
@@ -1593,8 +1594,12 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
       } 
 
       $segmentoincial = $Bnf->cedula . ';' . $Bnf->apellidos . ';' . $Bnf->nombres . 
-      ';' . $Bnf->grado_nombre . ';' . round($Bnf->total_asignacion,2) . 
-      ';' . $Bnf->porcentaje . ';' . $Bnf->sueldo_base . ';' . round($Bnf->pension,2); // . ';' . $monto_str;   
+      ';' . $Bnf->fecha_ingreso . ';' . $Bnf->fecha_ultimo_ascenso . ';' . $Bnf->fecha_retiro . 
+      ';' . $Bnf->componente_nombre . ';' . $Bnf->grado_codigo . ';' . $Bnf->grado_nombre . 
+      ';;;' . $Bnf->numero_hijos . ';' . $Bnf->porcentaje ;
+      
+      //. round($Bnf->total_asignacion,2) . ';' . $Bnf->porcentaje . ';' . $Bnf->sueldo_base . ';' . round($Bnf->pension,2); 
+      // . ';' . $monto_str;   
             
 
 
@@ -1608,7 +1613,7 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
             ';' . $PS[$i]['cedula'] . ';' . $PS[$i]['apellidos'] . ';' . $PS[$i]['nombres'] . 
             ';' . $PS[$i]['parentesco'] . ';' . $PS[$i]['tipo'] . ";'" . $PS[$i]['banco'] . ";'" . $PS[$i]['numero'] . 
             ';' . round($Bnf->pension,2) . ';' . round($PS[$i]['porcentaje'],2) . 
-            ";" . round($asignacion,2) . ';' . round($deduccion,2) . ';' . round($neto,2) . PHP_EOL;
+            ';;' . round($asignacion,2) . ';' . round($deduccion,2) . ';;' . round($neto,2) . PHP_EOL;
           $this->OperarBeneficiarios++;
           $this->KRecibo->conceptos = $recibo_de_pago;        
           $this->KRecibo->asignaciones = $asignacion;

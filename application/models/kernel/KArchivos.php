@@ -18,10 +18,13 @@ class KArchivos extends CI_Model{
 		$donde = '';
 		$tipo = 1;
 		
-		if ( $map["nombre"] == 'FCP' ){
-			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo WHERE fami != '' ;"; // AND fami = '533320' --WHERE fech BETWEEN '2019-04-01' AND '2019-04-30'";
+		$seleccionar = $this->SeleccionarConceptos($map['Concepto']);
+		if ( $map["tipo"] == 'FCP' ){
+			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo 
+				WHERE fami != '' AND  proc BETWEEN '" . $map["fechainicio"]  . "' 
+				AND '" . $map["fechafin"]  . "' " . $seleccionar ;
 		}else{
-			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo WHERE proc BETWEEN '" . $map["fechainicio"]  . "' AND '" . $map["fechafin"]  . "'";			
+			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo WHERE proc BETWEEN '" . $map["fechainicio"]  . "' AND '" . $map["fechafin"]  . "' "  . $seleccionar;			
 		}
 		//print_r( $query );
 
@@ -36,7 +39,7 @@ class KArchivos extends CI_Model{
 				$resultado = $v->mont * -1 ;
 			}
 			$cedula = $v->cedu;
-			if($v->fami != '')$cedula = $v->fami;
+			if($v->fami != '')$cedula = $v->cedu . $v->fami;
 
             $arr[$v->conc][$cedula] = $resultado;
         }
@@ -44,7 +47,9 @@ class KArchivos extends CI_Model{
 	}
 
 
-	public function Ejecutar($cedula = '', $concepto = '', $arr){		
+	public function Ejecutar($cedula = '', $concepto = '', $arr, $familiar = ''){	
+		
+		//print_r( $cedula . ' -- ' . $arr[$concepto][$cedula]);
 		$monto = isset($arr[$concepto][$cedula])?$arr[$concepto][$cedula]:0;
 		
         return $monto;
@@ -58,6 +63,16 @@ class KArchivos extends CI_Model{
 		$query = "SELECT cedula, conc, fnxc, tipo  from space.descuentos ";
 	}
 
+	public function SeleccionarConceptos( $Conceptos = array() ){
+		$cadena = ' AND conc IN ( ';
+		$coma = '';
+		$cant = count($Conceptos);
+		for ($i= 0; $i < $cant; $i++){
+			if($i >= 1)$coma = ",";
+			$cadena .= $coma . "'" . $Conceptos[$i]['codigo'] . "'";
+		}
+		return $cadena . ' ) ';
+	}
 
 
 }
