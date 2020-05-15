@@ -125,12 +125,13 @@ class KNomina extends CI_Model{
     return array('act' => $contar, 'par' => $paralizado);
   }
 
-  public function Listar($mes = "", $id){
+  public function Listar($mes = "", $id = "", $ano = ""){
     if ( $id < 4 ){
-      $sConsulta = "SELECT * FROM space.nomina WHERE esta IN ( 1, 2, 3) ";
+      $sConsulta = "SELECT * FROM space.nomina WHERE esta IN ( 1, 2, 3) AND desd BETWEEN '$ano-01-01' AND '$ano-12-31'";
     }else{
-      $sConsulta = "SELECT * FROM space.nomina WHERE esta BETWEEN 4 AND 6  AND mes = '" . $mes . "'";
+      $sConsulta = "SELECT * FROM space.nomina WHERE esta IN ( 4, 6, 10 )  AND mes = '" . $mes . "' AND desd BETWEEN '$ano-01-01' AND '$ano-12-31'";
     }
+    //echo $sConsulta;
     $obj = $this->DBSpace->consultar($sConsulta);
     $lst = array();
     foreach($obj->rs as $c => $v ){

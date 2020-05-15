@@ -304,9 +304,9 @@ class WServer extends REST_Controller{
 		$this->response($Contar);
     }
 
-    function listartpendientes_get($mes, $id){
+    function listartpendientes_get($mes, $id, $ano){
         $this->load->model('kernel/KNomina');
-		$lst = $this->KNomina->Listar($mes, $id);
+		$lst = $this->KNomina->Listar($mes, $id, $ano);
 		$this->response($lst);
     }
 
