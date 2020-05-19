@@ -127,7 +127,7 @@ class KNomina extends CI_Model{
 
   public function Listar($mes = "", $id = "", $ano = ""){
     if ( $id < 4 ){
-      $sConsulta = "SELECT * FROM space.nomina WHERE esta IN ( 1, 2, 3) AND desd BETWEEN '$ano-01-01' AND '$ano-12-31'";
+      $sConsulta = "SELECT * FROM space.nomina WHERE esta IN ( 1, 2, 3)";
     }else{
       $sConsulta = "SELECT * FROM space.nomina WHERE esta IN ( 4, 6, 10 )  AND mes = '" . $mes . "' AND desd BETWEEN '$ano-01-01' AND '$ano-12-31'";
     }
