@@ -428,6 +428,59 @@ class WServer extends REST_Controller{
         $arr = $this->KCargador->GitAll();
         $this->response($arr);
     }
+
+    function cmesesactivo_post(){
+        $this->load->model('kernel/KNomina');
+        $lst = $this->KNomina->CargarMesesActivo($this->post());
+        $this->response($lst);
+    }
+
+    function cmesdetalle_post(){
+        $this->load->model('kernel/KNomina');
+        $lst = $this->KNomina->CargarMesDetalle($this->post());
+        $this->response($lst);
+    }
+
+    public function gretroactivo_post(){
+        $this->load->model('kernel/KSensor');
+        $fecha = date('d/m/Y H:i:s');
+        $firma = $this->post("codigo"); //md5($fecha);
+        $this->load->model('kernel/KRetroactivo');
+        $data['id'] = $this->post("id"); //Directiva
+        $data['fecha'] = $this->post("fechainicio");
+        $data['mes'] = $this->post("mes");
+        $data['cedula'] = $this->post("cedula");
+
+        $this->KRetroactivo->_MapWNomina = $this->post();
+        
+        $segmento = $this->KRetroactivo->IniciarIndividual($data, $firma, "SSSIFANB");
+        
+        $neto = round( $this->KRetroactivo->Neto, 2 );
+        $asig = round( $this->KRetroactivo->Asignacion, 2 );
+        $dedu = round( $this->KRetroactivo->Deduccion, 2 );
+       
+        // $segmento = array(
+        //     'neto' => number_format($neto, 2, ',','.'),
+        //     'asignacion' => number_format($asig, 2, ',','.'),
+        //     'deduccion' => number_format($dedu, 2, ',','.'),
+        //     'registros' => $this->KRetroactivo->Paralizados + $this->KRetroactivo->Anomalia + $this->KRetroactivo->Cantidad,
+        //     'md5' => $firma,
+        //     'paralizados' => $this->KRetroactivo->Paralizados,
+        //     'incidencias' => $this->KRetroactivo->Anomalia,
+        //     'sinpagos' => $this->KRetroactivo->SinPagos,
+        //     'operados' =>  $this->KRetroactivo->Cantidad,
+        //     'total' => $this->KRetroactivo->SinPagos + $this->KRetroactivo->Cantidad,
+        //     'desde' => $this->post("fechainicio"),
+        //     'hasta' => $this->post("fechafin"),
+        //     'archivo' => 'tmp/' . $firma . '.csv',
+        //     'oid' => $this->KRetroactivo->OidNomina,
+        //     'tipo' => $this->post("tipo"),
+        //     'nombre' => $this->post("nombre"),
+        //     'url' => base_url(),           
+        //     'resumen' => $this->KRetroactivo->ResumenPresupuestario
+        // );        
+        $this->response($segmento);
+    }
     
 
 }

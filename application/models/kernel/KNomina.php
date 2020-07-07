@@ -279,4 +279,66 @@ class KNomina extends CI_Model{
     }
     return $lst;
   }
+
+
+
+   /**
+   * Cargar las nóminas generadas en un año lectivo hasta la fecha
+   */
+  public function CargarMesesActivo($arr = array()){
+    $desde = $arr['ano'] . '-01-01';
+    $hasta = $arr['ano'] . '-12-31';
+    $s = "SELECT desd, mes FROM (
+            SELECT mes, desd, tipo, obse from space.nomina 
+              WHERE desd BETWEEN '" . $desde . "' and '" . $hasta . "' AND llav != '' AND tipo = '" . $arr['tipo'] . "'
+              AND obse NOT IN('DIFERENCIA DE SUELDO','DIFERENCIA DE BONO', 'DIFERENCIA DE CESTA TICKET', 'DIFERENCIA DE RETRIBUCION ESPECIAL')
+            ORDER BY desd ) AS A  
+          GROUP BY desd, mes ORDER BY desd";
+
+
+    $obj = $this->DBSpace->consultar($s);
+    return $obj;
+  }
+
+
+  /**
+   * Cargar las nóminas generadas en un mes par los pagos de retroactivos
+   */
+  public function CargarMesDetalle($arr = array()){
+    $desde = $arr['ano'] . '-01-01';
+    $hasta = $arr['ano'] . '-12-31';
+
+    $s = "
+    SELECT * FROM (
+      SELECT obse,esta, info, fech, cant, asig, dedu, mont, llav, oid FROM (
+        SELECT * from space.nomina 
+          WHERE desd BETWEEN '" . $desde . "' and '" . $hasta . "' AND llav != '' AND tipo = '" . $arr['tipo'] . "'
+          AND obse NOT IN('DIFERENCIA DE SUELDO','DIFERENCIA DE BONO', 'DIFERENCIA DE CESTA TICKET', 'DIFERENCIA DE RETRIBUCION ESPECIAL')
+          ORDER BY desd ) AS A WHERE mes='" . $arr['mes'] . "' 	
+    ) AS cob 
+      LEFT JOIN space.pagos AS pag ON cob.oid=pag.nomi AND pag.cedu='" . $arr['cedula'] . "'";
+
+    $obj = $this->DBSpace->consultar($s);
+    return $obj;
+  }
+
+   
+  /**
+   * Listar las nóminas para los pagos de retroactivos
+   */
+  public function PagarRetroactivos($arr = array()){
+    $desde = $arr['ano'] . '-01-01';
+    $hasta = $arr['ano'] . '-12-31';
+
+    $s = 'SELECT * FROM space.nomina WHERE mes = ' . $arr['mes'] . ' AND desd BETWEEN ' . $desde . ' AND ' . $hasta;
+
+    $obj = $this->DBSpace->consultar($s);
+
+    return $obj;
+  }
+
+  public function ConfirmacionPagosPorCedula($arr = array()){
+
+  }
+
 }
