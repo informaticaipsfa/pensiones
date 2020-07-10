@@ -252,22 +252,37 @@ class KCargador extends CI_Model{
     
     $con = $this->DBSpace->consultar($sConsulta);
     $this->functionRefelxion = "generarConPatrones";
+    $strNombre = $this->_MapWNomina["nombre"];
     if($this->_MapWNomina["tipo"] == "FCP"){
       $this->cargarFamiliaresFCP();
-      if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" ||  $this->_MapWNomina["nombre"] == "DIFERENCIA DE RETRIBUCION ESPECIAL" || $this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO" ){
+      if( $strNombre == "DIFERENCIA DE SUELDO" ||  
+          $strNombre == "DIFERENCIA DE RETRIBUCION ESPECIAL" || 
+          $strNombre == "DIFERENCIA DE BONO" || 
+          $strNombre == "NOMINA DE RETROACTIVOS"
+          ){
+
         $this->functionRefelxion = "generarConPatronesFCPDIF";
-      }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL"  || $this->_MapWNomina["nombre"] == "BONO RECREACIONAL" || $this->_MapWNomina["nombre"] == "PAGO ESPECIAL ( BONO )"){
+
+      }else if( $strNombre == "RETRIBUCION ESPECIAL"  || 
+                $strNombre == "BONO RECREACIONAL" || 
+                $strNombre == "PAGO ESPECIAL ( BONO )"){
+
         $this->functionRefelxion = "generarConPatronesFCPRetribucionEspecial";
-      }else if ($this->_MapWNomina["nombre"] == "AGUINALDOS" ) {
+
+      }else if ($strNombre == "AGUINALDOS" ) {
         $this->functionRefelxion = "gCPatronesFCPAguinaldos";
       }else{
         $this->functionRefelxion = "generarConPatronesFCP";
       }
       
-    }else{
-      if( $this->_MapWNomina["nombre"] == "DIFERENCIA DE SUELDO" ||  $this->_MapWNomina["nombre"] == "DIFERENCIA DE RETRIBUCION ESPECIAL" ||$this->_MapWNomina["nombre"] == "DIFERENCIA DE BONO"){
+    }else{ //DE LO CONTRARIO EN CASO DE NOMINA PARA RCP
+      if( $strNombre == "DIFERENCIA DE SUELDO" ||  
+          $strNombre == "DIFERENCIA DE RETRIBUCION ESPECIAL" ||
+          $strNombre == "DIFERENCIA DE BONO" || 
+          $strNombre == "NOMINA DE RETROACTIVOS" ){
         $this->functionRefelxion = "generarConPatronesRCPDIF";
-      }else if( $this->_MapWNomina["nombre"] == "RETRIBUCION ESPECIAL"  || $this->_MapWNomina["nombre"] == "BONO RECREACIONAL" || $this->_MapWNomina["nombre"] == "PAGO ESPECIAL ( BONO )"){
+        
+      }else if( $strNombre == "RETRIBUCION ESPECIAL"  || $strNombre == "BONO RECREACIONAL" || $strNombre == "PAGO ESPECIAL ( BONO )"){
         $this->functionRefelxion = "generarConPatronesRetribucionEspecial";
       }
     }
