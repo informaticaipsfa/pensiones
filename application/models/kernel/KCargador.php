@@ -611,7 +611,8 @@ class KCargador extends CI_Model{
 
                
         $neto = $asignacion - $deduccion;
-        if( $Bnf->situacion == "PG" ){          
+        if( $Bnf->situacion == "PG" ){
+          $deduccion = 0;          
           if($this->_MapWNomina["nombre"] == "AGUINALDOS"){
             //$asignacion = round(($Directivas['salario'] * 5.66666666 ) /4 , 2);
             $sueldo_mensual = $Directivas['salario'];
