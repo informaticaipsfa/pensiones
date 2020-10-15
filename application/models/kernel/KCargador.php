@@ -615,7 +615,7 @@ class KCargador extends CI_Model{
           if($this->_MapWNomina["nombre"] == "AGUINALDOS"){
             //$asignacion = round(($Directivas['salario'] * 5.66666666 ) /4 , 2);
             $sueldo_mensual = $Directivas['salario'];
-            $asignacion =  round(((((12* $sueldo_mensual)+( 40*( $sueldo_mensual/30))+( 120*( $sueldo_mensual/30)))/12) /30)*30, 2);
+            $asignacion =  round(577777.78, 2) ;//round(((((12* $sueldo_mensual)+( 40*( $sueldo_mensual/30))+( 120*( $sueldo_mensual/30)))/12) /30)*30, 2);
             $neto = $asignacion;
             $this->asignarPresupuesto("AGUI0001", $neto, 1, "", "40701010101","", "AGUI0001");
                 
