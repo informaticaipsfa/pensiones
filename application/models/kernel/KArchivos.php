@@ -26,7 +26,7 @@ class KArchivos extends CI_Model{
 		}else{
 			$query = "SELECT llav, cedu, fami, conc, mont, tipo from space.nomina_archivo WHERE proc BETWEEN '" . $map["fechainicio"]  . "' AND '" . $map["fechafin"]  . "' "  . $seleccionar;			
 		}
-		//print_r( $query );
+		print_r( $query );
 
         $obj = $this->Dbpace->consultar($query);
 		$rs = $obj->rs;
