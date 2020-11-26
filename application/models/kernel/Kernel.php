@@ -34,5 +34,11 @@ class Kernel extends CI_Model{
    
 
   }
+
+  public function ArchivoLogError($cadena){
+    $ddf = fopen('errorspace.log', 'a');
+    fwrite($ddf, "[" . date("r") . "] Error : " . $cadena . "\r\n");
+    fclose($ddf);
+  }
   
 }
