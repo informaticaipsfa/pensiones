@@ -2765,8 +2765,8 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
   function ImprimirARC($data){
     // $sConsulta = "SELECT * FROM space.z_arc 
     // WHERE ano = '" . $data['anio'] . "' AND cedu = '" . $data['cedula'] . "' ORDER BY mes;";
-    $sConsulta = "SELECT cedu,  mes.oid as mes, monto FROM (
-      select cedu,  mes, sum(neto) AS monto from space.pagos pg 
+    $sConsulta = "SELECT cedu,  mes.oid as mes, mont FROM (
+      select cedu,  mes, sum(neto) AS mont from space.pagos pg 
       JOIN space.nomina nom ON pg.nomi=nom.oid
       where cedu='" . $data['cedula'] . "' AND desd > '" . $data['anio'] . "-01-01' AND desd < '" . $data['anio'] . "-12-31'
       GROUP BY pg.cedu, nom.mes ) AS arc 
