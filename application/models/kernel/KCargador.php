@@ -2763,12 +2763,31 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
   }
 
   function ImprimirARC($data){
-    $sConsulta = "SELECT * FROM space.z_arc 
-    WHERE ano = '" . $data['anio'] . "' AND cedu = '" . $data['cedula'] . "' ORDER BY mes;";
-    
+    // $sConsulta = "SELECT * FROM space.z_arc 
+    // WHERE ano = '" . $data['anio'] . "' AND cedu = '" . $data['cedula'] . "' ORDER BY mes;";
+    $sConsulta = "SELECT cedu,  mes.oid as mes, monto FROM (
+      select cedu,  mes, sum(neto) AS monto from space.pagos pg 
+      JOIN space.nomina nom ON pg.nomi=nom.oid
+      where cedu='" . $data['cedula'] . "' AND desd > '" . $data['anio'] . "-01-01' AND desd < '" . $data['anio'] . "-12-31'
+      GROUP BY pg.cedu, nom.mes ) AS arc 
+    JOIN space.meses mes ON arc.mes=mes.descr ";
     //echo $sConsulta;
     $con = $this->DBSpace->consultar($sConsulta);
     return $con;
+
+  }
+
+  function ImprimirARCFamiliar(){
+    /*
+     SELECT * FROM (
+      select cedu, pg.cfam, mes, sum(neto) from space.pagos pg 
+      JOIN space.nomina nom ON pg.nomi=nom.oid
+      where cedu='21628966' AND desd>'2019-12-31'
+      GROUP BY pg.cedu, pg.cfam, nom.mes ) AS arc 
+    JOIN space.meses mes ON arc.mes=mes.descr 
+     */
+
+    return ""
   }
 
 }
