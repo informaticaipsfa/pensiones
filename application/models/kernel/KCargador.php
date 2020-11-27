@@ -2770,7 +2770,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       JOIN space.nomina nom ON pg.nomi=nom.oid
       where cedu='" . $data['cedula'] . "' AND desd > '" . $data['anio'] . "-01-01' AND desd < '" . $data['anio'] . "-12-31'
       GROUP BY pg.cedu, nom.mes ) AS arc 
-    JOIN space.meses mes ON arc.mes=mes.descr ";
+    JOIN space.meses mes ON arc.mes=mes.descr";
     //echo $sConsulta;
     $con = $this->DBSpace->consultar($sConsulta);
     return $con;
@@ -2787,7 +2787,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     JOIN space.meses mes ON arc.mes=mes.descr 
      */
 
-    return ""
+    return "";
   }
 
 }
