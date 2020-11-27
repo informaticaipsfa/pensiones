@@ -2768,7 +2768,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     $sConsulta = "SELECT cedu,  mes.oid as mes, mont FROM (
       select cedu,  mes, sum(neto) AS mont from space.pagos pg 
       JOIN space.nomina nom ON pg.nomi=nom.oid
-      where cedu='" . $data['cedula'] . "' AND desd >= '" . $data['anio'] . "-01-01' AND desd =< '" . $data['anio'] . "-12-31'
+      where cedu='" . $data['cedula'] . "' AND desd >= '" . $data['anio'] . "-01-01' AND desd <= '" . $data['anio'] . "-12-31'
       GROUP BY pg.cedu, nom.mes ) AS arc 
     JOIN space.meses mes ON arc.mes=mes.descr 
     ORDER BY mes.oid";
