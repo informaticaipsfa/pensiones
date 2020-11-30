@@ -2772,6 +2772,17 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       GROUP BY pg.cedu, nom.mes ) AS arc 
     JOIN space.meses mes ON arc.mes=mes.descr 
     ORDER BY mes.oid";
+    if ($data['cedulafamiliar'] != ""){
+      $sConsulta = "SELECT cedu, cfam, mes.oid as mes, mont FROM (
+        SELECT cedu, cfam, mes, sum(neto) AS mont from space.pagos pg 
+          JOIN space.nomina nom ON pg.nomi=nom.oid
+          where cedu='" . $data['cedula'] . "' 
+          AND cfam='" . $data['cedulafamiliar'] . "' 
+          AND desd >= '" . $data['anio'] . "-1-01' AND desd <= '" . $data['anio'] . "-12-31'
+          GROUP BY pg.cedu, pg.cfam, nom.mes ) AS arc 
+        left JOIN space.meses mes ON arc.mes=mes.descr 
+        ORDER BY mes.oid;";
+    }
     //echo $sConsulta;
     $con = $this->DBSpace->consultar($sConsulta);
     return $con;
