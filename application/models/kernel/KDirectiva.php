@@ -74,7 +74,7 @@ class KDirectiva extends CI_Model{
     $this->load->model('kernel/KFunciones');
     $this->load->model('kernel/KConceptos');   
     
-    $donde = $fecha != ''? 'f_inicio < \'' . $fecha . '\' AND f_vigencia > \'' . $fecha . '\'': ' id=' . $id ;
+    $donde = $fecha != ''? 'f_vigencia >= \'' . $fecha . '\' AND f_inicio <= \'' . $fecha . '\'': ' id=' . $id ;
 
     $lst = array();
     $sConsulta = '

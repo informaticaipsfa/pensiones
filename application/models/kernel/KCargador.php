@@ -237,18 +237,18 @@ class KCargador extends CI_Model{
         JOIN
           grado ON bnf.grado_id=grado.codigo AND bnf.componente_id= grado.componente_id
         WHERE 
-        bnf.situacion = '" . $this->_MapWNomina["tipo"] . "'
-        AND
-        bnf.status_id = 201
-        -- AND bnf.anio_reconocido > 0 AND bnf.mes_reconocido > 0 AND bnf.dia_reconocido > 0
-        -- AND bnf.anio_reconocido IS NULL
-        -- AND bnf.cedula IN (  '20955773 )
-        -- AND bnf.cedula='20955773' --RCP '4262481' --FCP='15236250' 
-        -- grado.codigo NOT IN(8450, 8510, 8500, 8460, 8470, 8480, 5320) 
+          bnf.situacion = '" . $this->_MapWNomina["tipo"] . "'
+          AND
+          bnf.status_id = 201
+          -- AND bnf.anio_reconocido > 0 AND bnf.mes_reconocido > 0 AND bnf.dia_reconocido > 0
+          -- AND bnf.anio_reconocido IS NULL
+          -- AND bnf.cedula IN ( '9696480', '13587538' )
+          -- AND bnf.cedula='20955773' --RCP '4262481' --FCP='15236250' 
+          -- grado.codigo NOT IN(8450, 8510, 8500, 8460, 8470, 8480, 5320) 
         ORDER BY grado.codigo
-        -- AND grado.codigo IN( 10, 15)
-        -- LIMIT 190 OFFSET 10
-        ";
+          -- AND grado.codigo IN( 10, 15)
+          -- LIMIT 190 OFFSET 10
+          LIMIT 10000";
     
     $con = $this->DBSpace->consultar($sConsulta);
     $this->functionRefelxion = "generarConPatrones";
