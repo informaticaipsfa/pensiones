@@ -248,7 +248,7 @@ class KCargador extends CI_Model{
         ORDER BY grado.codigo
           -- AND grado.codigo IN( 10, 15)
           -- LIMIT 190 OFFSET 10
-          LIMIT 10000";
+          -- LIMIT 10000";
     
     $con = $this->DBSpace->consultar($sConsulta);
     $this->functionRefelxion = "generarConPatrones";
