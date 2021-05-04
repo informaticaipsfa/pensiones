@@ -151,6 +151,7 @@ class KCalculoLote extends CI_Model{
               'cuen' => ''
             );
           }
+
         }
         $total_primas = $this->Beneficiario->monto_total_prima + $prima_profesionalizacion_mt;
         $pension = (( $sueldo_basico +  $total_primas ) * $porcentaje_pension  ) / 100;
@@ -172,6 +173,8 @@ class KCalculoLote extends CI_Model{
 
       }
       
+      //print_r($this->Beneficiario);
+
       if( $this->Beneficiario->situacion == "PG" ){
         $this->Beneficiario->pension = $sueldo_minimo;
         $this->Beneficiario->sueldo_mensual = $sueldo_minimo;
@@ -192,10 +195,11 @@ class KCalculoLote extends CI_Model{
       
       //Formular Conceptos Ryotyonsy
       foreach ( $this->Directiva['fnxC'] as $Con => $obj ){
-        $fnx = strtolower($obj['fn']);
+        $fnx = $obj['fn'];
         $rs = $obj['rs'];
         $valor = 0;
         try {
+          
           eval('$valor = ' . $fnx); 
         } catch (ParseError $e) {
             // Report error somehow
