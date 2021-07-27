@@ -214,6 +214,7 @@ class KCargador extends CI_Model{
    */
   public function IniciarLote($arr, $archivo, $autor){
     ini_set('memory_limit', '4024M'); //Aumentar el limite de PHP
+    ini_set('max_execution_time', 300);
 
     $this->load->model('comun/Dbpace');
     $this->load->model('kernel/KSensor');
@@ -242,7 +243,7 @@ class KCargador extends CI_Model{
           bnf.status_id = 201
           -- AND bnf.anio_reconocido > 0 AND bnf.mes_reconocido > 0 AND bnf.dia_reconocido > 0
           -- AND bnf.anio_reconocido IS NULL
-          -- AND bnf.cedula IN ( '9696480', '13587538' )
+        AND bnf.cedula IN ( '18214241', '12488541','15683209', '236810', '9698574.','12834431', '11113890', '1636273' )
           -- AND bnf.cedula='20955773' --RCP '4262481' --FCP='15236250' 
           -- grado.codigo NOT IN(8450, 8510, 8500, 8460, 8470, 8480, 5320) 
         ORDER BY grado.codigo
@@ -331,13 +332,16 @@ class KCargador extends CI_Model{
           if( $nmb == "SUELDO BASE" || $nmb == "DIRECTIVA PRIMAS" || $nmb == "PENSION") {
             $fcplinea .= $rs . ";";
           }else{
-            $fcplinea_aux = $rs . ";";
+            $fcplinea_aux .= $rs . ";";
           }
         }else{
           $linea .= $rs . ";";
         }
     }
     $linea .= $medida_str . $cajaahorro_str . 'ASIGNACION;DEDUCCION;NETO';
+
+    
+
     if($this->_MapWNomina['tipo'] == "FCP"){
       $linea = 'CEDULA;APELLIDOS;NOMBRES;';
       $linea .= 'FECHA INGRESO;FECHA ASCENSO;FECHA RETIRO;COMPONENTE;GRADO;GRADO DESC.;';
@@ -349,7 +353,7 @@ class KCargador extends CI_Model{
       $linea .= 'CEDULA;APELLIDOS;NOMBRES;PARENTESCO;TIPO;BANCO;NUMERO CUENTA;PENSION MIL;';
       $linea .= 'PORCENTAJE;';
       $linea .= 'RETROACTIVO;';
-      $linea .= 'ASIGNACION;FCIS;FCIR;NETO';
+      $linea .= 'ASIGNACION;FCIS;FCIR;'. $fcplinea_aux .'NETO';
     }
     fputs($file,$linea);//Para Generar archivo csv 04102017
     fputs($file,"\n");//Salto de linea
@@ -1006,8 +1010,10 @@ class KCargador extends CI_Model{
 
             break;
           case 2: //Leer archivos de texto
+
            break;
-          case 3: //Leer archivos de texto                
+          case 3: //Leer archivos de texto    
+            
             break;
           case 33:
             break;
@@ -1463,7 +1469,7 @@ class KCargador extends CI_Model{
    * @param conceptos array
    * @param clave string Cedula del beneficiario con el familiar 1100|00001
    */
-  private function recorrerConceptos( $map = array(), $conceptos = array(), $clave = '', &$recibo_de_pago ) {
+  private function recorrerConceptos( $map = array(), $conceptos = array(), $clave = '', &$recibo_de_pago = '') {
     $lst = array();
     $segmentoincial = '';
     $fcplinea = '';
