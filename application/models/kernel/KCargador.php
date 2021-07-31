@@ -2393,25 +2393,19 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     }
     $strR = $r . 'tmp/' . $archivo . '-SQL';
     $comando = 'cd tmp/; time ./load.sh ' . $strR . ' 2>&1';
-    print_r($comando);
-
     exec($comando, $bash);
     $res[] = $bash;
-    print_r($bash);
 
 
 
     $strR = $r . 'tmp/' . $archivo . '-MJ';
     $comando = 'cd tmp/; time ./load.sh ' . $strR . ' 2>&1';
     exec($comando, $bash);
-    print_r($comando);
     $res[] = $bash;
 
     $sUpdate = 'UPDATE  space.nomina SET esta=4, llav = \'' . $llave . '\'  WHERE oid=' . $oid . ';';
     $rs = $this->DBSpace->consultar($sUpdate);
 
-    print_r($sUpdate);
-    
     $this->Resultado = array(
       'a' => $archivo,
       'll' => $llave,
