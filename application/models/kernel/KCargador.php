@@ -244,7 +244,7 @@ class KCargador extends CI_Model{
           -- AND bnf.anio_reconocido > 0 AND bnf.mes_reconocido > 0 AND bnf.dia_reconocido > 0
           -- AND bnf.anio_reconocido IS NULL
           -- AND bnf.cedula IN ( '18214241', '12488541','15683209', '236810', '9698574.','12834431', '11113890', '1636273' )
-          -- AND bnf.cedula='20955773' --RCP '4262481' --FCP='15236250' 
+          -- AND bnf.cedula='7391293' --RCP '4262481' --FCP='15236250' 
           -- grado.codigo NOT IN(8450, 8510, 8500, 8460, 8470, 8480, 5320) 
         ORDER BY grado.codigo
           -- AND grado.codigo IN( 10, 15)
@@ -878,9 +878,9 @@ class KCargador extends CI_Model{
         $monto_str .= $valor . ';';
         $deduccion +=  $valor;
         
-        if($valor != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 2, 'mont' => $valor );
+        if($valor != 0)$recibo_de_pago[] = array( 'desc' => $map[$i]['nombre'], 'tipo' => 3, 'mont' => $valor );
         
-        $this->asignarPresupuesto( $rs, $deduccion, '2', $map[$i]['nombre'], $map[$i]['partida'], '',  $map[$i]['codigo']);
+        $this->asignarPresupuesto( $rs, $deduccion, '3', $map[$i]['nombre'], $map[$i]['partida'], '',  $map[$i]['codigo']);
       }
     } 
   
