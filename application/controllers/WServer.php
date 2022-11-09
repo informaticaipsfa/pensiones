@@ -1,8 +1,7 @@
 <?php
-
-
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
 /** @noinspection PhpIncludeInspection */
+declare(strict_types=1);  # accepts 0 as a toggle-off
 require APPPATH . '/libraries/REST_Controller.php';
 // use namespace
 use Restserver\Libraries\REST_Controller;

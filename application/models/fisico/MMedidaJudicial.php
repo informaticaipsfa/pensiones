@@ -350,7 +350,7 @@ class MMedidaJudicial extends CI_Model{
 
   }
 
-  	public function listarPorCodigo($cedula = '', $id){
+public function listarPorCodigo($cedula = '', $id = ''){
 		$arr = array();
 		$sConsulta = 'select *,medida_judicial.id AS medida_id, 
 			ciudad.nombre AS ciudad_nombre,

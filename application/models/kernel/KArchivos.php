@@ -28,7 +28,7 @@ class KArchivos extends CI_Model{
 		}
 		//print_r( $query );
 
-        $obj = $this->Dbpace->consultar($query);
+    $obj = $this->Dbpace->consultar($query);
 		$rs = $obj->rs;
 
 		foreach ($rs as $c => $v) {

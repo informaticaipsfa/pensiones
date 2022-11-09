@@ -41,9 +41,10 @@ class KCalculoLote extends CI_Model{
   }
 
 
-  function Instanciar(MBeneficiario & $Bnf, $Dir){
+  function Instanciar(MBeneficiario & $Bnf, $Dir, $Concepto = ''){
     $this->Directiva = $Dir;
     $this->Beneficiario = $Bnf;
+    $this->Concpetos = $Concepto;
   }
   /**
   * Consultar los beneficiario por componente, cargar diirectivas, instanciar las primas y ejeutar calculos

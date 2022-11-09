@@ -249,7 +249,7 @@ class KCargador extends CI_Model{
         ORDER BY grado.codigo
           -- AND grado.codigo IN( 10, 15)
           -- LIMIT 190 OFFSET 10
-          -- LIMIT 10000";
+          -- LIMIT 100";
     
     $con = $this->DBSpace->consultar($sConsulta);
     $this->functionRefelxion = "generarConPatrones";
@@ -350,10 +350,10 @@ class KCargador extends CI_Model{
       if ($this->_MapWNomina["nombre"] == "AGUINALDOS"){
         $linea .= 'AGUINALDOS;';
       }
-      $linea .= 'CEDULA;APELLIDOS;NOMBRES;PARENTESCO;TIPO;BANCO;NUMERO CUENTA;PENSION MIL;';
+      $linea .= 'CEDULA;APELLIDOS;NOMBRES;F.NACIMIENTO;PARENTESCO;TIPO;BANCO;NUMERO CUENTA;PENSION MIL;';
       $linea .= 'PORCENTAJE;';
       $linea .= 'RETROACTIVO;';
-      $linea .= 'ASIGNACION;FCIS;FCIR;'. $fcplinea_aux .'NETO';
+      $linea .= 'ASIGNACION;FCIS;FCIR;FAMAY;'. $fcplinea_aux .'NETO';
     }
     fputs($file,$linea);//Para Generar archivo csv 04102017
     fputs($file,"\n");//Salto de linea
@@ -1057,6 +1057,7 @@ class KCargador extends CI_Model{
     $deducciont = 0;
     $fondo_cis = 0;
     $fondo_circulo = 0;
+    $fondo_adultomayor = 0;
     $netot = 0;
     $linea = "";
     $i = 0;
@@ -1071,14 +1072,19 @@ class KCargador extends CI_Model{
         $base_porc = ( $base_pension * $PS[$i]['porcentaje'] ) / 100; //Obtengo porcentaje de la base
         $fondo_cis = round ( (  $base_porc * 6.5 ) / 100, 2) ;
         $fondo_circulo = round ( (  $base_porc * 1.5 ) / 100, 2) ;
-        $retencionesG = $fondo_cis + $fondo_circulo;
+
+        if ( $this->Adulto_Mayor($PS[$i]['nacimiento']) ) { //Evaluar el calculo para el Fondo del Adulto Mayor
+          $fondo_adultomayor = round ( ( $base_porc * 1 ) / 100, 2 ) ; 
+        }
+        
+        $retencionesG = $fondo_cis + $fondo_circulo + $fondo_adultomayor;
         $Bnf->retencion = $retencionesG;
         $deducciont += $Bnf->retencion;
         $cporcdistri = ( $pension_distribuir * $PS[$i]['porcentaje'] ) / 100; //Obtengo la pension del familiar en porcion %
         
         $this->KReciboSobreviviente->fondo_cis = $fondo_cis;
         $this->KReciboSobreviviente->fondo_circulo = $fondo_circulo;
-        
+        $this->KReciboSobreviviente->fondo_adultomayor = $fondo_adultomayor;
         
         $asignacionp = $cporcdistri;
         $deduccionp = $retencionesG; //$fondo_circulo + $fondo_cis
@@ -1104,6 +1110,14 @@ class KCargador extends CI_Model{
               'tipo' => 0,
               'mont' => $fondo_circulo
             );
+            if ( $fondo_adultomayor > 0 ) { //Evaluar el calculo para el Fondo del Adulto Mayor
+              $recibo_de_pago[] = array(
+                'desc' =>  'FONDO 1% ADULTO MAYOR', 
+                'tipo' => 0,
+                'mont' => $fondo_adultomayor
+              );
+            }
+           
             $clave = $Bnf->cedula . "|" . $PS[$i]['cedula'];
             $retroactivo = $this->recorrerConceptos($map, $Bnf->Concepto, $clave, $recibo_de_pago);
             
@@ -1116,9 +1130,10 @@ class KCargador extends CI_Model{
             );
 
             $linea .= $segmentoincial . $PS[$i]['cedula'] . ';' . $PS[$i]['apellidos'] . ';' . $PS[$i]['nombres'] . 
-            ';' . $PS[$i]['parentesco'] . ';' . $PS[$i]['tipo'] . ";'" . $PS[$i]['banco'] . ";'" . $PS[$i]['numero'] . 
-            ';' . round($pension_distribuir,2) . ';' . round($PS[$i]['porcentaje'],2) . ';' . $retroactivo . ';' . 
-            round($asignacionp,2) . ';' . $fondo_cis . ';' . $fondo_circulo . ';' . round($neto,2) . PHP_EOL;
+            ';' . $PS[$i]['nacimiento'] . ';' . $PS[$i]['parentesco'] . ';' . $PS[$i]['tipo'] . ";'" . $PS[$i]['banco'] . 
+            ";'" . $PS[$i]['numero'] . ';' . round($pension_distribuir,2) . ';' . round($PS[$i]['porcentaje'],2) . 
+            ';' . $retroactivo . ';' . round($asignacionp,2) . ';' . $fondo_cis . ';' . $fondo_circulo . ';'. $fondo_adultomayor . 
+            ';' . round($neto,2) . PHP_EOL;
 
             $asignaciont += $asignacionp;
             $deducciont += $deduccionp;
@@ -1192,7 +1207,30 @@ class KCargador extends CI_Model{
 
   
 
+  function Adulto_Mayor( $fecha ){
+    list($ano,$mes,$dia) = explode("-",$fecha);
+    $fecha_actual = date('Y-m-d');
+    list($anoa,$mesa,$diaa) = explode("-",$fecha_actual);
 
+    $diax = $diaa - $dia;
+
+    if ($diax <= 0 ) {
+      $diax = ($diaa + 30) - $dia;
+    }
+
+    $mesx = $mesa - $mes;
+
+    if ( $mesx <= 0 ) {
+      $mesx = ($mesa + 12) - $mes;
+    }
+
+    $edad = $anoa - $ano;
+
+    if ($edad > 59 ) {
+      return false;
+    }
+    return true;
+  }
 
 
 
@@ -2306,24 +2344,30 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     $monto = $this->KArchivos->Ejecutar($cedula, $concepto, $this->Archivos);    
     return $monto;
   }
+
+  
   private function obtenerArchivos( MBeneficiario &$Bnf, $concepto  ){
     //print_r($this->Archivos);
     $monto = $this->KArchivos->Ejecutar($Bnf->cedula, $concepto, $this->Archivos, $this->_MapWNomina);
     return $monto;
   }
 
+
   private function obtenerCajaAhorro( MBeneficiario &$Bnf ){
     return $this->KArchivos->Ejecutar($Bnf->cedula, "CA-00001", $this->Archivos);
   }
+
 
   private function generarLinea($Recuerdo){
         return $Recuerdo;
   }
 
+
   private function generarLineaMemoria($Recuerdo){
     return $Recuerdo['RECUERDO'];
 
   }
+
 
   private function asignarPresupuesto($rs, $mt, $tp, $ab, $part, $cuen, $codi){
     if (isset($this->ResumenPresupuestario[$rs])){
@@ -2441,6 +2485,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
       regexp_replace(fam.nombres, '[^a-zA-Y0-9 ]', '', 'g') as nombres, 
       regexp_replace(fam.apellidos, '[^a-zA-Y0-9 ]', '', 'g') as apellidos, 
       fam.parentesco, fam.autorizado, 
+      fam.f_nacimiento, 
       regexp_replace(fam.nombre_autorizado, '[^a-zA-Y0-9 ]', '', 'g') as nombre_autorizado,  
       fam.tipo, fam.banco, fam.numero,
       fam.porcentaje, fam.motivo, fam.estatus
@@ -2458,6 +2503,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
           "estatus" => $v->estatus,
           "banco" => $v->banco,
           "numero" => $v->numero,
+          "nacimiento" => $v->f_nacimiento,
           "porcentaje" => $v->porcentaje,
           "motivo" => $v->motivo
         );

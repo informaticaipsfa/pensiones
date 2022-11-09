@@ -62,7 +62,7 @@ class KMedidaJudicial extends CI_Model{
 	}
 
 
-	public function Ejecutar($sb = 0.00, $estatus = 0, $fnx = '', $Directiva){
+	public function Ejecutar($sb = 0.00, $estatus = 0, $fnx = '', $Directiva = ''){
 		$aguinaldos = 0;
 		$aguinaldo = 0;
 		$bono_recreacional = 0;
