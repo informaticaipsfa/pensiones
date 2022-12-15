@@ -121,7 +121,7 @@ class KCalculoLote extends CI_Model{
       $numero_hijos = $this->Beneficiario->numero_hijos;
       $prima_profesionalizacion_mt = $this->Beneficiario->prima_profesionalizacion_mt;
       $porcentaje_profesionalizacion = $this->Beneficiario->prima_profesionalizacion_mt; 
-
+      $adultoMayor = $this->Beneficiario->adultoMayor?1:0;
       
 
       $total_primas = 0;
@@ -243,6 +243,7 @@ class KCalculoLote extends CI_Model{
       $sueldo_mensual = $sueldo_base;
       $pension = $sueldo_base;
       $this->Beneficiario->total_asignacion = $sueldo_base;
+      $adultoMayor = $this->Beneficiario->adultoMayor?1:0;
      
       $this->Beneficiario->pension = $pension;
       $this->Beneficiario->sueldo_mensual = $pension;
@@ -285,6 +286,7 @@ class KCalculoLote extends CI_Model{
       $sueldo_minimo = $this->Directiva['salario'];
       $unidad_tributaria = $this->Directiva['ut'];
       $porcentaje_pension = $this->Beneficiario->porcentaje;
+      $adultoMayor = $this->Beneficiario->adultoMayor?1:0;
       $no_ascenso = 0;
       $numero_hijos = 0;
    

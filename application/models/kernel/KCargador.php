@@ -232,7 +232,7 @@ class KCargador extends CI_Model{
         bnf.cedula, fecha_ingreso,f_ult_ascenso, grado.codigo,grado.nombre as gnombre,
         bnf.componente_id, n_hijos, st_no_ascenso, bnf.status_id,
         st_profesion, monto_especial, anio_reconocido, mes_reconocido,dia_reconocido,bnf.status_id as status_id, 
-        bnf.porcentaje, f_retiro, bnf.tipo, bnf.banco, bnf.numero_cuenta, bnf.situacion
+        bnf.porcentaje, f_retiro, bnf.tipo, bnf.banco, bnf.numero_cuenta, bnf.situacion, bnf.f_nacimiento
         FROM
           beneficiario AS bnf
         JOIN
@@ -249,7 +249,7 @@ class KCargador extends CI_Model{
         ORDER BY grado.codigo
           -- AND grado.codigo IN( 10, 15)
           -- LIMIT 190 OFFSET 10
-          -- LIMIT 100";
+          LIMIT 10";
     
     $con = $this->DBSpace->consultar($sConsulta);
     $this->functionRefelxion = "generarConPatrones";
@@ -312,7 +312,7 @@ class KCargador extends CI_Model{
     $file_cajas = fopen("tmp/" . $archivo . "-CA.sql","a") or die("Problemas");
 
     $linea = 'CEDULA;APELLIDOS;NOMBRES;TIPO;BANCO;NUMERO CUENTA;FECHA INGRESO;FECHA ASCENSO;FECHA RETIRO;COMPONENTE;GRADO;GRADO DESC.;TIEMPO DE SERV.;';
-    $linea .= 'ANTIGUEDAD;NUM. HIJOS;PORCENTAJE;';
+    $linea .= 'ANTIGUEDAD;NUM. HIJOS;PORCENTAJE;FECHA_NACIMIENTO;';
     
     
 
@@ -461,6 +461,10 @@ class KCargador extends CI_Model{
       $Bnf->nombres = $v->nombres; //Individual del Objeto
       
       $Bnf->fecha_ingreso = $v->fecha_ingreso;
+      $Bnf->fecha_nacimiento = $v->f_nacimiento;
+      //print_r($v->f_nacimiento);
+      $Bnf->adultoMayor = $this->Adulto_Mayor($v->f_nacimiento);
+
       $Bnf->numero_hijos = $v->n_hijos;
       $Bnf->tipo = $v->tipo;
       $Bnf->banco = $v->banco;
@@ -598,7 +602,7 @@ class KCargador extends CI_Model{
         $recuerdo = $Bnf->fecha_ingreso . ';' . $Bnf->fecha_ultimo_ascenso . 
             ';' . $Bnf->fecha_retiro . ';' . $Bnf->componente_nombre . ';' . $Bnf->grado_codigo . 
             ';' . $Bnf->grado_nombre . ';' . $Bnf->tiempo_servicio . ';' . $Bnf->antiguedad_grado . 
-            ';' . $Bnf->numero_hijos . ';' . $Bnf->porcentaje;
+            ';' . $Bnf->numero_hijos . ';' . $Bnf->porcentaje ;
 
         $Perceptron->Aprender($patron, array(
           'RECUERDO' => $recuerdo,
@@ -611,7 +615,7 @@ class KCargador extends CI_Model{
           'RECIBO' => $recibo_de_pago
           ) );
 
-          $segmentoincial = $recuerdo . ';' . $segmentoincial;
+          $segmentoincial = $recuerdo . ';' . $Bnf->fecha_nacimiento . ';' . $segmentoincial;
 
                
         $neto = $asignacion - $deduccion;
@@ -770,7 +774,7 @@ class KCargador extends CI_Model{
           
           $linea = $Bnf->cedula . ';' . trim($Bnf->apellidos) . ';' . trim($Bnf->nombres) . 
           ';' .  $Bnf->tipo . ";'" . $Bnf->banco . ";'" . $Bnf->numero_cuenta . 
-          "\";" . $Perceptron->Neurona[$patron]["RECUERDO"] . ";" . $segmentoincial .
+          "\";" . $Perceptron->Neurona[$patron]["RECUERDO"] . ";" . $Bnf->fecha_nacimiento . ";" . $segmentoincial .
           $medida_str . $cajaahorro_str . $asignacion . ';' . $deduccion . ';' . $neto;
         }else{
           $log = $Bnf->cedula . ';' . $Bnf->apellidos . ';' . $Bnf->nombres . ';';
@@ -821,6 +825,8 @@ class KCargador extends CI_Model{
     $Bnf->nombres = $v->nombres; //Individual del Objeto
     
     $Bnf->fecha_ingreso = $v->fecha_ingreso;
+    $Bnf->fecha_nacimiento = $v->f_nacimiento;
+    $Bnf->adultoMayor = $this->Adulto_Mayor($v->f_nacimiento);
     $Bnf->numero_hijos = $v->n_hijos;
     $Bnf->tipo = $v->tipo;
     $Bnf->banco = $v->banco;
@@ -949,6 +955,8 @@ class KCargador extends CI_Model{
     $Bnf->nombres = $v->nombres; //Individual del Objeto
     
     $Bnf->fecha_ingreso = $v->fecha_ingreso;
+    $Bnf->fecha_nacimiento = $v->f_nacimiento;
+    $Bnf->adultoMayor = $this->Adulto_Mayor($v->f_nacimiento);
     $Bnf->numero_hijos = $v->n_hijos;
     $Bnf->tipo = $v->tipo;
     $Bnf->banco = $v->banco;
@@ -1225,7 +1233,7 @@ class KCargador extends CI_Model{
     }
 
     $edad = $anoa - $ano;
-
+    //print_r($edad);
     if ($edad > 59 ) {
       return false;
     }
@@ -1252,6 +1260,8 @@ class KCargador extends CI_Model{
     $Bnf->nombres = $v->nombres; //Individual del Objeto
     
     $Bnf->fecha_ingreso = $v->fecha_ingreso;
+    $Bnf->fecha_nacimiento = $v->f_nacimiento;
+    $Bnf->adultoMayor = $this->Adulto_Mayor($v->f_nacimiento);
     $Bnf->numero_hijos = $v->n_hijos;
     $Bnf->tipo = $v->tipo;
     $Bnf->banco = $v->banco;
@@ -1585,6 +1595,8 @@ private function generarConPatronesFCPDIF(MBeneficiario &$Bnf, KCalculoLote &$Ca
   $Bnf->nombres = $v->nombres; //Individual del Objeto
   
   $Bnf->fecha_ingreso = $v->fecha_ingreso;
+  $Bnf->fecha_nacimiento = $v->f_nacimiento;
+  $Bnf->adultoMayor = $this->Adulto_Mayor($v->f_nacimiento);
   $Bnf->numero_hijos = $v->n_hijos;
   $Bnf->tipo = $v->tipo;
   $Bnf->banco = $v->banco;
@@ -1744,6 +1756,8 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     $Bnf->nombres = $v->nombres; //Individual del Objeto
     
     $Bnf->fecha_ingreso = $v->fecha_ingreso;
+    $Bnf->fecha_nacimiento = $v->f_nacimiento;
+    $Bnf->adultoMayor = $this->Adulto_Mayor($v->f_nacimiento);
     $Bnf->numero_hijos = $v->n_hijos;
     $Bnf->tipo = $v->tipo;
     $Bnf->banco = $v->banco;
@@ -2046,6 +2060,8 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     $Bnf->nombres = $v->nombres; //Individual del Objeto
     
     $Bnf->fecha_ingreso = $v->fecha_ingreso;
+    $Bnf->fecha_nacimiento = $v->f_nacimiento;
+    $Bnf->adultoMayor = $this->Adulto_Mayor($v->f_nacimiento);
     $Bnf->numero_hijos = $v->n_hijos;
     $Bnf->tipo = $v->tipo;
     $Bnf->banco = $v->banco;
