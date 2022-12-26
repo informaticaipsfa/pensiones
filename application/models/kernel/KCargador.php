@@ -2593,7 +2593,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
         bnf.cedula, fecha_ingreso,f_ult_ascenso, grado.codigo,grado.nombre as gnombre,
         bnf.componente_id, n_hijos, st_no_ascenso, bnf.status_id,
         st_profesion, monto_especial, anio_reconocido, mes_reconocido,dia_reconocido,bnf.status_id as status_id, 
-        bnf.porcentaje, f_retiro, bnf.tipo, bnf.banco, bnf.numero_cuenta, bnf.situacion
+        bnf.porcentaje, f_retiro, bnf.tipo, bnf.banco, bnf.numero_cuenta, bnf.situacion, bnf.f_nacimiento
         FROM
           beneficiario AS bnf
         JOIN
@@ -2652,6 +2652,7 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     $Bnf->deposito_banco = ""; //$v->cap_banco; //Individual de la Red
     $Bnf->apellidos = $v->apellidos; //Individual del Objeto
     $Bnf->nombres = $v->nombres; //Individual del Objeto
+    $Bnf->adultoMayor = $this->Adulto_Mayor($v->f_nacimiento);
     
     $Bnf->fecha_ingreso = $v->fecha_ingreso;
     $Bnf->numero_hijos = $v->n_hijos;
