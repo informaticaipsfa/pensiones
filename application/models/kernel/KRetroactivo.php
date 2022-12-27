@@ -224,7 +224,7 @@ class KRetroactivo extends CI_Model{
         bnf.cedula, fecha_ingreso,f_ult_ascenso, grado.codigo,grado.nombre as gnombre,
         bnf.componente_id, n_hijos, st_no_ascenso, bnf.status_id,
         st_profesion, monto_especial, anio_reconocido, mes_reconocido,dia_reconocido,bnf.status_id as status_id, 
-        bnf.porcentaje, f_retiro, bnf.tipo, bnf.banco, bnf.numero_cuenta, bnf.situacion
+        bnf.porcentaje, f_retiro, bnf.tipo, bnf.banco, bnf.numero_cuenta, bnf.situacion, bnf.f_nacimiento
         FROM
           beneficiario AS bnf
         JOIN
@@ -331,6 +331,9 @@ class KRetroactivo extends CI_Model{
     $Bnf->tipo = $v->tipo;
     $Bnf->banco = $v->banco;
     $Bnf->numero_cuenta = $v->numero_cuenta;
+    $Bnf->fecha_nacimiento = $v->f_nacimiento;
+    //print_r($v->f_nacimiento);
+    $Bnf->adultoMayor = $this->Adulto_Mayor($v->f_nacimiento);
     $Bnf->situacion = $v->situacion;
     $Bnf->no_ascenso = $v->st_no_ascenso;
     $Bnf->componente_id = $v->componente_id;
@@ -611,4 +614,29 @@ class KRetroactivo extends CI_Model{
   }
 
 
+
+  private function Adulto_Mayor( $fecha ){
+    list($ano,$mes,$dia) = explode("-",$fecha);
+    $fecha_actual = date('Y-m-d');
+    list($anoa,$mesa,$diaa) = explode("-",$fecha_actual);
+
+    $diax = $diaa - $dia;
+
+    if ($diax <= 0 ) {
+      $diax = ($diaa + 30) - $dia;
+    }
+
+    $mesx = $mesa - $mes;
+
+    if ( $mesx <= 0 ) {
+      $mesx = ($mesa + 12) - $mes;
+    }
+
+    $edad = $anoa - $ano;
+    //print_r($edad);
+    if ($edad > 59 ) {
+      return false;
+    }
+    return true;
+  }
 }
