@@ -462,7 +462,6 @@ class KCargador extends CI_Model{
       
       $Bnf->fecha_ingreso = $v->fecha_ingreso;
       $Bnf->fecha_nacimiento = $v->f_nacimiento;
-      //print_r($v->f_nacimiento);
       $Bnf->adultoMayor = $this->Adulto_Mayor($v->f_nacimiento);
 
       $Bnf->numero_hijos = $v->n_hijos;
@@ -508,11 +507,7 @@ class KCargador extends CI_Model{
       if(!isset($Perceptron->Neurona[$patron])){
         $CalculoLote->Ejecutar();
         
-        
-              
         $medida = $this->calcularMedidaJudicial($this->KMedidaJudicial,  $Bnf, $sqlID, $Directivas);
-
-
         $cajaahorro = 0; 
         //Aplicar conceptos de Asignación
         for ($i= 0; $i < $cant; $i++){
