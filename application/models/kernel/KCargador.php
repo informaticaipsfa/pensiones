@@ -2380,6 +2380,10 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
   }
 
 
+  /**
+   * Asignar el presupuesto como resumen prespuestario
+   * @return array
+   */
   private function asignarPresupuesto($rs, $mt, $tp, $ab, $part, $cuen, $codi){
     if (isset($this->ResumenPresupuestario[$rs])){
       $mt_aux = $this->ResumenPresupuestario[$rs]['mnt'];
