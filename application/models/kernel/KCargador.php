@@ -2470,6 +2470,9 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     return $this->Resultado;
   }
 
+  /**
+   * Actualizando el codigo fuente de pensiones
+   */
   function GitAll(){
     $arr['data'] = "";
     $comando = 'git pull origin master 2>&1';
@@ -2479,15 +2482,6 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     );
     return $this->Resultado;
   }
-
-
-
-
-
-
-
-
-
 
 
 
