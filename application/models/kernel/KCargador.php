@@ -2409,6 +2409,11 @@ private function generarConPatronesRetribucionEspecial(MBeneficiario &$Bnf, KCal
     }
   }
  
+  /**
+   * Funcion agregada para validar estatus de los militares
+   * @param Beneficiario
+   * @return boolean
+   */
   private function validarEstatusParalizado(MBeneficiario &$Bnf){
     switch ($Bnf->estatus_id) {
       case 201:
