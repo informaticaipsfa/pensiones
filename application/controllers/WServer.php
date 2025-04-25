@@ -19,7 +19,19 @@ use Restserver\Libraries\REST_Controller;
 
  date_default_timezone_set ( 'America/Caracas' );
 class WServer extends REST_Controller{
+
+    /**
+	* @var string
+	*/
+    var $componente_id = '';
     
+
+    /**
+	* @var string
+	*/
+    var $adultoMayor = '';
+    
+
     public function __construct(){
         parent::__construct();
         $this->load->helper('url'); 

@@ -266,6 +266,11 @@ class MBeneficiario extends CI_Model{
 	var $prima_profesionalizacion_mt = 0.00;
 
 	/**
+	* @var string
+	*/
+	var $componente_id = '';
+
+	/**
 	* @var MPrima
 	*/
 	var $Prima = array();
@@ -319,6 +324,7 @@ class MBeneficiario extends CI_Model{
 	* @var MOrdenPago
 	*/
 	var $HistorialOrdenPagos = array();
+
 
 	/**
 	* Iniciando la clase, Cargando Elementos Pace
